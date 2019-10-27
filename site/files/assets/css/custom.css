@@ -1,0 +1,47 @@
+article.storypage > header {
+  text-align: center;
+}
+
+div.highlight pre {
+  background: #f0f0f0;
+}
+
+div.text_cell_render h4 {
+  font-family: "Times New Roman", serif;
+}
+
+div.prompt {
+  background-color: #FFFFFF !important;
+}
+
+div.output_prompt {
+  margin-right: 1em !important;
+}
+
+div.rendered_html > div.navigation > p {
+  text-align: center;
+}
+
+a.navbar-brand {
+  margin-right: unset;
+}
+
+a.blog-header-logo {
+  font-size: 2.5rem;
+}
+
+h1.entry-title {
+  font-size: 2.25rem;
+}
+
+div.rendered_html table.dataframe {
+  font-size: 14px;
+}
+
+div.output_area pre {
+  font-size: 14px !important;
+}
+
+div.output div.output_area:nth-child(2) div.prompt span {
+  display: none;
+}

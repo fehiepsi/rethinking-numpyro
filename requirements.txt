@@ -1,0 +1,4 @@
+numpyro
+arviz
+causalgraphicalmodels
+ete3

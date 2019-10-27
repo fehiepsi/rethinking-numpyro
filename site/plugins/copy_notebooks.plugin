@@ -1,0 +1,12 @@
+[Core]
+Name = copy_notebooks
+Module = copy_notebooks
+
+[Documentation]
+Author = Du Phan
+Version = 0.1
+Website = https://github.com/fehiepsi/rethinking-numpyro/tree/master/site/plugins
+Description = Copy notebooks into pages
+
+[Nikola]
+PluginCategory = Task
