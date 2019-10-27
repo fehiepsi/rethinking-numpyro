@@ -17,14 +17,8 @@ I am a fan of the book [*Statistical Rethinking*](https://xcelab.net/rm/statisti
 
 ## Installation
 
+The following tools are used for some analysis and visualizations: [arviz](https://arviz-devs.github.io/arviz/) for [posteriors](https://en.wikipedia.org/wiki/Posterior_probability), [causalgraphicalmodels](https://github.com/ijmbarr/causalgraphicalmodels) for [causal graphs](https://en.wikipedia.org/wiki/Causal_graph), [ete3](http://etetoolkit.org/) for [phylogenetic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree).
+
 ```sh
 pip install numpyro arviz causalgraphicalmodels ete3
 ```
-
-The following tools are used for some analysis and visualizations:
-
-+ [ArviZ](https://arviz-devs.github.io/arviz/) for [posteriors](https://en.wikipedia.org/wiki/Posterior_probability).
-
-+ [CausalGraphicalModels](https://github.com/ijmbarr/causalgraphicalmodels) for [causal graphs](https://en.wikipedia.org/wiki/Causal_graph).
-
-+ [ETE Toolkit](http://etetoolkit.org/) for [phylogenetic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree).
