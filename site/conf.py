@@ -17,7 +17,7 @@ import time
 
 # Data about this site
 BLOG_AUTHOR = "fehiepsi"  # (translatable)
-BLOG_TITLE = "Statistical Rethinking (2nd Edition) with NumPyro"  # (translatable)
+BLOG_TITLE = "Statistical Rethinking (2nd ed.) with NumPyro"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
 SITE_URL = "https://fehiepsi.github.io/rethinking-numpyro/"
