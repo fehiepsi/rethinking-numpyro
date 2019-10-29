@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/</loc>
-  <lastmod>2019-10-28T14:50:00Z</lastmod>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/00-preface.html</loc>
@@ -55,7 +55,7 @@
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/11-god-spiked-the-integers.html</loc>
-  <lastmod>2019-10-28T14:50:00Z</lastmod>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/12-monsters-and-mixtures.html</loc>
@@ -63,7 +63,7 @@
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/13-models-with-memory.html</loc>
-  <lastmod>2019-10-28T14:50:00Z</lastmod>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/14-adventures-in-covariance.html</loc>
@@ -71,11 +71,15 @@
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/15-missing-data-and-other-opportunities.html</loc>
-  <lastmod>2019-10-28T14:50:00Z</lastmod>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://fehiepsi.github.io/rethinking-numpyro/16-generalized-linear-madness.html</loc>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/17-horoscopes.html</loc>
-  <lastmod>2019-10-28T14:50:00Z</lastmod>
+  <lastmod>2019-10-29T04:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/archive.html</loc>
