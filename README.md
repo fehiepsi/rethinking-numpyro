@@ -1,3 +1,4 @@
+[![Test Status](https://travis-ci.com/fehiepsi/rethinking-numpyro.svg?branch=master)](https://travis-ci.com/fehiepsi/rethinking-numpyro)
 # Statistical Rethinking (2nd ed.) with NumPyro
 
 **Status:** The codes here correspond to the book draft dated on 26 Sept 2019.
