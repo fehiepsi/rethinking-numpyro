@@ -1,27 +1,22 @@
 language: python
 
-python:
-    - '3.7'
-
-install:
-    - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-    - bash miniconda.sh -b -p $HOME/miniconda
-    - source "$HOME/miniconda/etc/profile.d/conda.sh"
-    - hash -r
-    - conda config --set always_yes yes --set changeps1 no
-    - conda update -q conda
-    - conda info -a
-    - conda create -q -n test python=3.7
-    - conda activate test
-    - conda install -c conda-forge ete3 graphviz
-    - conda list
-    - pip install -r requirements.txt
-    - pip install nbval
-    - pip freeze
+python: 3.7
 
 branches:
     only:
         - master
 
-script:
-    - find notebooks -maxdepth 1 -name "*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
+install:
+    - pip install -r requirements.txt
+    - pip install nbval
+    - pip freeze
+
+jobs:
+    fast_finish: true
+    include:
+        - name: "Chapters 00-09"
+          script:
+              - find notebooks -maxdepth 1 -name "0*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
+        - name: "Chapters 10-17"
+          script:
+              - find notebooks -maxdepth 1 -name "1*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
