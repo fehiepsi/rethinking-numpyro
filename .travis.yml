@@ -12,4 +12,4 @@ branches:
         - master
 
 script:
-    - find notebooks -maxdepth 1 -name "*.ipynb" | xargs pytest -v --nbval-lax
+    - find notebooks -maxdepth 1 -name "*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
