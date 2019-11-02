@@ -11,8 +11,9 @@ install:
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     - conda info -a
-    - conda create -q -n test python=3.7 graphviz
+    - conda create -q -n test python=3.7
     - conda activate test
+    - conda install -c conda-forge ete3 graphviz
     - conda list
     - pip install -r requirements.txt
     - pip install nbval
