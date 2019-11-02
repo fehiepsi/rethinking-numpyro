@@ -1,0 +1,15 @@
+language: python
+
+python:
+    - '3.7'
+
+install:
+    - pip install -r requirements.txt
+    - pip install nbval
+
+branches:
+    only:
+        - master
+
+script:
+    - find notebooks -maxdepth 1 -name "*.ipynb" | xargs pytest -v --nbval-lax
