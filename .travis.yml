@@ -14,10 +14,11 @@ install:
 jobs:
     fast_finish: true
     include:
-        - name: "Chapters 10-17"
+        - name: "Chapters 13-17"
           script:
-              - find notebooks -maxdepth 1 -name "1*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
-        - name: "Chapters 00-09"
+              - travis_wait 20 find notebooks -maxdepth 1 -name "1[3-7]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
+        - name: "Chapters 00-12"
           script:
               - find notebooks -maxdepth 1 -name "0*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
+	      - find notebooks -maxdepth 1 -name "1[0-2]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
 
