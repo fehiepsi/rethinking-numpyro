@@ -20,5 +20,6 @@ jobs:
               - find notebooks -maxdepth 1 -name "1[0-2]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
         - name: "Chapters 13-17"
           script:
-              - travis_wait 20 find notebooks -maxdepth 1 -name "1[3-7]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
+              - "travis_wait 20 sleep 1200 &"
+              - find notebooks -maxdepth 1 -name "1[3-7]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax
 
