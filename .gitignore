@@ -1,9 +1,11 @@
 *~
 .ipynb_checkpoints
+
 __pycache__
 cache
 output
 .doit.db*
+
 site/pages/*.ipynb
 site/listings/*.py
 
