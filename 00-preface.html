@@ -43,7 +43,7 @@ from jax.random import PRNGKey
 
 imp">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2019-11-02T15:52:15-04:00">
+<meta property="article:published_time" content="2019-11-03T00:37:48-04:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -115,13 +115,13 @@ imp">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">jax</span> <span class="k">import</span> <span class="n">lax</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">jax.random</span> <span class="k">import</span> <span class="n">PRNGKey</span>
+<span class="kn">from</span> <span class="nn">jax.random</span> <span class="kn">import</span> <span class="n">PRNGKey</span>
 
-<span class="kn">import</span> <span class="nn">numpyro</span> <span class="k">as</span> <span class="nn">npyro</span>
+<span class="kn">import</span> <span class="nn">numpyro</span>
 <span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">dist</span>
-<span class="kn">from</span> <span class="nn">numpyro.infer</span> <span class="k">import</span> <span class="n">ELBO</span><span class="p">,</span> <span class="n">SVI</span>
+<span class="kn">from</span> <span class="nn">numpyro.infer</span> <span class="kn">import</span> <span class="n">ELBO</span><span class="p">,</span> <span class="n">SVI</span>
 <span class="kn">import</span> <span class="nn">numpyro.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_formats = ["svg"]
@@ -296,8 +296,8 @@ imp">
 
 <span class="c1"># fit a linear regression of distance on speed</span>
 <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">dist_</span><span class="p">):</span>
-    <span class="n">mu</span> <span class="o">=</span> <span class="n">npyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">+</span> <span class="n">npyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">"b"</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">speed</span>
-    <span class="n">npyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"dist"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">obs</span><span class="o">=</span><span class="n">dist_</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">+</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">"b"</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"dist"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">obs</span><span class="o">=</span><span class="n">dist_</span><span class="p">)</span>
 
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">speed</span><span class="p">,</span> <span class="n">dist_</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="n">optim</span><span class="o">=</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">loss</span><span class="o">=</span><span class="n">ELBO</span><span class="p">(),</span>
           <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dist_</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -345,20 +345,20 @@ imp">
 
 
 <div class="output_svg output_subarea ">
-<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Created with matplotlib (https://matplotlib.org/) --><svg height="296.39952pt" version="1.1" viewbox="0 0 440.39952 296.39952" width="440.39952pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Created with matplotlib (https://matplotlib.org/) --><svg height="353.99952pt" version="1.1" viewbox="0 0 526.79952 353.99952" width="526.79952pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
 *{stroke-linecap:butt;stroke-linejoin:round;}
-  </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 296.39952 
-L 440.39952 296.39952 
-L 440.39952 0 
+  </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 353.99952 
+L 526.79952 353.99952 
+L 526.79952 0 
 L 0 0 
 z
-" style="fill:none;"></path></g><g id="axes_1"><g id="patch_2"><path d="M 58.76375 253.632957 
-L 433.19952 253.632957 
-L 433.19952 7.2 
+" style="fill:#ffffff;"></path></g><g id="axes_1"><g id="patch_2"><path d="M 58.76375 311.232957 
+L 519.59952 311.232957 
+L 519.59952 7.2 
 L 58.76375 7.2 
 z
-" style="fill:#eeeeee;"></path></g><g id="matplotlib.axis_1"><g id="xtick_1"><g id="line2d_1"><path clip-path="url(#p817455a382)" d="M 91.992898 253.632957 
-L 91.992898 7.2 
+" style="fill:#eeeeee;"></path></g><g id="matplotlib.axis_1"><g id="xtick_1"><g id="line2d_1"><path clip-path="url(#p33795b44f8)" d="M 99.660431 311.232957 
+L 99.660431 7.2 
 " style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_2"></g><g id="text_1"><!-- 5 --><defs><path d="M 10.796875 72.90625 
 L 49.515625 72.90625 
 L 49.515625 64.59375 
@@ -382,8 +382,8 @@ Q 35.15625 39.890625 26.703125 39.890625
 Q 22.75 39.890625 18.8125 39.015625 
 Q 14.890625 38.140625 10.796875 36.28125 
 z
-" id="DejaVuSans-53"></path></defs><g style="fill:#262626;" transform="translate(87.539148 267.77077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-53"></use></g></g></g><g id="xtick_2"><g id="line2d_3"><path clip-path="url(#p817455a382)" d="M 173.039602 253.632957 
-L 173.039602 7.2 
+" id="DejaVuSans-53"></path></defs><g style="fill:#262626;" transform="translate(95.206681 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-53"></use></g></g></g><g id="xtick_2"><g id="line2d_3"><path clip-path="url(#p33795b44f8)" d="M 199.408433 311.232957 
+L 199.408433 7.2 
 " style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_4"></g><g id="text_2"><!-- 10 --><defs><path d="M 12.40625 8.296875 
 L 28.515625 8.296875 
 L 28.515625 63.921875 
@@ -416,10 +416,10 @@ Q 6.59375 17.96875 6.59375 36.375
 Q 6.59375 54.828125 13.0625 64.515625 
 Q 19.53125 74.21875 31.78125 74.21875 
 z
-" id="DejaVuSans-48"></path></defs><g style="fill:#262626;" transform="translate(164.132102 267.77077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_3"><g id="line2d_5"><path clip-path="url(#p817455a382)" d="M 254.086305 253.632957 
-L 254.086305 7.2 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_6"></g><g id="text_3"><!-- 15 --><g style="fill:#262626;" transform="translate(245.178805 267.77077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="xtick_4"><g id="line2d_7"><path clip-path="url(#p817455a382)" d="M 335.133009 253.632957 
-L 335.133009 7.2 
+" id="DejaVuSans-48"></path></defs><g style="fill:#262626;" transform="translate(190.500933 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_3"><g id="line2d_5"><path clip-path="url(#p33795b44f8)" d="M 299.156435 311.232957 
+L 299.156435 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_6"></g><g id="text_3"><!-- 15 --><g style="fill:#262626;" transform="translate(290.248935 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="xtick_4"><g id="line2d_7"><path clip-path="url(#p33795b44f8)" d="M 398.904437 311.232957 
+L 398.904437 7.2 
 " style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_8"></g><g id="text_4"><!-- 20 --><defs><path d="M 19.1875 8.296875 
 L 53.609375 8.296875 
 L 53.609375 0 
@@ -443,9 +443,9 @@ Q 49.859375 40.875 45.40625 35.40625
 Q 44.1875 33.984375 37.640625 27.21875 
 Q 31.109375 20.453125 19.1875 8.296875 
 z
-" id="DejaVuSans-50"></path></defs><g style="fill:#262626;" transform="translate(326.225509 267.77077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_5"><g id="line2d_9"><path clip-path="url(#p817455a382)" d="M 416.179712 253.632957 
-L 416.179712 7.2 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_10"></g><g id="text_5"><!-- 25 --><g style="fill:#262626;" transform="translate(407.272212 267.77077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="text_6"><!-- speed --><defs><path d="M 44.28125 53.078125 
+" id="DejaVuSans-50"></path></defs><g style="fill:#262626;" transform="translate(389.996937 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_5"><g id="line2d_9"><path clip-path="url(#p33795b44f8)" d="M 498.65244 311.232957 
+L 498.65244 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_10"></g><g id="text_5"><!-- 25 --><g style="fill:#262626;" transform="translate(489.74494 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="text_6"><!-- speed --><defs><path d="M 44.28125 53.078125 
 L 44.28125 44.578125 
 Q 40.484375 46.53125 36.375 47.5 
 Q 32.28125 48.484375 27.875 48.484375 
@@ -548,8 +548,8 @@ Q 37.203125 48.484375 30.078125 48.484375
 Q 22.953125 48.484375 18.875 42.84375 
 Q 14.796875 37.203125 14.796875 27.296875 
 z
-" id="DejaVuSans-100"></path></defs><g style="fill:#262626;" transform="translate(223.32226 286.079989)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-115"></use><use x="52.099609" xlink:href="#DejaVuSans-112"></use><use x="115.576172" xlink:href="#DejaVuSans-101"></use><use x="177.099609" xlink:href="#DejaVuSans-101"></use><use x="238.623047" xlink:href="#DejaVuSans-100"></use></g></g></g><g id="matplotlib.axis_2"><g id="ytick_1"><g id="line2d_11"><path clip-path="url(#p817455a382)" d="M 58.76375 245.542987 
-L 433.19952 245.542987 
+" id="DejaVuSans-100"></path></defs><g style="fill:#262626;" transform="translate(266.52226 343.679989)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-115"></use><use x="52.099609" xlink:href="#DejaVuSans-112"></use><use x="115.576172" xlink:href="#DejaVuSans-101"></use><use x="177.099609" xlink:href="#DejaVuSans-101"></use><use x="238.623047" xlink:href="#DejaVuSans-100"></use></g></g></g><g id="matplotlib.axis_2"><g id="ytick_1"><g id="line2d_11"><path clip-path="url(#p33795b44f8)" d="M 58.76375 301.252078 
+L 519.59952 301.252078 
 " style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_12"></g><g id="text_7"><!-- −30 --><defs><path d="M 10.59375 35.5 
 L 73.1875 35.5 
 L 73.1875 27.203125 
@@ -586,20 +586,20 @@ Q 53.90625 64.015625 53.90625 55.328125
 Q 53.90625 49.265625 50.4375 45.09375 
 Q 46.96875 40.921875 40.578125 39.3125 
 z
-" id="DejaVuSans-51"></path></defs><g style="fill:#262626;" transform="translate(25.717187 250.861893)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-51"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_2"><g id="line2d_13"><path clip-path="url(#p817455a382)" d="M 58.76375 214.427714 
-L 433.19952 214.427714 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_14"></g><g id="text_8"><!-- −20 --><g style="fill:#262626;" transform="translate(25.717187 219.746621)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-50"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_3"><g id="line2d_15"><path clip-path="url(#p817455a382)" d="M 58.76375 183.312442 
-L 433.19952 183.312442 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_16"></g><g id="text_9"><!-- −10 --><g style="fill:#262626;" transform="translate(25.717187 188.631348)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-49"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_4"><g id="line2d_17"><path clip-path="url(#p817455a382)" d="M 58.76375 152.197169 
-L 433.19952 152.197169 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_18"></g><g id="text_10"><!-- 0 --><g style="fill:#262626;" transform="translate(46.35625 157.516076)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_5"><g id="line2d_19"><path clip-path="url(#p817455a382)" d="M 58.76375 121.081897 
-L 433.19952 121.081897 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_20"></g><g id="text_11"><!-- 10 --><g style="fill:#262626;" transform="translate(37.44875 126.400803)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_6"><g id="line2d_21"><path clip-path="url(#p817455a382)" d="M 58.76375 89.966625 
-L 433.19952 89.966625 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_22"></g><g id="text_12"><!-- 20 --><g style="fill:#262626;" transform="translate(37.44875 95.285531)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_7"><g id="line2d_23"><path clip-path="url(#p817455a382)" d="M 58.76375 58.851352 
-L 433.19952 58.851352 
-" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_24"></g><g id="text_13"><!-- 30 --><g style="fill:#262626;" transform="translate(37.44875 64.170258)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-51"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_8"><g id="line2d_25"><path clip-path="url(#p817455a382)" d="M 58.76375 27.73608 
-L 433.19952 27.73608 
+" id="DejaVuSans-51"></path></defs><g style="fill:#262626;" transform="translate(25.717187 306.570984)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-51"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_2"><g id="line2d_13"><path clip-path="url(#p33795b44f8)" d="M 58.76375 262.864078 
+L 519.59952 262.864078 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_14"></g><g id="text_8"><!-- −20 --><g style="fill:#262626;" transform="translate(25.717187 268.182984)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-50"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_3"><g id="line2d_15"><path clip-path="url(#p33795b44f8)" d="M 58.76375 224.476078 
+L 519.59952 224.476078 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_16"></g><g id="text_9"><!-- −10 --><g style="fill:#262626;" transform="translate(25.717187 229.794984)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-8722"></use><use x="83.789062" xlink:href="#DejaVuSans-49"></use><use x="147.412109" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_4"><g id="line2d_17"><path clip-path="url(#p33795b44f8)" d="M 58.76375 186.088079 
+L 519.59952 186.088079 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_18"></g><g id="text_10"><!-- 0 --><g style="fill:#262626;" transform="translate(46.35625 191.406985)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_5"><g id="line2d_19"><path clip-path="url(#p33795b44f8)" d="M 58.76375 147.700079 
+L 519.59952 147.700079 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_20"></g><g id="text_11"><!-- 10 --><g style="fill:#262626;" transform="translate(37.44875 153.018985)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_6"><g id="line2d_21"><path clip-path="url(#p33795b44f8)" d="M 58.76375 109.312079 
+L 519.59952 109.312079 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_22"></g><g id="text_12"><!-- 20 --><g style="fill:#262626;" transform="translate(37.44875 114.630985)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_7"><g id="line2d_23"><path clip-path="url(#p33795b44f8)" d="M 58.76375 70.924079 
+L 519.59952 70.924079 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_24"></g><g id="text_13"><!-- 30 --><g style="fill:#262626;" transform="translate(37.44875 76.242986)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-51"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_8"><g id="line2d_25"><path clip-path="url(#p33795b44f8)" d="M 58.76375 32.53608 
+L 519.59952 32.53608 
 " style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_26"></g><g id="text_14"><!-- 40 --><defs><path d="M 37.796875 64.3125 
 L 12.890625 25.390625 
 L 37.796875 25.390625 
@@ -616,7 +616,7 @@ L 37.796875 17.1875
 L 4.890625 17.1875 
 L 4.890625 26.703125 
 z
-" id="DejaVuSans-52"></path></defs><g style="fill:#262626;" transform="translate(37.44875 33.054986)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-52"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="text_15"><!-- resid --><defs><path d="M 41.109375 46.296875 
+" id="DejaVuSans-52"></path></defs><g style="fill:#262626;" transform="translate(37.44875 37.854986)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-52"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="text_15"><!-- resid --><defs><path d="M 41.109375 46.296875 
 Q 39.59375 47.171875 37.8125 47.578125 
 Q 36.03125 48 33.890625 48 
 Q 26.265625 48 22.1875 43.046875 
@@ -641,56 +641,56 @@ L 18.40625 75.984375
 L 18.40625 64.59375 
 L 9.421875 64.59375 
 z
-" id="DejaVuSans-105"></path></defs><g style="fill:#262626;" transform="translate(18.597656 148.864135)rotate(-90)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-114"></use><use x="41.082031" xlink:href="#DejaVuSans-101"></use><use x="102.605469" xlink:href="#DejaVuSans-115"></use><use x="154.705078" xlink:href="#DejaVuSans-105"></use><use x="182.488281" xlink:href="#DejaVuSans-100"></use></g></g></g><g id="line2d_27"><path clip-path="url(#p817455a382)" d="M 75.783558 142.862588 
-L 75.783558 117.97037 
-L 124.41158 167.754806 
-L 124.41158 114.858843 
-L 140.62092 145.974115 
-L 156.830261 173.97786 
-L 173.039602 161.531751 
-L 173.039602 139.75106 
-L 173.039602 114.858843 
-L 189.248943 177.089387 
-L 189.248943 145.974115 
-L 205.458283 198.870078 
-L 205.458283 180.200915 
-L 205.458283 167.754806 
-L 205.458283 155.308697 
-L 221.667624 173.97786 
-L 221.667624 152.197169 
-L 221.667624 152.197169 
-L 221.667624 114.858843 
-L 237.876965 186.423969 
-L 237.876965 155.308697 
-L 237.876965 83.74357 
-L 237.876965 21.513025 
-L 254.086305 217.539242 
-L 254.086305 198.870078 
-L 254.086305 114.858843 
-L 270.295646 192.647024 
-L 270.295646 167.754806 
-L 286.504987 205.093133 
-L 286.504987 180.200915 
-L 286.504987 152.197169 
-L 302.714327 186.423969 
-L 302.714327 145.974115 
-L 302.714327 83.74357 
-L 302.714327 58.851352 
-L 318.923668 217.539242 
-L 318.923668 186.423969 
-L 318.923668 121.081897 
-L 335.133009 242.431459 
-L 335.133009 192.647024 
-L 335.133009 180.200915 
-L 335.133009 167.754806 
-L 335.133009 145.974115 
-L 367.55169 158.420224 
-L 383.761031 208.20466 
-L 399.970372 170.866333 
-L 399.970372 105.524261 
-L 399.970372 102.412734 
-L 399.970372 18.401498 
-L 416.179712 139.75106 
+" id="DejaVuSans-105"></path></defs><g style="fill:#262626;" transform="translate(18.597656 177.664135)rotate(-90)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-114"></use><use x="41.082031" xlink:href="#DejaVuSans-101"></use><use x="102.605469" xlink:href="#DejaVuSans-115"></use><use x="154.705078" xlink:href="#DejaVuSans-105"></use><use x="182.488281" xlink:href="#DejaVuSans-100"></use></g></g></g><g id="line2d_27"><path clip-path="url(#p33795b44f8)" d="M 79.71083 174.571679 
+L 79.71083 143.861279 
+L 139.559632 205.282078 
+L 139.559632 140.022479 
+L 159.509232 178.410479 
+L 179.458833 212.959678 
+L 199.408433 197.604478 
+L 199.408433 170.732879 
+L 199.408433 140.022479 
+L 219.358033 216.798478 
+L 219.358033 178.410479 
+L 239.307634 243.670078 
+L 239.307634 220.637278 
+L 239.307634 205.282078 
+L 239.307634 189.926878 
+L 259.257234 212.959678 
+L 259.257234 186.088079 
+L 259.257234 186.088079 
+L 259.257234 140.022479 
+L 279.206835 228.314878 
+L 279.206835 189.926878 
+L 279.206835 101.634479 
+L 279.206835 24.85848 
+L 299.156435 266.702878 
+L 299.156435 243.670078 
+L 299.156435 140.022479 
+L 319.106036 235.992478 
+L 319.106036 205.282078 
+L 339.055636 251.347678 
+L 339.055636 220.637278 
+L 339.055636 186.088079 
+L 359.005237 228.314878 
+L 359.005237 178.410479 
+L 359.005237 101.634479 
+L 359.005237 70.924079 
+L 378.954837 266.702878 
+L 378.954837 228.314878 
+L 378.954837 147.700079 
+L 398.904437 297.413278 
+L 398.904437 235.992478 
+L 398.904437 220.637278 
+L 398.904437 205.282078 
+L 398.904437 178.410479 
+L 438.803638 193.765678 
+L 458.753239 255.186478 
+L 478.702839 209.120878 
+L 478.702839 128.506079 
+L 478.702839 124.667279 
+L 478.702839 21.01968 
+L 498.65244 170.732879 
 " style="fill:none;"></path><defs><path d="M 0 1.5 
 C 0.397805 1.5 0.77937 1.341951 1.06066 1.06066 
 C 1.341951 0.77937 1.5 0.397805 1.5 0 
@@ -701,15 +701,15 @@ C -1.341951 -0.77937 -1.5 -0.397805 -1.5 0
 C -1.5 0.397805 -1.341951 0.77937 -1.06066 1.06066 
 C -0.77937 1.341951 -0.397805 1.5 0 1.5 
 z
-" id="m96dbe6b1f2" style="stroke:#2a2eec;"></path></defs><g clip-path="url(#p817455a382)"><use style="fill:#2a2eec;stroke:#2a2eec;" x="75.783558" xlink:href="#m96dbe6b1f2" y="142.862588"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="75.783558" xlink:href="#m96dbe6b1f2" y="117.97037"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="124.41158" xlink:href="#m96dbe6b1f2" y="167.754806"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="124.41158" xlink:href="#m96dbe6b1f2" y="114.858843"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="140.62092" xlink:href="#m96dbe6b1f2" y="145.974115"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="156.830261" xlink:href="#m96dbe6b1f2" y="173.97786"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="173.039602" xlink:href="#m96dbe6b1f2" y="161.531751"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="173.039602" xlink:href="#m96dbe6b1f2" y="139.75106"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="173.039602" xlink:href="#m96dbe6b1f2" y="114.858843"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="189.248943" xlink:href="#m96dbe6b1f2" y="177.089387"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="189.248943" xlink:href="#m96dbe6b1f2" y="145.974115"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="205.458283" xlink:href="#m96dbe6b1f2" y="198.870078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="205.458283" xlink:href="#m96dbe6b1f2" y="180.200915"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="205.458283" xlink:href="#m96dbe6b1f2" y="167.754806"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="205.458283" xlink:href="#m96dbe6b1f2" y="155.308697"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="221.667624" xlink:href="#m96dbe6b1f2" y="173.97786"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="221.667624" xlink:href="#m96dbe6b1f2" y="152.197169"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="221.667624" xlink:href="#m96dbe6b1f2" y="152.197169"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="221.667624" xlink:href="#m96dbe6b1f2" y="114.858843"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="237.876965" xlink:href="#m96dbe6b1f2" y="186.423969"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="237.876965" xlink:href="#m96dbe6b1f2" y="155.308697"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="237.876965" xlink:href="#m96dbe6b1f2" y="83.74357"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="237.876965" xlink:href="#m96dbe6b1f2" y="21.513025"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="254.086305" xlink:href="#m96dbe6b1f2" y="217.539242"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="254.086305" xlink:href="#m96dbe6b1f2" y="198.870078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="254.086305" xlink:href="#m96dbe6b1f2" y="114.858843"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="270.295646" xlink:href="#m96dbe6b1f2" y="192.647024"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="270.295646" xlink:href="#m96dbe6b1f2" y="167.754806"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="286.504987" xlink:href="#m96dbe6b1f2" y="205.093133"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="286.504987" xlink:href="#m96dbe6b1f2" y="180.200915"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="286.504987" xlink:href="#m96dbe6b1f2" y="152.197169"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="302.714327" xlink:href="#m96dbe6b1f2" y="186.423969"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="302.714327" xlink:href="#m96dbe6b1f2" y="145.974115"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="302.714327" xlink:href="#m96dbe6b1f2" y="83.74357"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="302.714327" xlink:href="#m96dbe6b1f2" y="58.851352"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="318.923668" xlink:href="#m96dbe6b1f2" y="217.539242"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="318.923668" xlink:href="#m96dbe6b1f2" y="186.423969"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="318.923668" xlink:href="#m96dbe6b1f2" y="121.081897"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="335.133009" xlink:href="#m96dbe6b1f2" y="242.431459"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="335.133009" xlink:href="#m96dbe6b1f2" y="192.647024"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="335.133009" xlink:href="#m96dbe6b1f2" y="180.200915"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="335.133009" xlink:href="#m96dbe6b1f2" y="167.754806"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="335.133009" xlink:href="#m96dbe6b1f2" y="145.974115"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="367.55169" xlink:href="#m96dbe6b1f2" y="158.420224"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="383.761031" xlink:href="#m96dbe6b1f2" y="208.20466"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="399.970372" xlink:href="#m96dbe6b1f2" y="170.866333"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="399.970372" xlink:href="#m96dbe6b1f2" y="105.524261"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="399.970372" xlink:href="#m96dbe6b1f2" y="102.412734"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="399.970372" xlink:href="#m96dbe6b1f2" y="18.401498"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="416.179712" xlink:href="#m96dbe6b1f2" y="139.75106"></use></g></g><g id="patch_3"><path d="M 58.76375 253.632957 
+" id="mf0d141a7c1" style="stroke:#2a2eec;"></path></defs><g clip-path="url(#p33795b44f8)"><use style="fill:#2a2eec;stroke:#2a2eec;" x="79.71083" xlink:href="#mf0d141a7c1" y="174.571679"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="79.71083" xlink:href="#mf0d141a7c1" y="143.861279"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="139.559632" xlink:href="#mf0d141a7c1" y="205.282078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="139.559632" xlink:href="#mf0d141a7c1" y="140.022479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="159.509232" xlink:href="#mf0d141a7c1" y="178.410479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="179.458833" xlink:href="#mf0d141a7c1" y="212.959678"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="199.408433" xlink:href="#mf0d141a7c1" y="197.604478"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="199.408433" xlink:href="#mf0d141a7c1" y="170.732879"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="199.408433" xlink:href="#mf0d141a7c1" y="140.022479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="219.358033" xlink:href="#mf0d141a7c1" y="216.798478"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="219.358033" xlink:href="#mf0d141a7c1" y="178.410479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="239.307634" xlink:href="#mf0d141a7c1" y="243.670078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="239.307634" xlink:href="#mf0d141a7c1" y="220.637278"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="239.307634" xlink:href="#mf0d141a7c1" y="205.282078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="239.307634" xlink:href="#mf0d141a7c1" y="189.926878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="259.257234" xlink:href="#mf0d141a7c1" y="212.959678"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="259.257234" xlink:href="#mf0d141a7c1" y="186.088079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="259.257234" xlink:href="#mf0d141a7c1" y="186.088079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="259.257234" xlink:href="#mf0d141a7c1" y="140.022479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="279.206835" xlink:href="#mf0d141a7c1" y="228.314878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="279.206835" xlink:href="#mf0d141a7c1" y="189.926878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="279.206835" xlink:href="#mf0d141a7c1" y="101.634479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="279.206835" xlink:href="#mf0d141a7c1" y="24.85848"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="299.156435" xlink:href="#mf0d141a7c1" y="266.702878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="299.156435" xlink:href="#mf0d141a7c1" y="243.670078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="299.156435" xlink:href="#mf0d141a7c1" y="140.022479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="319.106036" xlink:href="#mf0d141a7c1" y="235.992478"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="319.106036" xlink:href="#mf0d141a7c1" y="205.282078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="339.055636" xlink:href="#mf0d141a7c1" y="251.347678"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="339.055636" xlink:href="#mf0d141a7c1" y="220.637278"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="339.055636" xlink:href="#mf0d141a7c1" y="186.088079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="359.005237" xlink:href="#mf0d141a7c1" y="228.314878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="359.005237" xlink:href="#mf0d141a7c1" y="178.410479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="359.005237" xlink:href="#mf0d141a7c1" y="101.634479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="359.005237" xlink:href="#mf0d141a7c1" y="70.924079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="378.954837" xlink:href="#mf0d141a7c1" y="266.702878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="378.954837" xlink:href="#mf0d141a7c1" y="228.314878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="378.954837" xlink:href="#mf0d141a7c1" y="147.700079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="398.904437" xlink:href="#mf0d141a7c1" y="297.413278"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="398.904437" xlink:href="#mf0d141a7c1" y="235.992478"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="398.904437" xlink:href="#mf0d141a7c1" y="220.637278"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="398.904437" xlink:href="#mf0d141a7c1" y="205.282078"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="398.904437" xlink:href="#mf0d141a7c1" y="178.410479"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="438.803638" xlink:href="#mf0d141a7c1" y="193.765678"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="458.753239" xlink:href="#mf0d141a7c1" y="255.186478"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="478.702839" xlink:href="#mf0d141a7c1" y="209.120878"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="478.702839" xlink:href="#mf0d141a7c1" y="128.506079"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="478.702839" xlink:href="#mf0d141a7c1" y="124.667279"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="478.702839" xlink:href="#mf0d141a7c1" y="21.01968"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="498.65244" xlink:href="#mf0d141a7c1" y="170.732879"></use></g></g><g id="patch_3"><path d="M 58.76375 311.232957 
 L 58.76375 7.2 
-" style="fill:none;"></path></g><g id="patch_4"><path d="M 433.19952 253.632957 
-L 433.19952 7.2 
-" style="fill:none;"></path></g><g id="patch_5"><path d="M 58.76375 253.632957 
-L 433.19952 253.632957 
+" style="fill:none;"></path></g><g id="patch_4"><path d="M 519.59952 311.232957 
+L 519.59952 7.2 
+" style="fill:none;"></path></g><g id="patch_5"><path d="M 58.76375 311.232957 
+L 519.59952 311.232957 
 " style="fill:none;"></path></g><g id="patch_6"><path d="M 58.76375 7.2 
-L 433.19952 7.2 
-" style="fill:none;"></path></g></g></g><defs><clippath id="p817455a382"><rect height="246.432958" width="374.43577" x="58.76375" y="7.2"></rect></clippath></defs></svg>
+L 519.59952 7.2 
+" style="fill:none;"></path></g></g></g><defs><clippath id="p33795b44f8"><rect height="304.032957" width="460.83577" x="58.76375" y="7.2"></rect></clippath></defs></svg>
 </div>
 
 </div>
