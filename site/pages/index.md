@@ -9,17 +9,12 @@ I am a fan of the book [*Statistical Rethinking*](https://xcelab.net/rm/statisti
 
 {{% contents %}}
 
-## Supplements
-
-+ [data](data/)
-
-+ [source](https://github.com/fehiepsi/rethinking-numpyro)
-
 ## Installation
+
+Data and notebooks can be found at [my github repository](https://github.com/fehiepsi/rethinking-numpyro).
 
 The following tools are used for some analysis and visualizations: [arviz](https://arviz-devs.github.io/arviz/) for [posteriors](https://en.wikipedia.org/wiki/Posterior_probability), [causalgraphicalmodels](https://github.com/ijmbarr/causalgraphicalmodels) and [daft](https://docs.daft-pgm.org/en/latest/) for [causal graphs](https://en.wikipedia.org/wiki/Causal_graph), and (optional) [ete3](http://etetoolkit.org/) for [phylogenetic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree).
 
 ```sh
-pip install numpyro causalgraphicalmodels daft
-pip install git+https://github.com/arviz-devs/arviz@refs/pull/852/head#egg=arviz
+pip install numpyro arviz causalgraphicalmodels daft
 ```
