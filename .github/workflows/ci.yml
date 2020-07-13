@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  chapters_[01][01234]:
+  chapters_d01234:
 
     runs-on: ubuntu-latest
     strategy:
@@ -31,7 +31,7 @@ jobs:
         find notebooks -maxdepth 1 -name "[01][01234]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
 
 
-  chapters_[01][56789]:
+  chapters_d56789:
 
     runs-on: ubuntu-latest
     strategy:
