@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  even_chapters:
+  chapters_[01][01234]:
 
     runs-on: ubuntu-latest
     strategy:
@@ -28,10 +28,10 @@ jobs:
         pip install nbval
     - name: Test with nbval
       run: |
-        find notebooks -maxdepth 1 -name "[01][02468]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
+        find notebooks -maxdepth 1 -name "[01][01234]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
 
 
-  odd_chapters:
+  chapters_[01][56789]:
 
     runs-on: ubuntu-latest
     strategy:
@@ -52,5 +52,5 @@ jobs:
         pip install nbval
     - name: Test with nbval
       run: |
-        find notebooks -maxdepth 1 -name "[01][13579]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
+        find notebooks -maxdepth 1 -name "[01][56789]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
 
