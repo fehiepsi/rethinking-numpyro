@@ -7,90 +7,18 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/</loc>
-  <lastmod>2019-10-29T04:46:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/00-preface.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/01-the-golem-of-prague.html</loc>
-  <lastmod>2019-10-29T14:18:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/02-small-worlds-and-large-worlds.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/03-sampling-the-imaginary.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/04-geocentric-models.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/05-the-many-variables-and-the-spurious-waffles.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/06-the-haunted-dag-and-the-causal-terror.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/07-ulysses-compass.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/08-conditional-manatees.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/09-markov-chain-monte-carlo.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/10-big-entropy-and-the-generalized-linear-model.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/11-god-spiked-the-integers.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/12-monsters-and-mixtures.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/13-models-with-memory.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/14-adventures-in-covariance.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/15-missing-data-and-other-opportunities.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/16-generalized-linear-madness.html</loc>
-  <lastmod>2019-12-26T17:00:00Z</lastmod>
- </url>
- <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/17-horoscopes.html</loc>
-  <lastmod>2019-10-29T14:18:00Z</lastmod>
+  <lastmod>2020-07-27T20:52:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/archive.html</loc>
-  <lastmod>2019-10-29T14:18:00Z</lastmod>
+  <lastmod>2020-07-27T20:52:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/categories/</loc>
-  <lastmod>2019-10-28T14:49:00Z</lastmod>
+  <lastmod>2020-07-27T20:52:00Z</lastmod>
  </url>
  <url>
-  <loc>https://fehiepsi.github.io/rethinking-numpyro/code/</loc>
-  <lastmod>2019-10-28T14:49:00Z</lastmod>
+  <loc>https://fehiepsi.github.io/rethinking-numpyro/listings/</loc>
+  <lastmod>2020-07-27T20:52:00Z</lastmod>
  </url>
 </urlset>

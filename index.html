@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="https://fehiepsi.github.io/rethinking-numpyro/">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><meta name="author" content="fehiepsi">
 <meta property="og:site_name" content="Statistical Rethinking (2nd ed.) with NumPyro">
@@ -18,7 +18,7 @@
 <meta property="og:url" content="https://fehiepsi.github.io/rethinking-numpyro/">
 <meta property="og:description" content="I am a fan of the book Statistical Rethinking, so I port the codes of its second edition to NumPyro. I hope that the book and this translation will be helpful not only for NumPyro/Pyro users but also ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2019-12-25T22:44:04-05:00">
+<meta property="article:published_time" content="2020-07-27T15:49:08-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -35,13 +35,20 @@
             </div>
         </div>
           <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
-            <a class="navbar-brand blog-header-logo text-dark" href="https://fehiepsi.github.io/rethinking-numpyro/">
+            <a class="navbar-brand blog-header-logo text-dark" href=".">
 
             <span id="blog-title">Statistical Rethinking (2nd ed.) with NumPyro</span>
         </a>
           </div>
             <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
-            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav"></ul></nav>
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.md" id="sourcelink" class="nav-link">Source</a>
+    </li>
+
+
+                    
+            </ul></nav>
 </div>
     </div>
 </header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
@@ -56,13 +63,14 @@
         <!--Body content-->
         
         
+        
 <article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Overview</a></h1>
 
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
-<p>I am a fan of the book <a href="https://xcelab.net/rm/statistical-rethinking/"><em>Statistical Rethinking</em></a>, so I port the codes of <a href="https://github.com/rmcelreath/statrethinking_winter2019#draft-chapters">its second edition</a> to <a href="https://github.com/pyro-ppl/numpyro">NumPyro</a>. I hope that the book and this translation will be helpful not only for NumPyro/Pyro users but also for ones who are willing to do Bayesian statistics in Python.</p>
+<p>I am a fan of the book <a href="https://xcelab.net/rm/statistical-rethinking/"><em>Statistical Rethinking</em></a>, so I port the codes of <a href="https://github.com/rmcelreath/rethinking">its second edition</a> to <a href="https://github.com/pyro-ppl/numpyro">NumPyro</a>. I hope that the book and this translation will be helpful not only for NumPyro/Pyro users but also for ones who are willing to do Bayesian statistics in Python.</p>
 <h3>Contents</h3>
 <p></p>
 <ul>
@@ -88,19 +96,17 @@
 <h3>Installation</h3>
 <p>Data and notebooks can be found at <a href="https://github.com/fehiepsi/rethinking-numpyro">my github repository</a>.</p>
 <p>The following tools are used for some analysis and visualizations: <a href="https://arviz-devs.github.io/arviz/">arviz</a> for <a href="https://en.wikipedia.org/wiki/Posterior_probability">posteriors</a>, <a href="https://github.com/ijmbarr/causalgraphicalmodels">causalgraphicalmodels</a> and <a href="https://docs.daft-pgm.org/en/latest/">daft</a> for <a href="https://en.wikipedia.org/wiki/Causal_graph">causal graphs</a>, and (optional) <a href="http://etetoolkit.org/">ete3</a> for <a href="https://en.wikipedia.org/wiki/Phylogenetic_tree">phylogenetic trees</a>.</p>
-<pre class="code literal-block"><span></span>pip install numpyro arviz causalgraphicalmodels daft
-</pre>
+<pre class="code literal-block"><span></span><code>pip install numpyro arviz causalgraphicalmodels daft
+</code></pre>
 </div>
     </div>
     
 
-</article><!--End of body content--><footer id="footer"><div class="text-center">
-  Contents © 2019         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+</article><!--End of body content--><footer id="footer">
+            Contents © 2020         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-  <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
-
-</div>
-
+<img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
+            
             
         </footer>
 </div>

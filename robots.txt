@@ -1,0 +1,4 @@
+Sitemap: https://fehiepsi.github.io/rethinking-numpyro/sitemapindex.xml
+
+User-Agent: *
+Host: fehiepsi.github.io
