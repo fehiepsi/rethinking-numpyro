@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 2. Small Worlds and Large Worlds | Statistical Rethinking (2nd ed.) with NumPyro</title>
+<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
+<link rel="canonical" href="https://fehiepsi.github.io/rethinking-numpyro/02-small-worlds-and-large-worlds.html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><meta name="author" content="fehiepsi">
+<meta property="og:site_name" content="Statistical Rethinking (2nd ed.) with NumPyro">
+<meta property="og:title" content="Chapter 2. Small Worlds and Large Worlds">
+<meta property="og:url" content="https://fehiepsi.github.io/rethinking-numpyro/02-small-worlds-and-large-worlds.html">
+<meta property="og:description" content="&lt; Chapter 1. The Golem of Prague | Chapter 3. Sampling the Imaginary &gt;
+
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+In [0]:
+
+    
+import arviz as az
+import matplotlib.pyplot as plt
+
+import jax.numpy as jnp
+from jax ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2020-07-27T15:52:18-05:00">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href=".">
+
+            <span id="blog-title">Statistical Rethinking (2nd ed.) with NumPyro</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="02-small-worlds-and-large-worlds.ipynb" id="sourcelink" class="nav-link">Source</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100"></ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Chapter 2. Small Worlds and Large Worlds</a></h1>
+
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<div class="cell border-box-sizing text_cell rendered">
+    <div class="inner_cell">
+    <div class="text_cell_render border-box-sizing rendered_html">
+    <div class="navigation">
+    <p><!-- NAVIGATION -->
+&lt; <a href="01-the-golem-of-prague.html">Chapter 1. The Golem of Prague</a> | <a href="03-sampling-the-imaginary.html">Chapter 3. Sampling the Imaginary</a> &gt;</p>
+
+    </div>
+    </div>
+    </div>
+    </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [0]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span><span class="p">,</span> <span class="n">random</span>
+
+<span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">dist</span>
+<span class="kn">import</span> <span class="nn">numpyro.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">numpyro.infer</span> <span class="kn">import</span> <span class="n">ELBO</span><span class="p">,</span> <span class="n">SVI</span>
+<span class="kn">from</span> <span class="nn">numpyro.infer.autoguide</span> <span class="kn">import</span> <span class="n">AutoLaplaceApproximation</span>
+
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_formats = ["svg"]
+<span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"arviz-darkgrid"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.1">Code 2.1<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.1">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ways</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ways</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ways</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[1]:</span>
+</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DeviceArray([0.  , 0.15, 0.4 , 0.45, 0.  ], dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.2">Code 2.2<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.2">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">total_count</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">probs</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[2]:</span>
+</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DeviceArray(0.16406302, dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.3">Code 2.3<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.3">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># define grid</span>
+<span class="n">p_grid</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># define prior</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># compute likelihood at each value in grid</span>
+<span class="n">likelihood</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">total_count</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">probs</span><span class="o">=</span><span class="n">p_grid</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># compute product of likelihood and prior</span>
+<span class="n">unstd_posterior</span> <span class="o">=</span> <span class="n">likelihood</span> <span class="o">*</span> <span class="n">prior</span>
+
+<span class="c1"># standardize the posterior, so it sums to 1</span>
+<span class="n">posterior</span> <span class="o">=</span> <span class="n">unstd_posterior</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">unstd_posterior</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.4">Code 2.4<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.4">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p_grid</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"probability of water"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"posterior probability"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"20 points"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[4]:</span>
+</div>
+
+
+
+<div class="output_svg output_subarea ">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Created with matplotlib (https://matplotlib.org/) --><svg height="353.99952pt" version="1.1" viewbox="0 0 526.79952 353.99952" width="526.79952pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+*{stroke-linecap:butt;stroke-linejoin:round;}
+  </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 353.99952 
+L 526.79952 353.99952 
+L 526.79952 0 
+L 0 0 
+z
+" style="fill:#ffffff;"></path></g><g id="axes_1"><g id="patch_2"><path d="M 60.389063 311.232957 
+L 519.59952 311.232957 
+L 519.59952 25.3575 
+L 60.389063 25.3575 
+z
+" style="fill:#eeeeee;"></path></g><g id="matplotlib.axis_1"><g id="xtick_1"><g id="line2d_1"><path clip-path="url(#paa7239ec5f)" d="M 81.262265 311.232957 
+L 81.262265 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_2"></g><g id="text_1"><!-- 0.0 --><defs><path d="M 31.78125 66.40625 
+Q 24.171875 66.40625 20.328125 58.90625 
+Q 16.5 51.421875 16.5 36.375 
+Q 16.5 21.390625 20.328125 13.890625 
+Q 24.171875 6.390625 31.78125 6.390625 
+Q 39.453125 6.390625 43.28125 13.890625 
+Q 47.125 21.390625 47.125 36.375 
+Q 47.125 51.421875 43.28125 58.90625 
+Q 39.453125 66.40625 31.78125 66.40625 
+z
+M 31.78125 74.21875 
+Q 44.046875 74.21875 50.515625 64.515625 
+Q 56.984375 54.828125 56.984375 36.375 
+Q 56.984375 17.96875 50.515625 8.265625 
+Q 44.046875 -1.421875 31.78125 -1.421875 
+Q 19.53125 -1.421875 13.0625 8.265625 
+Q 6.59375 17.96875 6.59375 36.375 
+Q 6.59375 54.828125 13.0625 64.515625 
+Q 19.53125 74.21875 31.78125 74.21875 
+z
+" id="DejaVuSans-48"></path><path d="M 10.6875 12.40625 
+L 21 12.40625 
+L 21 0 
+L 10.6875 0 
+z
+" id="DejaVuSans-46"></path></defs><g style="fill:#262626;" transform="translate(70.130078 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_2"><g id="line2d_3"><path clip-path="url(#paa7239ec5f)" d="M 164.755076 311.232957 
+L 164.755076 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_4"></g><g id="text_2"><!-- 0.2 --><defs><path d="M 19.1875 8.296875 
+L 53.609375 8.296875 
+L 53.609375 0 
+L 7.328125 0 
+L 7.328125 8.296875 
+Q 12.9375 14.109375 22.625 23.890625 
+Q 32.328125 33.6875 34.8125 36.53125 
+Q 39.546875 41.84375 41.421875 45.53125 
+Q 43.3125 49.21875 43.3125 52.78125 
+Q 43.3125 58.59375 39.234375 62.25 
+Q 35.15625 65.921875 28.609375 65.921875 
+Q 23.96875 65.921875 18.8125 64.3125 
+Q 13.671875 62.703125 7.8125 59.421875 
+L 7.8125 69.390625 
+Q 13.765625 71.78125 18.9375 73 
+Q 24.125 74.21875 28.421875 74.21875 
+Q 39.75 74.21875 46.484375 68.546875 
+Q 53.21875 62.890625 53.21875 53.421875 
+Q 53.21875 48.921875 51.53125 44.890625 
+Q 49.859375 40.875 45.40625 35.40625 
+Q 44.1875 33.984375 37.640625 27.21875 
+Q 31.109375 20.453125 19.1875 8.296875 
+z
+" id="DejaVuSans-50"></path></defs><g style="fill:#262626;" transform="translate(153.622888 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-50"></use></g></g></g><g id="xtick_3"><g id="line2d_5"><path clip-path="url(#paa7239ec5f)" d="M 248.247886 311.232957 
+L 248.247886 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_6"></g><g id="text_3"><!-- 0.4 --><defs><path d="M 37.796875 64.3125 
+L 12.890625 25.390625 
+L 37.796875 25.390625 
+z
+M 35.203125 72.90625 
+L 47.609375 72.90625 
+L 47.609375 25.390625 
+L 58.015625 25.390625 
+L 58.015625 17.1875 
+L 47.609375 17.1875 
+L 47.609375 0 
+L 37.796875 0 
+L 37.796875 17.1875 
+L 4.890625 17.1875 
+L 4.890625 26.703125 
+z
+" id="DejaVuSans-52"></path></defs><g style="fill:#262626;" transform="translate(237.115699 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-52"></use></g></g></g><g id="xtick_4"><g id="line2d_7"><path clip-path="url(#paa7239ec5f)" d="M 331.740696 311.232957 
+L 331.740696 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_8"></g><g id="text_4"><!-- 0.6 --><defs><path d="M 33.015625 40.375 
+Q 26.375 40.375 22.484375 35.828125 
+Q 18.609375 31.296875 18.609375 23.390625 
+Q 18.609375 15.53125 22.484375 10.953125 
+Q 26.375 6.390625 33.015625 6.390625 
+Q 39.65625 6.390625 43.53125 10.953125 
+Q 47.40625 15.53125 47.40625 23.390625 
+Q 47.40625 31.296875 43.53125 35.828125 
+Q 39.65625 40.375 33.015625 40.375 
+z
+M 52.59375 71.296875 
+L 52.59375 62.3125 
+Q 48.875 64.0625 45.09375 64.984375 
+Q 41.3125 65.921875 37.59375 65.921875 
+Q 27.828125 65.921875 22.671875 59.328125 
+Q 17.53125 52.734375 16.796875 39.40625 
+Q 19.671875 43.65625 24.015625 45.921875 
+Q 28.375 48.1875 33.59375 48.1875 
+Q 44.578125 48.1875 50.953125 41.515625 
+Q 57.328125 34.859375 57.328125 23.390625 
+Q 57.328125 12.15625 50.6875 5.359375 
+Q 44.046875 -1.421875 33.015625 -1.421875 
+Q 20.359375 -1.421875 13.671875 8.265625 
+Q 6.984375 17.96875 6.984375 36.375 
+Q 6.984375 53.65625 15.1875 63.9375 
+Q 23.390625 74.21875 37.203125 74.21875 
+Q 40.921875 74.21875 44.703125 73.484375 
+Q 48.484375 72.75 52.59375 71.296875 
+z
+" id="DejaVuSans-54"></path></defs><g style="fill:#262626;" transform="translate(320.608509 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-54"></use></g></g></g><g id="xtick_5"><g id="line2d_9"><path clip-path="url(#paa7239ec5f)" d="M 415.233507 311.232957 
+L 415.233507 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_10"></g><g id="text_5"><!-- 0.8 --><defs><path d="M 31.78125 34.625 
+Q 24.75 34.625 20.71875 30.859375 
+Q 16.703125 27.09375 16.703125 20.515625 
+Q 16.703125 13.921875 20.71875 10.15625 
+Q 24.75 6.390625 31.78125 6.390625 
+Q 38.8125 6.390625 42.859375 10.171875 
+Q 46.921875 13.96875 46.921875 20.515625 
+Q 46.921875 27.09375 42.890625 30.859375 
+Q 38.875 34.625 31.78125 34.625 
+z
+M 21.921875 38.8125 
+Q 15.578125 40.375 12.03125 44.71875 
+Q 8.5 49.078125 8.5 55.328125 
+Q 8.5 64.0625 14.71875 69.140625 
+Q 20.953125 74.21875 31.78125 74.21875 
+Q 42.671875 74.21875 48.875 69.140625 
+Q 55.078125 64.0625 55.078125 55.328125 
+Q 55.078125 49.078125 51.53125 44.71875 
+Q 48 40.375 41.703125 38.8125 
+Q 48.828125 37.15625 52.796875 32.3125 
+Q 56.78125 27.484375 56.78125 20.515625 
+Q 56.78125 9.90625 50.3125 4.234375 
+Q 43.84375 -1.421875 31.78125 -1.421875 
+Q 19.734375 -1.421875 13.25 4.234375 
+Q 6.78125 9.90625 6.78125 20.515625 
+Q 6.78125 27.484375 10.78125 32.3125 
+Q 14.796875 37.15625 21.921875 38.8125 
+z
+M 18.3125 54.390625 
+Q 18.3125 48.734375 21.84375 45.5625 
+Q 25.390625 42.390625 31.78125 42.390625 
+Q 38.140625 42.390625 41.71875 45.5625 
+Q 45.3125 48.734375 45.3125 54.390625 
+Q 45.3125 60.0625 41.71875 63.234375 
+Q 38.140625 66.40625 31.78125 66.40625 
+Q 25.390625 66.40625 21.84375 63.234375 
+Q 18.3125 60.0625 18.3125 54.390625 
+z
+" id="DejaVuSans-56"></path></defs><g style="fill:#262626;" transform="translate(404.101319 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-56"></use></g></g></g><g id="xtick_6"><g id="line2d_11"><path clip-path="url(#paa7239ec5f)" d="M 498.726317 311.232957 
+L 498.726317 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_12"></g><g id="text_6"><!-- 1.0 --><defs><path d="M 12.40625 8.296875 
+L 28.515625 8.296875 
+L 28.515625 63.921875 
+L 10.984375 60.40625 
+L 10.984375 69.390625 
+L 28.421875 72.90625 
+L 38.28125 72.90625 
+L 38.28125 8.296875 
+L 54.390625 8.296875 
+L 54.390625 0 
+L 12.40625 0 
+z
+" id="DejaVuSans-49"></path></defs><g style="fill:#262626;" transform="translate(487.59413 325.37077)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="text_7"><!-- probability of water --><defs><path d="M 18.109375 8.203125 
+L 18.109375 -20.796875 
+L 9.078125 -20.796875 
+L 9.078125 54.6875 
+L 18.109375 54.6875 
+L 18.109375 46.390625 
+Q 20.953125 51.265625 25.265625 53.625 
+Q 29.59375 56 35.59375 56 
+Q 45.5625 56 51.78125 48.09375 
+Q 58.015625 40.1875 58.015625 27.296875 
+Q 58.015625 14.40625 51.78125 6.484375 
+Q 45.5625 -1.421875 35.59375 -1.421875 
+Q 29.59375 -1.421875 25.265625 0.953125 
+Q 20.953125 3.328125 18.109375 8.203125 
+z
+M 48.6875 27.296875 
+Q 48.6875 37.203125 44.609375 42.84375 
+Q 40.53125 48.484375 33.40625 48.484375 
+Q 26.265625 48.484375 22.1875 42.84375 
+Q 18.109375 37.203125 18.109375 27.296875 
+Q 18.109375 17.390625 22.1875 11.75 
+Q 26.265625 6.109375 33.40625 6.109375 
+Q 40.53125 6.109375 44.609375 11.75 
+Q 48.6875 17.390625 48.6875 27.296875 
+z
+" id="DejaVuSans-112"></path><path d="M 41.109375 46.296875 
+Q 39.59375 47.171875 37.8125 47.578125 
+Q 36.03125 48 33.890625 48 
+Q 26.265625 48 22.1875 43.046875 
+Q 18.109375 38.09375 18.109375 28.8125 
+L 18.109375 0 
+L 9.078125 0 
+L 9.078125 54.6875 
+L 18.109375 54.6875 
+L 18.109375 46.1875 
+Q 20.953125 51.171875 25.484375 53.578125 
+Q 30.03125 56 36.53125 56 
+Q 37.453125 56 38.578125 55.875 
+Q 39.703125 55.765625 41.0625 55.515625 
+z
+" id="DejaVuSans-114"></path><path d="M 30.609375 48.390625 
+Q 23.390625 48.390625 19.1875 42.75 
+Q 14.984375 37.109375 14.984375 27.296875 
+Q 14.984375 17.484375 19.15625 11.84375 
+Q 23.34375 6.203125 30.609375 6.203125 
+Q 37.796875 6.203125 41.984375 11.859375 
+Q 46.1875 17.53125 46.1875 27.296875 
+Q 46.1875 37.015625 41.984375 42.703125 
+Q 37.796875 48.390625 30.609375 48.390625 
+z
+M 30.609375 56 
+Q 42.328125 56 49.015625 48.375 
+Q 55.71875 40.765625 55.71875 27.296875 
+Q 55.71875 13.875 49.015625 6.21875 
+Q 42.328125 -1.421875 30.609375 -1.421875 
+Q 18.84375 -1.421875 12.171875 6.21875 
+Q 5.515625 13.875 5.515625 27.296875 
+Q 5.515625 40.765625 12.171875 48.375 
+Q 18.84375 56 30.609375 56 
+z
+" id="DejaVuSans-111"></path><path d="M 48.6875 27.296875 
+Q 48.6875 37.203125 44.609375 42.84375 
+Q 40.53125 48.484375 33.40625 48.484375 
+Q 26.265625 48.484375 22.1875 42.84375 
+Q 18.109375 37.203125 18.109375 27.296875 
+Q 18.109375 17.390625 22.1875 11.75 
+Q 26.265625 6.109375 33.40625 6.109375 
+Q 40.53125 6.109375 44.609375 11.75 
+Q 48.6875 17.390625 48.6875 27.296875 
+z
+M 18.109375 46.390625 
+Q 20.953125 51.265625 25.265625 53.625 
+Q 29.59375 56 35.59375 56 
+Q 45.5625 56 51.78125 48.09375 
+Q 58.015625 40.1875 58.015625 27.296875 
+Q 58.015625 14.40625 51.78125 6.484375 
+Q 45.5625 -1.421875 35.59375 -1.421875 
+Q 29.59375 -1.421875 25.265625 0.953125 
+Q 20.953125 3.328125 18.109375 8.203125 
+L 18.109375 0 
+L 9.078125 0 
+L 9.078125 75.984375 
+L 18.109375 75.984375 
+z
+" id="DejaVuSans-98"></path><path d="M 34.28125 27.484375 
+Q 23.390625 27.484375 19.1875 25 
+Q 14.984375 22.515625 14.984375 16.5 
+Q 14.984375 11.71875 18.140625 8.90625 
+Q 21.296875 6.109375 26.703125 6.109375 
+Q 34.1875 6.109375 38.703125 11.40625 
+Q 43.21875 16.703125 43.21875 25.484375 
+L 43.21875 27.484375 
+z
+M 52.203125 31.203125 
+L 52.203125 0 
+L 43.21875 0 
+L 43.21875 8.296875 
+Q 40.140625 3.328125 35.546875 0.953125 
+Q 30.953125 -1.421875 24.3125 -1.421875 
+Q 15.921875 -1.421875 10.953125 3.296875 
+Q 6 8.015625 6 15.921875 
+Q 6 25.140625 12.171875 29.828125 
+Q 18.359375 34.515625 30.609375 34.515625 
+L 43.21875 34.515625 
+L 43.21875 35.40625 
+Q 43.21875 41.609375 39.140625 45 
+Q 35.0625 48.390625 27.6875 48.390625 
+Q 23 48.390625 18.546875 47.265625 
+Q 14.109375 46.140625 10.015625 43.890625 
+L 10.015625 52.203125 
+Q 14.9375 54.109375 19.578125 55.046875 
+Q 24.21875 56 28.609375 56 
+Q 40.484375 56 46.34375 49.84375 
+Q 52.203125 43.703125 52.203125 31.203125 
+z
+" id="DejaVuSans-97"></path><path d="M 9.421875 54.6875 
+L 18.40625 54.6875 
+L 18.40625 0 
+L 9.421875 0 
+z
+M 9.421875 75.984375 
+L 18.40625 75.984375 
+L 18.40625 64.59375 
+L 9.421875 64.59375 
+z
+" id="DejaVuSans-105"></path><path d="M 9.421875 75.984375 
+L 18.40625 75.984375 
+L 18.40625 0 
+L 9.421875 0 
+z
+" id="DejaVuSans-108"></path><path d="M 18.3125 70.21875 
+L 18.3125 54.6875 
+L 36.8125 54.6875 
+L 36.8125 47.703125 
+L 18.3125 47.703125 
+L 18.3125 18.015625 
+Q 18.3125 11.328125 20.140625 9.421875 
+Q 21.96875 7.515625 27.59375 7.515625 
+L 36.8125 7.515625 
+L 36.8125 0 
+L 27.59375 0 
+Q 17.1875 0 13.234375 3.875 
+Q 9.28125 7.765625 9.28125 18.015625 
+L 9.28125 47.703125 
+L 2.6875 47.703125 
+L 2.6875 54.6875 
+L 9.28125 54.6875 
+L 9.28125 70.21875 
+z
+" id="DejaVuSans-116"></path><path d="M 32.171875 -5.078125 
+Q 28.375 -14.84375 24.75 -17.8125 
+Q 21.140625 -20.796875 15.09375 -20.796875 
+L 7.90625 -20.796875 
+L 7.90625 -13.28125 
+L 13.1875 -13.28125 
+Q 16.890625 -13.28125 18.9375 -11.515625 
+Q 21 -9.765625 23.484375 -3.21875 
+L 25.09375 0.875 
+L 2.984375 54.6875 
+L 12.5 54.6875 
+L 29.59375 11.921875 
+L 46.6875 54.6875 
+L 56.203125 54.6875 
+z
+" id="DejaVuSans-121"></path><path id="DejaVuSans-32"></path><path d="M 37.109375 75.984375 
+L 37.109375 68.5 
+L 28.515625 68.5 
+Q 23.6875 68.5 21.796875 66.546875 
+Q 19.921875 64.59375 19.921875 59.515625 
+L 19.921875 54.6875 
+L 34.71875 54.6875 
+L 34.71875 47.703125 
+L 19.921875 47.703125 
+L 19.921875 0 
+L 10.890625 0 
+L 10.890625 47.703125 
+L 2.296875 47.703125 
+L 2.296875 54.6875 
+L 10.890625 54.6875 
+L 10.890625 58.5 
+Q 10.890625 67.625 15.140625 71.796875 
+Q 19.390625 75.984375 28.609375 75.984375 
+z
+" id="DejaVuSans-102"></path><path d="M 4.203125 54.6875 
+L 13.1875 54.6875 
+L 24.421875 12.015625 
+L 35.59375 54.6875 
+L 46.1875 54.6875 
+L 57.421875 12.015625 
+L 68.609375 54.6875 
+L 77.59375 54.6875 
+L 63.28125 0 
+L 52.6875 0 
+L 40.921875 44.828125 
+L 29.109375 0 
+L 18.5 0 
+z
+" id="DejaVuSans-119"></path><path d="M 56.203125 29.59375 
+L 56.203125 25.203125 
+L 14.890625 25.203125 
+Q 15.484375 15.921875 20.484375 11.0625 
+Q 25.484375 6.203125 34.421875 6.203125 
+Q 39.59375 6.203125 44.453125 7.46875 
+Q 49.3125 8.734375 54.109375 11.28125 
+L 54.109375 2.78125 
+Q 49.265625 0.734375 44.1875 -0.34375 
+Q 39.109375 -1.421875 33.890625 -1.421875 
+Q 20.796875 -1.421875 13.15625 6.1875 
+Q 5.515625 13.8125 5.515625 26.8125 
+Q 5.515625 40.234375 12.765625 48.109375 
+Q 20.015625 56 32.328125 56 
+Q 43.359375 56 49.78125 48.890625 
+Q 56.203125 41.796875 56.203125 29.59375 
+z
+M 47.21875 32.234375 
+Q 47.125 39.59375 43.09375 43.984375 
+Q 39.0625 48.390625 32.421875 48.390625 
+Q 24.90625 48.390625 20.390625 44.140625 
+Q 15.875 39.890625 15.1875 32.171875 
+z
+" id="DejaVuSans-101"></path></defs><g style="fill:#262626;" transform="translate(216.616166 343.679989)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-112"></use><use x="63.476562" xlink:href="#DejaVuSans-114"></use><use x="102.339844" xlink:href="#DejaVuSans-111"></use><use x="163.521484" xlink:href="#DejaVuSans-98"></use><use x="226.998047" xlink:href="#DejaVuSans-97"></use><use x="288.277344" xlink:href="#DejaVuSans-98"></use><use x="351.753906" xlink:href="#DejaVuSans-105"></use><use x="379.537109" xlink:href="#DejaVuSans-108"></use><use x="407.320312" xlink:href="#DejaVuSans-105"></use><use x="435.103516" xlink:href="#DejaVuSans-116"></use><use x="474.3125" xlink:href="#DejaVuSans-121"></use><use x="533.492188" xlink:href="#DejaVuSans-32"></use><use x="565.279297" xlink:href="#DejaVuSans-111"></use><use x="626.460938" xlink:href="#DejaVuSans-102"></use><use x="661.666016" xlink:href="#DejaVuSans-32"></use><use x="693.453125" xlink:href="#DejaVuSans-119"></use><use x="775.240234" xlink:href="#DejaVuSans-97"></use><use x="836.519531" xlink:href="#DejaVuSans-116"></use><use x="875.728516" xlink:href="#DejaVuSans-101"></use><use x="937.251953" xlink:href="#DejaVuSans-114"></use></g></g></g><g id="matplotlib.axis_2"><g id="ytick_1"><g id="line2d_13"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 298.238619 
+L 519.59952 298.238619 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_14"></g><g id="text_8"><!-- 0.00 --><g style="fill:#262626;" transform="translate(25.717188 303.557525)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use><use x="159.033203" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_2"><g id="line2d_15"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 261.848796 
+L 519.59952 261.848796 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_16"></g><g id="text_9"><!-- 0.02 --><g style="fill:#262626;" transform="translate(25.717188 267.167703)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use><use x="159.033203" xlink:href="#DejaVuSans-50"></use></g></g></g><g id="ytick_3"><g id="line2d_17"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 225.458974 
+L 519.59952 225.458974 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_18"></g><g id="text_10"><!-- 0.04 --><g style="fill:#262626;" transform="translate(25.717188 230.77788)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use><use x="159.033203" xlink:href="#DejaVuSans-52"></use></g></g></g><g id="ytick_4"><g id="line2d_19"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 189.069152 
+L 519.59952 189.069152 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_20"></g><g id="text_11"><!-- 0.06 --><g style="fill:#262626;" transform="translate(25.717188 194.388058)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use><use x="159.033203" xlink:href="#DejaVuSans-54"></use></g></g></g><g id="ytick_5"><g id="line2d_21"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 152.67933 
+L 519.59952 152.67933 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_22"></g><g id="text_12"><!-- 0.08 --><g style="fill:#262626;" transform="translate(25.717188 157.998236)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use><use x="159.033203" xlink:href="#DejaVuSans-56"></use></g></g></g><g id="ytick_6"><g id="line2d_23"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 116.289508 
+L 519.59952 116.289508 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_24"></g><g id="text_13"><!-- 0.10 --><g style="fill:#262626;" transform="translate(25.717188 121.608414)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-49"></use><use x="159.033203" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_7"><g id="line2d_25"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 79.899686 
+L 519.59952 79.899686 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_26"></g><g id="text_14"><!-- 0.12 --><g style="fill:#262626;" transform="translate(25.717188 85.218592)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-49"></use><use x="159.033203" xlink:href="#DejaVuSans-50"></use></g></g></g><g id="ytick_8"><g id="line2d_27"><path clip-path="url(#paa7239ec5f)" d="M 60.389063 43.509863 
+L 519.59952 43.509863 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_28"></g><g id="text_15"><!-- 0.14 --><g style="fill:#262626;" transform="translate(25.717188 48.82877)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-49"></use><use x="159.033203" xlink:href="#DejaVuSans-52"></use></g></g></g><g id="text_16"><!-- posterior probability --><defs><path d="M 44.28125 53.078125 
+L 44.28125 44.578125 
+Q 40.484375 46.53125 36.375 47.5 
+Q 32.28125 48.484375 27.875 48.484375 
+Q 21.1875 48.484375 17.84375 46.4375 
+Q 14.5 44.390625 14.5 40.28125 
+Q 14.5 37.15625 16.890625 35.375 
+Q 19.28125 33.59375 26.515625 31.984375 
+L 29.59375 31.296875 
+Q 39.15625 29.25 43.1875 25.515625 
+Q 47.21875 21.78125 47.21875 15.09375 
+Q 47.21875 7.46875 41.1875 3.015625 
+Q 35.15625 -1.421875 24.609375 -1.421875 
+Q 20.21875 -1.421875 15.453125 -0.5625 
+Q 10.6875 0.296875 5.421875 2 
+L 5.421875 11.28125 
+Q 10.40625 8.6875 15.234375 7.390625 
+Q 20.0625 6.109375 24.8125 6.109375 
+Q 31.15625 6.109375 34.5625 8.28125 
+Q 37.984375 10.453125 37.984375 14.40625 
+Q 37.984375 18.0625 35.515625 20.015625 
+Q 33.0625 21.96875 24.703125 23.78125 
+L 21.578125 24.515625 
+Q 13.234375 26.265625 9.515625 29.90625 
+Q 5.8125 33.546875 5.8125 39.890625 
+Q 5.8125 47.609375 11.28125 51.796875 
+Q 16.75 56 26.8125 56 
+Q 31.78125 56 36.171875 55.265625 
+Q 40.578125 54.546875 44.28125 53.078125 
+z
+" id="DejaVuSans-115"></path></defs><g style="fill:#262626;" transform="translate(18.597656 244.344057)rotate(-90)scale(0.15 -0.15)"><use xlink:href="#DejaVuSans-112"></use><use x="63.476562" xlink:href="#DejaVuSans-111"></use><use x="124.658203" xlink:href="#DejaVuSans-115"></use><use x="176.757812" xlink:href="#DejaVuSans-116"></use><use x="215.966797" xlink:href="#DejaVuSans-101"></use><use x="277.490234" xlink:href="#DejaVuSans-114"></use><use x="318.603516" xlink:href="#DejaVuSans-105"></use><use x="346.386719" xlink:href="#DejaVuSans-111"></use><use x="407.568359" xlink:href="#DejaVuSans-114"></use><use x="448.681641" xlink:href="#DejaVuSans-32"></use><use x="480.46875" xlink:href="#DejaVuSans-112"></use><use x="543.945312" xlink:href="#DejaVuSans-114"></use><use x="582.808594" xlink:href="#DejaVuSans-111"></use><use x="643.990234" xlink:href="#DejaVuSans-98"></use><use x="707.466797" xlink:href="#DejaVuSans-97"></use><use x="768.746094" xlink:href="#DejaVuSans-98"></use><use x="832.222656" xlink:href="#DejaVuSans-105"></use><use x="860.005859" xlink:href="#DejaVuSans-108"></use><use x="887.789062" xlink:href="#DejaVuSans-105"></use><use x="915.572266" xlink:href="#DejaVuSans-116"></use><use x="954.78125" xlink:href="#DejaVuSans-121"></use></g></g></g><g id="line2d_29"><path clip-path="url(#paa7239ec5f)" d="M 81.262265 298.238619 
+L 103.234058 298.237165 
+L 125.20585 298.16024 
+L 147.177639 297.494302 
+L 169.149435 294.792705 
+L 191.12123 287.551152 
+L 213.093013 272.687629 
+L 235.064809 247.562608 
+L 257.036604 211.264861 
+L 279.0084 165.766213 
+L 300.980195 116.520694 
+L 322.951978 72.140803 
+L 344.923761 42.938005 
+L 366.895569 38.351839 
+L 388.867352 63.627468 
+L 410.83916 116.520775 
+L 432.810943 185.323023 
+L 454.782726 250.104401 
+L 476.754534 289.7604 
+L 498.726317 298.238619 
+" style="fill:none;stroke:#2a2eec;stroke-linecap:round;stroke-width:1.5;"></path><defs><path d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" id="mf27c5bcb9d" style="stroke:#2a2eec;"></path></defs><g clip-path="url(#paa7239ec5f)"><use style="fill:#2a2eec;stroke:#2a2eec;" x="81.262265" xlink:href="#mf27c5bcb9d" y="298.238619"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="103.234058" xlink:href="#mf27c5bcb9d" y="298.237165"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="125.20585" xlink:href="#mf27c5bcb9d" y="298.16024"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="147.177639" xlink:href="#mf27c5bcb9d" y="297.494302"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="169.149435" xlink:href="#mf27c5bcb9d" y="294.792705"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="191.12123" xlink:href="#mf27c5bcb9d" y="287.551152"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="213.093013" xlink:href="#mf27c5bcb9d" y="272.687629"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="235.064809" xlink:href="#mf27c5bcb9d" y="247.562608"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="257.036604" xlink:href="#mf27c5bcb9d" y="211.264861"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="279.0084" xlink:href="#mf27c5bcb9d" y="165.766213"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="300.980195" xlink:href="#mf27c5bcb9d" y="116.520694"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="322.951978" xlink:href="#mf27c5bcb9d" y="72.140803"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="344.923761" xlink:href="#mf27c5bcb9d" y="42.938005"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="366.895569" xlink:href="#mf27c5bcb9d" y="38.351839"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="388.867352" xlink:href="#mf27c5bcb9d" y="63.627468"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="410.83916" xlink:href="#mf27c5bcb9d" y="116.520775"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="432.810943" xlink:href="#mf27c5bcb9d" y="185.323023"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="454.782726" xlink:href="#mf27c5bcb9d" y="250.104401"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="476.754534" xlink:href="#mf27c5bcb9d" y="289.7604"></use><use style="fill:#2a2eec;stroke:#2a2eec;" x="498.726317" xlink:href="#mf27c5bcb9d" y="298.238619"></use></g></g><g id="patch_3"><path d="M 60.389063 311.232957 
+L 60.389063 25.3575 
+" style="fill:none;"></path></g><g id="patch_4"><path d="M 519.59952 311.232957 
+L 519.59952 25.3575 
+" style="fill:none;"></path></g><g id="patch_5"><path d="M 60.389063 311.232957 
+L 519.59952 311.232957 
+" style="fill:none;"></path></g><g id="patch_6"><path d="M 60.389063 25.3575 
+L 519.59952 25.3575 
+" style="fill:none;"></path></g><g id="text_17"><!-- 20 points --><defs><path d="M 54.890625 33.015625 
+L 54.890625 0 
+L 45.90625 0 
+L 45.90625 32.71875 
+Q 45.90625 40.484375 42.875 44.328125 
+Q 39.84375 48.1875 33.796875 48.1875 
+Q 26.515625 48.1875 22.3125 43.546875 
+Q 18.109375 38.921875 18.109375 30.90625 
+L 18.109375 0 
+L 9.078125 0 
+L 9.078125 54.6875 
+L 18.109375 54.6875 
+L 18.109375 46.1875 
+Q 21.34375 51.125 25.703125 53.5625 
+Q 30.078125 56 35.796875 56 
+Q 45.21875 56 50.046875 50.171875 
+Q 54.890625 44.34375 54.890625 33.015625 
+z
+" id="DejaVuSans-110"></path></defs><g style="fill:#262626;" transform="translate(252.701791 19.3575)scale(0.16 -0.16)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-48"></use><use x="127.246094" xlink:href="#DejaVuSans-32"></use><use x="159.033203" xlink:href="#DejaVuSans-112"></use><use x="222.509766" xlink:href="#DejaVuSans-111"></use><use x="283.691406" xlink:href="#DejaVuSans-105"></use><use x="311.474609" xlink:href="#DejaVuSans-110"></use><use x="374.853516" xlink:href="#DejaVuSans-116"></use><use x="414.0625" xlink:href="#DejaVuSans-115"></use></g></g></g></g><defs><clippath id="paa7239ec5f"><rect height="285.875457" width="459.210457" x="60.389063" y="25.3575"></rect></clippath></defs></svg>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.5">Code 2.5<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.5">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">prior</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p_grid</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">p_grid</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.6">Code 2.6<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.6">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"p"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># uniform prior</span>
+    <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"W"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="n">L</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">obs</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>  <span class="c1"># binomial likelihood</span>
+
+
+<span class="n">guide</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">guide</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">W</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">fori_loop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">init_state</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+<span class="c1"># display summary of quadratic approximation</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">guide</span><span class="o">.</span><span class="n">sample_posterior</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
+<span class="n">numpyro</span><span class="o">.</span><span class="n">diagnostics</span><span class="o">.</span><span class="n">print_summary</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="mf">0.89</span><span class="p">,</span> <span class="n">group_by_chain</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[6]:</span>
+</div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+                mean       std    median      5.5%     94.5%     n_eff     r_hat
+         p      0.62      0.14      0.63      0.41      0.84    845.27      1.00
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.7">Code 2.7<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.7">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># analytical calculation</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="c1"># quadratic approximation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.61</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="s2">"--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[7]:</span>
+</div>
+
+
+
+<div class="output_svg output_subarea ">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Created with matplotlib (https://matplotlib.org/) --><svg height="353.99952pt" version="1.1" viewbox="0 0 526.79952 353.99952" width="526.79952pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+*{stroke-linecap:butt;stroke-linejoin:round;}
+  </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 353.99952 
+L 526.79952 353.99952 
+L 526.79952 0 
+L 0 0 
+z
+" style="fill:#ffffff;"></path></g><g id="axes_1"><g id="patch_2"><path d="M 32.964375 329.750145 
+L 519.59952 329.750145 
+L 519.59952 7.2 
+L 32.964375 7.2 
+z
+" style="fill:#eeeeee;"></path></g><g id="matplotlib.axis_1"><g id="xtick_1"><g id="line2d_1"><path clip-path="url(#pd0c4c01943)" d="M 55.084154 329.750145 
+L 55.084154 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_2"></g><g id="text_1"><!-- 0.0 --><defs><path d="M 31.78125 66.40625 
+Q 24.171875 66.40625 20.328125 58.90625 
+Q 16.5 51.421875 16.5 36.375 
+Q 16.5 21.390625 20.328125 13.890625 
+Q 24.171875 6.390625 31.78125 6.390625 
+Q 39.453125 6.390625 43.28125 13.890625 
+Q 47.125 21.390625 47.125 36.375 
+Q 47.125 51.421875 43.28125 58.90625 
+Q 39.453125 66.40625 31.78125 66.40625 
+z
+M 31.78125 74.21875 
+Q 44.046875 74.21875 50.515625 64.515625 
+Q 56.984375 54.828125 56.984375 36.375 
+Q 56.984375 17.96875 50.515625 8.265625 
+Q 44.046875 -1.421875 31.78125 -1.421875 
+Q 19.53125 -1.421875 13.0625 8.265625 
+Q 6.59375 17.96875 6.59375 36.375 
+Q 6.59375 54.828125 13.0625 64.515625 
+Q 19.53125 74.21875 31.78125 74.21875 
+z
+" id="DejaVuSans-48"></path><path d="M 10.6875 12.40625 
+L 21 12.40625 
+L 21 0 
+L 10.6875 0 
+z
+" id="DejaVuSans-46"></path></defs><g style="fill:#262626;" transform="translate(43.951967 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_2"><g id="line2d_3"><path clip-path="url(#pd0c4c01943)" d="M 143.563272 329.750145 
+L 143.563272 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_4"></g><g id="text_2"><!-- 0.2 --><defs><path d="M 19.1875 8.296875 
+L 53.609375 8.296875 
+L 53.609375 0 
+L 7.328125 0 
+L 7.328125 8.296875 
+Q 12.9375 14.109375 22.625 23.890625 
+Q 32.328125 33.6875 34.8125 36.53125 
+Q 39.546875 41.84375 41.421875 45.53125 
+Q 43.3125 49.21875 43.3125 52.78125 
+Q 43.3125 58.59375 39.234375 62.25 
+Q 35.15625 65.921875 28.609375 65.921875 
+Q 23.96875 65.921875 18.8125 64.3125 
+Q 13.671875 62.703125 7.8125 59.421875 
+L 7.8125 69.390625 
+Q 13.765625 71.78125 18.9375 73 
+Q 24.125 74.21875 28.421875 74.21875 
+Q 39.75 74.21875 46.484375 68.546875 
+Q 53.21875 62.890625 53.21875 53.421875 
+Q 53.21875 48.921875 51.53125 44.890625 
+Q 49.859375 40.875 45.40625 35.40625 
+Q 44.1875 33.984375 37.640625 27.21875 
+Q 31.109375 20.453125 19.1875 8.296875 
+z
+" id="DejaVuSans-50"></path></defs><g style="fill:#262626;" transform="translate(132.431084 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-50"></use></g></g></g><g id="xtick_3"><g id="line2d_5"><path clip-path="url(#pd0c4c01943)" d="M 232.042389 329.750145 
+L 232.042389 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_6"></g><g id="text_3"><!-- 0.4 --><defs><path d="M 37.796875 64.3125 
+L 12.890625 25.390625 
+L 37.796875 25.390625 
+z
+M 35.203125 72.90625 
+L 47.609375 72.90625 
+L 47.609375 25.390625 
+L 58.015625 25.390625 
+L 58.015625 17.1875 
+L 47.609375 17.1875 
+L 47.609375 0 
+L 37.796875 0 
+L 37.796875 17.1875 
+L 4.890625 17.1875 
+L 4.890625 26.703125 
+z
+" id="DejaVuSans-52"></path></defs><g style="fill:#262626;" transform="translate(220.910201 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-52"></use></g></g></g><g id="xtick_4"><g id="line2d_7"><path clip-path="url(#pd0c4c01943)" d="M 320.521506 329.750145 
+L 320.521506 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_8"></g><g id="text_4"><!-- 0.6 --><defs><path d="M 33.015625 40.375 
+Q 26.375 40.375 22.484375 35.828125 
+Q 18.609375 31.296875 18.609375 23.390625 
+Q 18.609375 15.53125 22.484375 10.953125 
+Q 26.375 6.390625 33.015625 6.390625 
+Q 39.65625 6.390625 43.53125 10.953125 
+Q 47.40625 15.53125 47.40625 23.390625 
+Q 47.40625 31.296875 43.53125 35.828125 
+Q 39.65625 40.375 33.015625 40.375 
+z
+M 52.59375 71.296875 
+L 52.59375 62.3125 
+Q 48.875 64.0625 45.09375 64.984375 
+Q 41.3125 65.921875 37.59375 65.921875 
+Q 27.828125 65.921875 22.671875 59.328125 
+Q 17.53125 52.734375 16.796875 39.40625 
+Q 19.671875 43.65625 24.015625 45.921875 
+Q 28.375 48.1875 33.59375 48.1875 
+Q 44.578125 48.1875 50.953125 41.515625 
+Q 57.328125 34.859375 57.328125 23.390625 
+Q 57.328125 12.15625 50.6875 5.359375 
+Q 44.046875 -1.421875 33.015625 -1.421875 
+Q 20.359375 -1.421875 13.671875 8.265625 
+Q 6.984375 17.96875 6.984375 36.375 
+Q 6.984375 53.65625 15.1875 63.9375 
+Q 23.390625 74.21875 37.203125 74.21875 
+Q 40.921875 74.21875 44.703125 73.484375 
+Q 48.484375 72.75 52.59375 71.296875 
+z
+" id="DejaVuSans-54"></path></defs><g style="fill:#262626;" transform="translate(309.389319 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-54"></use></g></g></g><g id="xtick_5"><g id="line2d_9"><path clip-path="url(#pd0c4c01943)" d="M 409.000623 329.750145 
+L 409.000623 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_10"></g><g id="text_5"><!-- 0.8 --><defs><path d="M 31.78125 34.625 
+Q 24.75 34.625 20.71875 30.859375 
+Q 16.703125 27.09375 16.703125 20.515625 
+Q 16.703125 13.921875 20.71875 10.15625 
+Q 24.75 6.390625 31.78125 6.390625 
+Q 38.8125 6.390625 42.859375 10.171875 
+Q 46.921875 13.96875 46.921875 20.515625 
+Q 46.921875 27.09375 42.890625 30.859375 
+Q 38.875 34.625 31.78125 34.625 
+z
+M 21.921875 38.8125 
+Q 15.578125 40.375 12.03125 44.71875 
+Q 8.5 49.078125 8.5 55.328125 
+Q 8.5 64.0625 14.71875 69.140625 
+Q 20.953125 74.21875 31.78125 74.21875 
+Q 42.671875 74.21875 48.875 69.140625 
+Q 55.078125 64.0625 55.078125 55.328125 
+Q 55.078125 49.078125 51.53125 44.71875 
+Q 48 40.375 41.703125 38.8125 
+Q 48.828125 37.15625 52.796875 32.3125 
+Q 56.78125 27.484375 56.78125 20.515625 
+Q 56.78125 9.90625 50.3125 4.234375 
+Q 43.84375 -1.421875 31.78125 -1.421875 
+Q 19.734375 -1.421875 13.25 4.234375 
+Q 6.78125 9.90625 6.78125 20.515625 
+Q 6.78125 27.484375 10.78125 32.3125 
+Q 14.796875 37.15625 21.921875 38.8125 
+z
+M 18.3125 54.390625 
+Q 18.3125 48.734375 21.84375 45.5625 
+Q 25.390625 42.390625 31.78125 42.390625 
+Q 38.140625 42.390625 41.71875 45.5625 
+Q 45.3125 48.734375 45.3125 54.390625 
+Q 45.3125 60.0625 41.71875 63.234375 
+Q 38.140625 66.40625 31.78125 66.40625 
+Q 25.390625 66.40625 21.84375 63.234375 
+Q 18.3125 60.0625 18.3125 54.390625 
+z
+" id="DejaVuSans-56"></path></defs><g style="fill:#262626;" transform="translate(397.868436 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-56"></use></g></g></g><g id="xtick_6"><g id="line2d_11"><path clip-path="url(#pd0c4c01943)" d="M 497.479741 329.750145 
+L 497.479741 7.2 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_12"></g><g id="text_6"><!-- 1.0 --><defs><path d="M 12.40625 8.296875 
+L 28.515625 8.296875 
+L 28.515625 63.921875 
+L 10.984375 60.40625 
+L 10.984375 69.390625 
+L 28.421875 72.90625 
+L 38.28125 72.90625 
+L 38.28125 8.296875 
+L 54.390625 8.296875 
+L 54.390625 0 
+L 12.40625 0 
+z
+" id="DejaVuSans-49"></path></defs><g style="fill:#262626;" transform="translate(486.347553 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g></g><g id="matplotlib.axis_2"><g id="ytick_1"><g id="line2d_13"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 315.088775 
+L 519.59952 315.088775 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_14"></g><g id="text_7"><!-- 0.0 --><g style="fill:#262626;" transform="translate(7.2 320.407681)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_2"><g id="line2d_15"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 261.397458 
+L 519.59952 261.397458 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_16"></g><g id="text_8"><!-- 0.5 --><defs><path d="M 10.796875 72.90625 
+L 49.515625 72.90625 
+L 49.515625 64.59375 
+L 19.828125 64.59375 
+L 19.828125 46.734375 
+Q 21.96875 47.46875 24.109375 47.828125 
+Q 26.265625 48.1875 28.421875 48.1875 
+Q 40.625 48.1875 47.75 41.5 
+Q 54.890625 34.8125 54.890625 23.390625 
+Q 54.890625 11.625 47.5625 5.09375 
+Q 40.234375 -1.421875 26.90625 -1.421875 
+Q 22.3125 -1.421875 17.546875 -0.640625 
+Q 12.796875 0.140625 7.71875 1.703125 
+L 7.71875 11.625 
+Q 12.109375 9.234375 16.796875 8.0625 
+Q 21.484375 6.890625 26.703125 6.890625 
+Q 35.15625 6.890625 40.078125 11.328125 
+Q 45.015625 15.765625 45.015625 23.390625 
+Q 45.015625 31 40.078125 35.4375 
+Q 35.15625 39.890625 26.703125 39.890625 
+Q 22.75 39.890625 18.8125 39.015625 
+Q 14.890625 38.140625 10.796875 36.28125 
+z
+" id="DejaVuSans-53"></path></defs><g style="fill:#262626;" transform="translate(7.2 266.716364)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="ytick_3"><g id="line2d_17"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 207.706141 
+L 519.59952 207.706141 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_18"></g><g id="text_9"><!-- 1.0 --><g style="fill:#262626;" transform="translate(7.2 213.025047)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_4"><g id="line2d_19"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 154.014824 
+L 519.59952 154.014824 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_20"></g><g id="text_10"><!-- 1.5 --><g style="fill:#262626;" transform="translate(7.2 159.33373)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-53"></use></g></g></g><g id="ytick_5"><g id="line2d_21"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 100.323507 
+L 519.59952 100.323507 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_22"></g><g id="text_11"><!-- 2.0 --><g style="fill:#262626;" transform="translate(7.2 105.642413)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="ytick_6"><g id="line2d_23"><path clip-path="url(#pd0c4c01943)" d="M 32.964375 46.63219 
+L 519.59952 46.63219 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_24"></g><g id="text_12"><!-- 2.5 --><g style="fill:#262626;" transform="translate(7.2 51.951096)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-50"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-53"></use></g></g></g></g><g id="line2d_25"><path clip-path="url(#pd0c4c01943)" d="M 55.084154 315.088775 
+L 59.50811 315.088775 
+L 63.932066 315.088769 
+L 68.356022 315.088715 
+L 72.779977 315.088448 
+L 77.203934 315.087566 
+L 81.627889 315.085279 
+L 86.051845 315.080239 
+L 90.4758 315.070362 
+L 94.899759 315.052651 
+L 99.323714 315.023018 
+L 103.747669 314.976123 
+L 108.171623 314.905227 
+L 112.595578 314.802072 
+L 117.019537 314.656781 
+L 121.443495 314.457791 
+L 125.867447 314.191818 
+L 130.291405 313.843853 
+L 134.715363 313.397203 
+L 139.139315 312.833545 
+L 143.563273 312.133052 
+L 147.987225 311.274505 
+L 152.411183 310.235513 
+L 156.835141 308.99266 
+L 161.259093 307.521806 
+L 165.683051 305.798308 
+L 170.107003 303.797347 
+L 174.530967 301.494212 
+L 178.954919 298.864714 
+L 183.378871 295.88542 
+L 187.802836 292.534147 
+L 192.226787 288.790238 
+L 196.650739 284.635044 
+L 201.074704 280.052171 
+L 205.498655 275.028009 
+L 209.922607 269.552 
+L 214.346572 263.61705 
+L 218.770523 257.219798 
+L 223.194475 250.360992 
+L 227.618427 243.045934 
+L 232.042392 235.284209 
+L 236.466343 227.090681 
+L 240.890295 218.485088 
+L 245.31426 209.492374 
+L 249.738211 200.142691 
+L 254.162163 190.471889 
+L 258.586128 180.520693 
+L 263.010079 170.335443 
+L 267.434031 159.967574 
+L 271.857996 149.473257 
+L 276.281948 138.913911 
+L 280.705899 128.354795 
+L 285.129851 117.865726 
+L 289.553802 107.519696 
+L 293.97778 97.392947 
+L 298.401732 87.564538 
+L 302.825684 78.11509 
+L 307.249635 69.126607 
+L 311.673587 60.681398 
+L 316.097539 52.861724 
+L 320.521517 45.748357 
+L 324.945468 39.420563 
+L 329.36942 33.953714 
+L 333.793372 29.420263 
+L 338.217323 25.886903 
+L 342.641275 23.414568 
+L 347.065253 22.057328 
+L 351.489205 21.86137 
+L 355.913156 22.863843 
+L 360.337108 25.091781 
+L 364.761059 28.561622 
+L 369.185011 33.277821 
+L 373.608989 39.232517 
+L 378.032941 46.404358 
+L 382.456892 54.758807 
+L 386.880844 64.246018 
+L 391.304796 74.802318 
+L 395.728747 86.348903 
+L 400.152699 98.792199 
+L 404.576677 112.024114 
+L 409.000629 125.922501 
+L 413.42458 140.351745 
+L 417.848532 155.164483 
+L 422.272484 170.201826 
+L 426.696435 185.296224 
+L 431.120413 200.273121 
+L 435.544365 214.953137 
+L 439.968317 229.155874 
+L 444.392268 242.702931 
+L 448.81622 255.422082 
+L 453.240171 267.151962 
+L 457.66415 277.747481 
+L 462.088101 287.085396 
+L 466.512053 295.071463 
+L 470.936004 301.647672 
+L 475.359956 306.80047 
+L 479.783908 310.569987 
+L 484.207886 313.060126 
+L 488.631837 314.449542 
+L 493.055789 315.003852 
+L 497.479741 315.088775 
+" style="fill:none;stroke:#2a2eec;stroke-linecap:round;stroke-width:1.5;"></path></g><g id="line2d_26"><path clip-path="url(#pd0c4c01943)" d="M 55.084154 314.685566 
+L 59.50811 314.591671 
+L 63.932066 314.478029 
+L 68.356022 314.341 
+L 72.779977 314.176387 
+L 77.203934 313.979384 
+L 81.627889 313.744502 
+L 86.051845 313.46552 
+L 90.4758 313.135407 
+L 94.899759 312.74628 
+L 99.323714 312.289342 
+L 103.747669 311.754826 
+L 108.171623 311.131969 
+L 112.595578 310.408965 
+L 117.019537 309.572974 
+L 121.443495 308.610092 
+L 125.867447 307.505416 
+L 130.291405 306.243034 
+L 134.715363 304.806157 
+L 139.139315 303.177162 
+L 143.563273 301.337771 
+L 147.987225 299.269162 
+L 152.411183 296.952235 
+L 156.835141 294.36779 
+L 161.259093 291.496841 
+L 165.683051 288.32091 
+L 170.107003 284.822338 
+L 174.530967 280.984702 
+L 178.954919 276.79323 
+L 183.378871 272.235152 
+L 187.802836 267.300178 
+L 192.226787 261.981005 
+L 196.650739 256.273637 
+L 201.074704 250.177893 
+L 205.498655 243.697838 
+L 209.922607 236.842104 
+L 214.346572 229.624199 
+L 218.770523 222.06297 
+L 223.194475 214.182542 
+L 227.618427 206.012619 
+L 232.042392 197.588455 
+L 236.466343 188.95095 
+L 240.890295 180.146225 
+L 245.31426 171.225548 
+L 249.738211 162.24495 
+L 254.162163 153.264659 
+L 258.586128 144.348527 
+L 263.010079 135.563426 
+L 267.434031 126.978354 
+L 271.857996 118.663562 
+L 276.281948 110.689737 
+L 280.705899 103.126928 
+L 285.129851 96.043541 
+L 289.553802 89.505376 
+L 293.97778 83.574464 
+L 298.401732 78.308411 
+L 302.825684 73.759036 
+L 307.249635 69.971909 
+L 311.673587 66.985331 
+L 316.097539 64.829795 
+L 320.521517 63.527472 
+L 324.945468 63.091879 
+L 329.36942 63.527472 
+L 333.793372 64.82977 
+L 338.217323 66.985306 
+L 342.641275 69.971883 
+L 347.065253 73.759036 
+L 351.489205 78.308411 
+L 355.913156 83.574464 
+L 360.337108 89.505324 
+L 364.761059 96.043516 
+L 369.185011 103.126877 
+L 373.608989 110.689737 
+L 378.032941 118.663562 
+L 382.456892 126.978328 
+L 386.880844 135.563413 
+L 391.304796 144.348502 
+L 395.728747 153.264595 
+L 400.152699 162.244899 
+L 404.576677 171.225548 
+L 409.000629 180.146199 
+L 413.42458 188.950937 
+L 417.848532 197.588442 
+L 422.272484 206.012568 
+L 426.696435 214.182491 
+L 431.120413 222.06297 
+L 435.544365 229.624199 
+L 439.968317 236.842072 
+L 444.392268 243.697812 
+L 448.81622 250.177861 
+L 453.240171 256.273599 
+L 457.66415 261.981005 
+L 462.088101 267.300178 
+L 466.512053 272.235133 
+L 470.936004 276.79321 
+L 475.359956 280.984695 
+L 479.783908 284.822325 
+L 484.207886 288.32091 
+L 488.631837 291.496841 
+L 493.055789 294.36779 
+L 497.479741 296.952223 
+" style="fill:none;stroke:#fa7c17;stroke-dasharray:5.55,2.4;stroke-dashoffset:0;stroke-width:1.5;"></path></g><g id="patch_3"><path d="M 32.964375 329.750145 
+L 32.964375 7.2 
+" style="fill:none;"></path></g><g id="patch_4"><path d="M 519.59952 329.750145 
+L 519.59952 7.2 
+" style="fill:none;"></path></g><g id="patch_5"><path d="M 32.964375 329.750145 
+L 519.59952 329.750145 
+" style="fill:none;"></path></g><g id="patch_6"><path d="M 32.964375 7.2 
+L 519.59952 7.2 
+" style="fill:none;"></path></g></g></g><defs><clippath id="pd0c4c01943"><rect height="322.550145" width="486.635145" x="32.964375" y="7.2"></rect></clippath></defs></svg>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.8">Code 2.8<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.8">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">with</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">rng_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
+        <span class="n">p_new</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"p_new"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">p_new</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">p_new</span><span class="p">)</span> <span class="k">if</span> <span class="n">p_new</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">p_new</span>
+        <span class="n">p_new</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">p_new</span> <span class="k">if</span> <span class="n">p_new</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">p_new</span>
+        <span class="n">q0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="n">L</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">W</span><span class="p">))</span>
+        <span class="n">q1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="n">L</span><span class="p">,</span> <span class="n">p_new</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">W</span><span class="p">))</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"u"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Uniform</span><span class="p">())</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_new</span> <span class="k">if</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">q1</span> <span class="o">/</span> <span class="n">q0</span> <span class="k">else</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code-2.9">Code 2.9<a class="anchor-link" href="02-small-worlds-and-large-worlds.html#Code-2.9">¶</a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_density</span><span class="p">({</span><span class="s2">"p"</span><span class="p">:</span> <span class="n">p</span><span class="p">},</span> <span class="n">hdi_prob</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="s2">"--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+<div class="prompt output_prompt">
+<span>Out[9]:</span>
+</div>
+
+
+
+<div class="output_svg output_subarea ">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Created with matplotlib (https://matplotlib.org/) --><svg height="353.99952pt" version="1.1" viewbox="0 0 526.79952 353.99952" width="526.79952pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+*{stroke-linecap:butt;stroke-linejoin:round;}
+  </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 353.99952 
+L 526.79952 353.99952 
+L 526.79952 0 
+L 0 0 
+z
+" style="fill:#ffffff;"></path></g><g id="axes_1"><g id="patch_2"><path d="M 7.2 329.750145 
+L 519.59952 329.750145 
+L 519.59952 25.3575 
+L 7.2 25.3575 
+z
+" style="fill:#eeeeee;"></path></g><g id="matplotlib.axis_1"><g id="xtick_1"><g id="line2d_1"><path clip-path="url(#p34c6e0ea7b)" d="M 30.490887 329.750145 
+L 30.490887 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_2"></g><g id="text_1"><!-- 0.0 --><defs><path d="M 31.78125 66.40625 
+Q 24.171875 66.40625 20.328125 58.90625 
+Q 16.5 51.421875 16.5 36.375 
+Q 16.5 21.390625 20.328125 13.890625 
+Q 24.171875 6.390625 31.78125 6.390625 
+Q 39.453125 6.390625 43.28125 13.890625 
+Q 47.125 21.390625 47.125 36.375 
+Q 47.125 51.421875 43.28125 58.90625 
+Q 39.453125 66.40625 31.78125 66.40625 
+z
+M 31.78125 74.21875 
+Q 44.046875 74.21875 50.515625 64.515625 
+Q 56.984375 54.828125 56.984375 36.375 
+Q 56.984375 17.96875 50.515625 8.265625 
+Q 44.046875 -1.421875 31.78125 -1.421875 
+Q 19.53125 -1.421875 13.0625 8.265625 
+Q 6.59375 17.96875 6.59375 36.375 
+Q 6.59375 54.828125 13.0625 64.515625 
+Q 19.53125 74.21875 31.78125 74.21875 
+z
+" id="DejaVuSans-48"></path><path d="M 10.6875 12.40625 
+L 21 12.40625 
+L 21 0 
+L 10.6875 0 
+z
+" id="DejaVuSans-46"></path></defs><g style="fill:#262626;" transform="translate(19.3587 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g><g id="xtick_2"><g id="line2d_3"><path clip-path="url(#p34c6e0ea7b)" d="M 123.654436 329.750145 
+L 123.654436 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_4"></g><g id="text_2"><!-- 0.2 --><defs><path d="M 19.1875 8.296875 
+L 53.609375 8.296875 
+L 53.609375 0 
+L 7.328125 0 
+L 7.328125 8.296875 
+Q 12.9375 14.109375 22.625 23.890625 
+Q 32.328125 33.6875 34.8125 36.53125 
+Q 39.546875 41.84375 41.421875 45.53125 
+Q 43.3125 49.21875 43.3125 52.78125 
+Q 43.3125 58.59375 39.234375 62.25 
+Q 35.15625 65.921875 28.609375 65.921875 
+Q 23.96875 65.921875 18.8125 64.3125 
+Q 13.671875 62.703125 7.8125 59.421875 
+L 7.8125 69.390625 
+Q 13.765625 71.78125 18.9375 73 
+Q 24.125 74.21875 28.421875 74.21875 
+Q 39.75 74.21875 46.484375 68.546875 
+Q 53.21875 62.890625 53.21875 53.421875 
+Q 53.21875 48.921875 51.53125 44.890625 
+Q 49.859375 40.875 45.40625 35.40625 
+Q 44.1875 33.984375 37.640625 27.21875 
+Q 31.109375 20.453125 19.1875 8.296875 
+z
+" id="DejaVuSans-50"></path></defs><g style="fill:#262626;" transform="translate(112.522249 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-50"></use></g></g></g><g id="xtick_3"><g id="line2d_5"><path clip-path="url(#p34c6e0ea7b)" d="M 216.817985 329.750145 
+L 216.817985 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_6"></g><g id="text_3"><!-- 0.4 --><defs><path d="M 37.796875 64.3125 
+L 12.890625 25.390625 
+L 37.796875 25.390625 
+z
+M 35.203125 72.90625 
+L 47.609375 72.90625 
+L 47.609375 25.390625 
+L 58.015625 25.390625 
+L 58.015625 17.1875 
+L 47.609375 17.1875 
+L 47.609375 0 
+L 37.796875 0 
+L 37.796875 17.1875 
+L 4.890625 17.1875 
+L 4.890625 26.703125 
+z
+" id="DejaVuSans-52"></path></defs><g style="fill:#262626;" transform="translate(205.685798 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-52"></use></g></g></g><g id="xtick_4"><g id="line2d_7"><path clip-path="url(#p34c6e0ea7b)" d="M 309.981535 329.750145 
+L 309.981535 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_8"></g><g id="text_4"><!-- 0.6 --><defs><path d="M 33.015625 40.375 
+Q 26.375 40.375 22.484375 35.828125 
+Q 18.609375 31.296875 18.609375 23.390625 
+Q 18.609375 15.53125 22.484375 10.953125 
+Q 26.375 6.390625 33.015625 6.390625 
+Q 39.65625 6.390625 43.53125 10.953125 
+Q 47.40625 15.53125 47.40625 23.390625 
+Q 47.40625 31.296875 43.53125 35.828125 
+Q 39.65625 40.375 33.015625 40.375 
+z
+M 52.59375 71.296875 
+L 52.59375 62.3125 
+Q 48.875 64.0625 45.09375 64.984375 
+Q 41.3125 65.921875 37.59375 65.921875 
+Q 27.828125 65.921875 22.671875 59.328125 
+Q 17.53125 52.734375 16.796875 39.40625 
+Q 19.671875 43.65625 24.015625 45.921875 
+Q 28.375 48.1875 33.59375 48.1875 
+Q 44.578125 48.1875 50.953125 41.515625 
+Q 57.328125 34.859375 57.328125 23.390625 
+Q 57.328125 12.15625 50.6875 5.359375 
+Q 44.046875 -1.421875 33.015625 -1.421875 
+Q 20.359375 -1.421875 13.671875 8.265625 
+Q 6.984375 17.96875 6.984375 36.375 
+Q 6.984375 53.65625 15.1875 63.9375 
+Q 23.390625 74.21875 37.203125 74.21875 
+Q 40.921875 74.21875 44.703125 73.484375 
+Q 48.484375 72.75 52.59375 71.296875 
+z
+" id="DejaVuSans-54"></path></defs><g style="fill:#262626;" transform="translate(298.849347 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-54"></use></g></g></g><g id="xtick_5"><g id="line2d_9"><path clip-path="url(#p34c6e0ea7b)" d="M 403.145084 329.750145 
+L 403.145084 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_10"></g><g id="text_5"><!-- 0.8 --><defs><path d="M 31.78125 34.625 
+Q 24.75 34.625 20.71875 30.859375 
+Q 16.703125 27.09375 16.703125 20.515625 
+Q 16.703125 13.921875 20.71875 10.15625 
+Q 24.75 6.390625 31.78125 6.390625 
+Q 38.8125 6.390625 42.859375 10.171875 
+Q 46.921875 13.96875 46.921875 20.515625 
+Q 46.921875 27.09375 42.890625 30.859375 
+Q 38.875 34.625 31.78125 34.625 
+z
+M 21.921875 38.8125 
+Q 15.578125 40.375 12.03125 44.71875 
+Q 8.5 49.078125 8.5 55.328125 
+Q 8.5 64.0625 14.71875 69.140625 
+Q 20.953125 74.21875 31.78125 74.21875 
+Q 42.671875 74.21875 48.875 69.140625 
+Q 55.078125 64.0625 55.078125 55.328125 
+Q 55.078125 49.078125 51.53125 44.71875 
+Q 48 40.375 41.703125 38.8125 
+Q 48.828125 37.15625 52.796875 32.3125 
+Q 56.78125 27.484375 56.78125 20.515625 
+Q 56.78125 9.90625 50.3125 4.234375 
+Q 43.84375 -1.421875 31.78125 -1.421875 
+Q 19.734375 -1.421875 13.25 4.234375 
+Q 6.78125 9.90625 6.78125 20.515625 
+Q 6.78125 27.484375 10.78125 32.3125 
+Q 14.796875 37.15625 21.921875 38.8125 
+z
+M 18.3125 54.390625 
+Q 18.3125 48.734375 21.84375 45.5625 
+Q 25.390625 42.390625 31.78125 42.390625 
+Q 38.140625 42.390625 41.71875 45.5625 
+Q 45.3125 48.734375 45.3125 54.390625 
+Q 45.3125 60.0625 41.71875 63.234375 
+Q 38.140625 66.40625 31.78125 66.40625 
+Q 25.390625 66.40625 21.84375 63.234375 
+Q 18.3125 60.0625 18.3125 54.390625 
+z
+" id="DejaVuSans-56"></path></defs><g style="fill:#262626;" transform="translate(392.012896 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-48"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-56"></use></g></g></g><g id="xtick_6"><g id="line2d_11"><path clip-path="url(#p34c6e0ea7b)" d="M 496.308633 329.750145 
+L 496.308633 25.3575 
+" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-width:0.8;"></path></g><g id="line2d_12"></g><g id="text_6"><!-- 1.0 --><defs><path d="M 12.40625 8.296875 
+L 28.515625 8.296875 
+L 28.515625 63.921875 
+L 10.984375 60.40625 
+L 10.984375 69.390625 
+L 28.421875 72.90625 
+L 38.28125 72.90625 
+L 38.28125 8.296875 
+L 54.390625 8.296875 
+L 54.390625 0 
+L 12.40625 0 
+z
+" id="DejaVuSans-49"></path></defs><g style="fill:#262626;" transform="translate(485.176445 343.887957)scale(0.14 -0.14)"><use xlink:href="#DejaVuSans-49"></use><use x="63.623047" xlink:href="#DejaVuSans-46"></use><use x="95.410156" xlink:href="#DejaVuSans-48"></use></g></g></g></g><g id="matplotlib.axis_2"></g><g id="line2d_13"><path clip-path="url(#p34c6e0ea7b)" d="M 141.196767 312.689881 
+L 146.245169 312.481965 
+L 149.61077 312.052934 
+L 152.976371 311.444519 
+L 156.341972 310.630565 
+L 161.390374 309.054269 
+L 166.438775 307.160329 
+L 173.169977 304.378373 
+L 178.218379 302.0994 
+L 183.266781 299.684569 
+L 186.632382 297.908012 
+L 191.680783 294.976651 
+L 196.729185 291.729639 
+L 205.143187 286.048501 
+L 216.922791 277.773063 
+L 220.288392 275.194279 
+L 221.971193 273.823471 
+L 225.336794 270.754202 
+L 228.702395 267.094135 
+L 230.385195 265.068091 
+L 233.750796 260.474946 
+L 237.116398 255.168727 
+L 240.481999 249.215007 
+L 243.8476 242.702633 
+L 253.944403 222.836408 
+L 258.992804 213.694363 
+L 265.724006 201.442909 
+L 269.089608 194.832006 
+L 272.455209 187.526431 
+L 275.82081 179.563538 
+L 279.186411 171.082476 
+L 301.062818 113.942231 
+L 304.428419 106.202456 
+L 307.79402 99.395884 
+L 309.47682 96.44863 
+L 311.159621 93.807487 
+L 312.842421 91.466687 
+L 314.525222 89.47675 
+L 316.208022 87.746816 
+L 317.890823 86.260089 
+L 321.256424 83.782713 
+L 324.622025 81.415162 
+L 326.304825 80.06752 
+L 327.987626 78.478459 
+L 329.670427 76.709918 
+L 333.036028 72.631295 
+L 336.401629 67.866917 
+L 341.45003 60.132637 
+L 344.815631 55.127689 
+L 348.181232 50.699603 
+L 351.546833 46.7897 
+L 354.912434 43.589207 
+L 356.595235 42.225287 
+L 358.278036 41.120124 
+L 359.960836 40.154548 
+L 361.643637 39.538425 
+L 363.326437 39.207011 
+L 365.009238 39.193529 
+L 366.692038 39.492082 
+L 368.374839 40.246807 
+L 370.057639 41.441599 
+L 371.74044 43.153464 
+L 373.42324 45.212888 
+L 375.106041 47.794449 
+L 376.788841 50.878543 
+L 380.154442 58.148591 
+L 383.520043 66.765374 
+L 386.885644 76.657748 
+L 390.251246 87.468573 
+L 395.299647 104.650266 
+L 400.348049 121.761745 
+L 403.71365 132.165687 
+L 405.39645 136.888358 
+L 407.079251 141.185598 
+L 408.762051 145.149484 
+L 410.444852 148.646373 
+L 412.127652 151.71812 
+L 413.810453 154.282212 
+L 415.493253 156.464538 
+L 417.176054 158.407968 
+L 423.907256 165.271041 
+L 427.272857 169.33248 
+L 428.955658 171.78782 
+L 430.638458 174.609905 
+L 432.321259 177.743918 
+L 435.68686 185.214372 
+L 439.052461 193.817202 
+L 442.418062 203.317684 
+L 449.149264 223.35967 
+L 452.514865 233.307004 
+L 457.563267 247.110712 
+L 460.928868 255.239486 
+L 462.611668 259.011323 
+L 464.294469 262.429814 
+L 465.977269 265.499581 
+L 467.66007 268.158935 
+L 469.34287 270.443846 
+L 471.025671 272.279637 
+L 472.708471 273.693231 
+L 474.391272 274.700217 
+L 476.074072 275.17724 
+L 476.074072 275.17724 
+" style="fill:none;stroke:#2a2eec;stroke-linecap:round;stroke-width:1.5;"></path></g><g id="line2d_14"><path clip-path="url(#p34c6e0ea7b)" d="M 141.196767 315.538989 
+L 141.196767 312.689881 
+" style="fill:none;stroke:#2a2eec;stroke-linecap:round;stroke-width:1.5;"></path></g><g id="line2d_15"><path clip-path="url(#p34c6e0ea7b)" d="M 476.074072 315.914116 
+L 476.074072 275.17724 
+" style="fill:none;stroke:#2a2eec;stroke-linecap:round;stroke-width:1.5;"></path></g><g id="line2d_16"><defs><path d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" id="mdba43db927" style="stroke:#000000;"></path></defs><g clip-path="url(#p34c6e0ea7b)"><use style="fill:#2a2eec;stroke:#000000;" x="345.716261" xlink:href="#mdba43db927" y="315.51078"></use></g></g><g id="line2d_17"><path clip-path="url(#p34c6e0ea7b)" d="M 30.490887 315.51078 
+L 35.149065 315.51078 
+L 39.807242 315.510776 
+L 44.465419 315.510729 
+L 49.123597 315.510498 
+L 53.781775 315.509738 
+L 58.439951 315.507766 
+L 63.09813 315.503419 
+L 67.756306 315.494901 
+L 72.414486 315.479626 
+L 77.072663 315.454069 
+L 81.730839 315.413625 
+L 86.389015 315.352482 
+L 91.047192 315.263518 
+L 95.705372 315.138214 
+L 100.363552 314.966598 
+L 105.021725 314.737214 
+L 109.679905 314.437117 
+L 114.338085 314.051911 
+L 118.996258 313.565793 
+L 123.654438 312.961664 
+L 128.312611 312.221224 
+L 132.970791 311.325161 
+L 137.628971 310.253282 
+L 142.287144 308.984768 
+L 146.945324 307.498363 
+L 151.603497 305.772666 
+L 156.261684 303.786364 
+L 160.919857 301.518595 
+L 165.57803 298.94915 
+L 170.236216 296.058897 
+L 174.894389 292.830022 
+L 179.552562 289.24644 
+L 184.210749 285.294014 
+L 188.868922 280.961005 
+L 193.527095 276.238307 
+L 198.185282 271.119803 
+L 202.843455 265.602594 
+L 207.501628 259.687325 
+L 212.159801 253.378568 
+L 216.817988 246.684591 
+L 221.476161 239.618212 
+L 226.134334 232.196455 
+L 230.792521 224.44083 
+L 235.450694 216.377344 
+L 240.108867 208.036912 
+L 244.767054 199.45466 
+L 249.425227 190.670552 
+L 254.0834 181.728947 
+L 258.741587 172.678289 
+L 263.39976 163.571547 
+L 268.057933 154.465005 
+L 272.716106 145.418873 
+L 277.374279 136.496102 
+L 282.03248 127.762447 
+L 286.690653 119.286091 
+L 291.348826 111.136564 
+L 296.006999 103.384588 
+L 300.665172 96.101151 
+L 305.323345 89.357196 
+L 309.981546 83.222386 
+L 314.639719 77.765079 
+L 319.297892 73.050281 
+L 323.956065 69.140478 
+L 328.614238 66.093187 
+L 333.272411 63.960961 
+L 337.930611 62.790431 
+L 342.588785 62.62143 
+L 347.246958 63.485997 
+L 351.905131 65.407447 
+L 356.563304 68.399957 
+L 361.221477 72.467368 
+L 365.879677 77.602901 
+L 370.53785 83.788143 
+L 375.196023 90.993306 
+L 379.854196 99.175401 
+L 384.512369 108.279515 
+L 389.170542 118.237686 
+L 393.828715 128.96921 
+L 398.486916 140.380867 
+L 403.145089 152.367311 
+L 407.803262 164.811585 
+L 412.461435 177.586597 
+L 417.119608 190.555317 
+L 421.777781 203.573242 
+L 426.435982 216.48983 
+L 431.094155 229.150379 
+L 435.752328 241.399305 
+L 440.410501 253.082751 
+L 445.068674 264.052182 
+L 449.726847 274.168432 
+L 454.385048 283.30637 
+L 459.043221 291.359708 
+L 463.701394 298.247166 
+L 468.359567 303.918713 
+L 473.01774 308.362662 
+L 477.675913 311.613623 
+L 482.334114 313.761204 
+L 486.992287 314.959484 
+L 491.65046 315.43754 
+L 496.308633 315.51078 
+" style="fill:none;stroke:#2a2eec;stroke-dasharray:5.55,2.4;stroke-dashoffset:0;stroke-width:1.5;"></path></g><g id="patch_3"><path d="M 7.2 329.750145 
+L 519.59952 329.750145 
+" style="fill:none;"></path></g><g id="text_7"><!-- p --><defs><path d="M 18.109375 8.203125 
+L 18.109375 -20.796875 
+L 9.078125 -20.796875 
+L 9.078125 54.6875 
+L 18.109375 54.6875 
+L 18.109375 46.390625 
+Q 20.953125 51.265625 25.265625 53.625 
+Q 29.59375 56 35.59375 56 
+Q 45.5625 56 51.78125 48.09375 
+Q 58.015625 40.1875 58.015625 27.296875 
+Q 58.015625 14.40625 51.78125 6.484375 
+Q 45.5625 -1.421875 35.59375 -1.421875 
+Q 29.59375 -1.421875 25.265625 0.953125 
+Q 20.953125 3.328125 18.109375 8.203125 
+z
+M 48.6875 27.296875 
+Q 48.6875 37.203125 44.609375 42.84375 
+Q 40.53125 48.484375 33.40625 48.484375 
+Q 26.265625 48.484375 22.1875 42.84375 
+Q 18.109375 37.203125 18.109375 27.296875 
+Q 18.109375 17.390625 22.1875 11.75 
+Q 26.265625 6.109375 33.40625 6.109375 
+Q 40.53125 6.109375 44.609375 11.75 
+Q 48.6875 17.390625 48.6875 27.296875 
+z
+" id="DejaVuSans-112"></path></defs><g style="fill:#262626;" transform="translate(258.32101 19.3575)scale(0.16 -0.16)"><use xlink:href="#DejaVuSans-112"></use></g></g></g></g><defs><clippath id="p34c6e0ea7b"><rect height="304.392645" width="512.39952" x="7.2" y="25.3575"></rect></clippath></defs></svg>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+    <div class="inner_cell">
+    <div class="text_cell_render border-box-sizing rendered_html">
+    <div class="navigation">
+    <p><!-- NAVIGATION -->
+&lt; <a href="01-the-golem-of-prague.html">Chapter 1. The Golem of Prague</a> | <a href="03-sampling-the-imaginary.html">Chapter 3. Sampling the Imaginary</a> &gt;</p>
+
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+    </div>
+    
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2020         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131299125-1"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-131299125-1');
+</script>
+</body>
+</html>
