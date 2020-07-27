@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  chapters_d01234:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install https://github.com/pyro-ppl/numpyro/archive/master.zip
+        pip install -r requirements.txt 
+        pip install nbval
+    - name: Test with nbval
+      run: |
+        find notebooks -maxdepth 1 -name "[01][01234]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
+
+
+  chapters_d56789:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install https://github.com/pyro-ppl/numpyro/archive/master.zip
+        pip install -r requirements.txt
+        pip install nbval
+    - name: Test with nbval
+      run: |
+        find notebooks -maxdepth 1 -name "[01][56789]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
+

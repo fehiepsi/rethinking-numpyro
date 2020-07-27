@@ -23,7 +23,7 @@ BLOG_TITLE = "Statistical Rethinking (2nd ed.) with NumPyro"  # (translatable)
 SITE_URL = "https://fehiepsi.github.io/rethinking-numpyro/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
-# BASE_URL = "https://fehiepsi.github.io/rethinking-numpyro/"
+# BASE_URL = "https://example.com/"
 BLOG_EMAIL = "fehiepsi@gmail.com"
 BLOG_DESCRIPTION = "This site contains codes in NumPyro for the book Statistical Rethinking 2nd Edition."  # (translatable)
 
@@ -32,6 +32,7 @@ BLOG_DESCRIPTION = "This site contains codes in NumPyro for the book Statistical
 # Currently supported languages are:
 #
 # en        English
+# af        Afrikaans
 # ar        Arabic
 # az        Azerbaijani
 # bg        Bulgarian
@@ -48,11 +49,13 @@ BLOG_DESCRIPTION = "This site contains codes in NumPyro for the book Statistical
 # fa        Persian
 # fi        Finnish
 # fr        French
+# fur       Friulian
 # gl        Galician
 # he        Hebrew
 # hi        Hindi
 # hr        Croatian
 # hu        Hungarian
+# ia        Interlingua
 # id        Indonesian
 # it        Italian
 # ja        Japanese [NOT jp]
@@ -136,8 +139,8 @@ TRANSLATIONS_PATTERN = '{path}.{lang}.{ext}'
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        # ("/archive.html", "Archive"),
-        # ("/categories/", "Tags"),
+        # ("/archive.html", "Archives"),
+        # ("/categories/index.html", "Tags"),
         # ("/rss.xml", "RSS feed"),
     ),
 }
@@ -146,7 +149,7 @@ NAVIGATION_LINKS = {
 # although themes may not always support them. (translatable)
 # (Bootstrap 4: right-side of navbar, Bootblog 4: right side of title)
 NAVIGATION_ALT_LINKS = {
-    DEFAULT_LANG: {}
+    DEFAULT_LANG: ()
 }
 
 # Name of the theme to use.
@@ -239,7 +242,7 @@ NOTEBOOKS_FOLDER = "../notebooks"
 # (e.g. 'Europe/Zurich')
 # Also, if you want to use a different time zone in some of your posts,
 # you can use the ISO 8601/RFC 3339 format (ex. 2012-03-30T23:00:00+02:00)
-TIMEZONE = "America/New_York"
+TIMEZONE = "America/Chicago"
 
 # If you want to use ISO 8601 (also valid RFC 3339) throughout Nikola
 # (especially in new_post), set this to True.
@@ -249,17 +252,20 @@ TIMEZONE = "America/New_York"
 # Date format used to display post dates. (translatable)
 # Used by babel.dates, CLDR style: http://cldr.unicode.org/translation/date-time
 # You can also use 'full', 'long', 'medium', or 'short'
-# DATE_FORMAT = 'YYYY-MM-dd HH:mm'
+# DATE_FORMAT = 'yyyy-MM-dd HH:mm'
 
 # Date format used to display post dates, if local dates are used. (translatable)
-# Used by moment.js: https://momentjs.com/docs/#/displaying/format/
-# JS_DATE_FORMAT = 'YYYY-MM-DD HH:mm'
+# Used by Luxon: https://moment.github.io/luxon/docs/manual/formatting
+# Example for presets: {'preset': True, 'format': 'DATE_FULL'}
+# LUXON_DATE_FORMAT = {
+#     DEFAULT_LANG: {'preset': False, 'format': 'yyyy-MM-dd HH:mm'},
+# }
 
 # Date fanciness.
 #
-# 0 = using DATE_FORMAT and TIMEZONE
-# 1 = using JS_DATE_FORMAT and local user time (via moment.js)
-# 2 = using a string like “2 days ago”
+# 0 = using DATE_FORMAT and TIMEZONE (without JS)
+# 1 = using LUXON_DATE_FORMAT and local user time (JS, using Luxon)
+# 2 = using a string like “2 days ago” (JS, using Luxon)
 #
 # Your theme must support it, Bootstrap already does.
 # DATE_FANCINESS = 0
@@ -271,40 +277,47 @@ TIMEZONE = "America/New_York"
 # One or more folders containing files to be copied as-is into the output.
 # The format is a dictionary of {source: relative destination}.
 # Default is:
-FILES_FOLDERS = {'files': '', '../data': 'data'}
+# FILES_FOLDERS = {'files': ''}
 # Which means copy 'files' into 'output'
 
 # One or more folders containing code listings to be processed and published on
 # the site. The format is a dictionary of {source: relative destination}.
 # Default is:
-LISTINGS_FOLDERS = {'listings': 'code'}
+# LISTINGS_FOLDERS = {'listings': 'listings'}
 # Which means process listings from 'listings' into 'output/listings'
 
 # A mapping of languages to file-extensions that represent that language.
 # Feel free to add or delete extensions to any list, but don't add any new
 # compilers unless you write the interface for it yourself.
 #
+# The default compiler for `new_post` is the first entry in the POSTS tuple.
+#
 # 'rest' is reStructuredText
 # 'markdown' is Markdown
 # 'html' assumes the file is HTML and just copies it
 COMPILERS = {
-    "rest": ('.rst', '.txt'),
-    "markdown": ('.md', '.mdown', '.markdown'),
-    "textile": ('.textile',),
-    "txt2tags": ('.t2t',),
-    "bbcode": ('.bb',),
-    "wiki": ('.wiki',),
-    "ipynb": ('.ipynb',),
-    "html": ('.html', '.htm'),
+    "rest": ['.rst', '.txt'],
+    "markdown": ['.md', '.mdown', '.markdown'],
+    "textile": ['.textile'],
+    "txt2tags": ['.t2t'],
+    "bbcode": ['.bb'],
+    "wiki": ['.wiki'],
+    "ipynb": ['.ipynb'],
+    "html": ['.html', '.htm'],
     # PHP files are rendered the usual way (i.e. with the full templates).
     # The resulting files have .php extensions, making it possible to run
     # them without reconfiguring your server to recognize them.
-    "php": ('.php',),
+    "php": ['.php'],
     # Pandoc detects the input from the source filename
     # but is disabled by default as it would conflict
     # with many of the others.
-    # "pandoc": ('.rst', '.md', '.txt'),
+    # "pandoc": ['.rst', '.md', '.txt'],
 }
+
+# Enable reST directives that insert the contents of external files such
+# as "include" and "raw." This maps directly to the docutils file_insertion_enabled
+# config. See: http://docutils.sourceforge.net/docs/user/config.html#file-insertion-enabled
+# REST_FILE_INSERTION_ENABLED = True
 
 # Create by default posts in one file format?
 # Set to False for two-file posts, with separate metadata.
@@ -336,6 +349,14 @@ COMPILERS = {
 # Final output is <img src="LOGO_URL" id="logo" alt="BLOG_TITLE">.
 # The URL may be relative to the site root.
 # LOGO_URL = ''
+
+# When linking posts to social media, Nikola provides Open Graph metadata
+# which is used to show a nice preview. This includes an image preview
+# taken from the post's previewimage metadata field.
+# This option lets you use an image to be used if the post doesn't have it.
+# The default is None, valid values are URLs or output paths like
+# "/images/foo.jpg"
+# DEFAULT_PREVIEW_IMAGE = None
 
 # If you want to hide the title of your website (for example, if your logo
 # already contains the text), set this to False.
@@ -558,6 +579,7 @@ FRONT_INDEX_HEADER = {
 # output / TRANSLATION[lang] / ARCHIVE_PATH / YEAR / index.html
 # output / TRANSLATION[lang] / ARCHIVE_PATH / YEAR / MONTH / index.html
 # output / TRANSLATION[lang] / ARCHIVE_PATH / YEAR / MONTH / DAY / index.html
+# (translatable)
 # ARCHIVE_PATH = ""
 # ARCHIVE_FILENAME = "archive.html"
 
@@ -739,7 +761,16 @@ GITHUB_COMMIT_SOURCE = False
 # MAX_IMAGE_SIZE = 1280
 # USE_FILENAME_AS_TITLE = True
 # EXTRA_IMAGE_EXTENSIONS = []
-#
+
+# Use a thumbnail (defined by ".. previewimage:" in the gallery's index) in
+# list of galleries for each gallery
+GALLERIES_USE_THUMBNAIL = False
+
+# Image to use as thumbnail for those galleries that don't have one
+# None: show a grey square
+# '/url/to/file': show the image in that url
+GALLERIES_DEFAULT_THUMBNAIL = None
+
 # If set to False, it will sort by filename instead. Defaults to True
 # GALLERY_SORT_BY_DATE = True
 
@@ -864,13 +895,14 @@ IMAGE_FOLDERS = {'images': 'images'}
 # META_GENERATOR_TAG = True
 
 # Color scheme to be used for code blocks. If your theme provides
-# "assets/css/code.css" this is ignored. Leave empty to disable.
+# "assets/css/code.css" this is ignored. Set to None to disable.
 # Can be any of:
 # algol, algol_nu, autumn, borland, bw, colorful, default, emacs, friendly,
 # fruity, igor, lovelace, manni, monokai, murphy, native, paraiso-dark,
 # paraiso-light, pastie, perldoc, rrt, tango, trac, vim, vs, xcode
 # This list MAY be incomplete since pygments adds styles every now and then.
 # Check with list(pygments.styles.get_all_styles()) in an interpreter.
+#
 # CODE_COLOR_SCHEME = 'default'
 
 # FAVICONS contains (name, file, size) tuples.
@@ -914,26 +946,18 @@ FEED_LINKS_APPEND_QUERY = False
 
 # A HTML fragment describing the license, for the sidebar.
 # (translatable)
-LICENSE = """
-<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-  <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-</a>
-"""
+LICENSE = ""
 # I recommend using the Creative Commons' wizard:
 # https://creativecommons.org/choose/
-# LICENSE = """
-# <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-# <img alt="Creative Commons License BY-NC-SA"
-# style="border-width:0; margin-bottom:12px;"
-# src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>"""
+LICENSE = """
+<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<img alt="Creative Commons License BY-NC-SA"
+style="border-width:0; margin-bottom:12px;"
+src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>"""
 
 # A small copyright notice for the page footer (in HTML).
 # (translatable)
-CONTENT_FOOTER = """
-<div class="text-center">
-  Contents &copy; {date}         <a href="mailto:{email}">{author}</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         {license}
-</div>
-"""
+CONTENT_FOOTER = 'Contents &copy; {date}         <a href="mailto:{email}">{author}</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         {license}'
 
 # Things that will be passed to CONTENT_FOOTER.format().  This is done
 # for translatability, as dicts are not formattable.  Nikola will
@@ -968,14 +992,14 @@ RSS_COPYRIGHT_FORMATS = CONTENT_FOOTER_FORMATS
 
 # To use comments, you can choose between different third party comment
 # systems.  The following comment systems are supported by Nikola:
-#   disqus, facebook, intensedebate, isso, livefyre, muut
+#   disqus, facebook, intensedebate, isso, muut, commento
 # You can leave this option blank to disable comments.
-COMMENT_SYSTEM = ""
+COMMENT_SYSTEM = "disqus"
 # And you also need to add your COMMENT_SYSTEM_ID which
 # depends on what comment system you use. The default is
 # "nikolademo" which is a test account for Disqus. More information
 # is in the manual.
-COMMENT_SYSTEM_ID = ""
+COMMENT_SYSTEM_ID = "fehiepsi-github-io"
 
 # Create index.html for page folders?
 # WARNING: if a page would conflict with the index file (usually
@@ -1028,7 +1052,7 @@ PRETTY_URLS = False
 # If True, use the scheduling rule to all posts (not pages!) by default
 # SCHEDULE_ALL = False
 
-# Do you want a add a Mathjax config file?
+# Do you want to add a Mathjax config file?
 # MATHJAX_CONFIG = ""
 
 # If you want support for the $.$ syntax (which may conflict with running
@@ -1053,7 +1077,7 @@ PRETTY_URLS = False
 # feature yet, it's faster and the output looks better.
 # USE_KATEX = False
 
-# KaTeX auto-render settings. If you want support for the $.$ syntax (wihch may
+# KaTeX auto-render settings. If you want support for the $.$ syntax (which may
 # conflict with running text!), just use this config:
 # KATEX_AUTO_RENDER = """
 # delimiters: [
@@ -1067,7 +1091,6 @@ PRETTY_URLS = False
 
 # Do you want to customize the nbconversion of your IPython notebook?
 IPYNB_CONFIG = {"Exporter": {"template_file": "files/templates/custom.tpl"}}
-#IPYNB_CONFIG = {"Exporter": {"template_file": "files/templates/custom.tpl"}}
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
 # IPYNB_CONFIG = {'Exporter': {'template_file': 'toggle'}}
@@ -1077,7 +1100,8 @@ IPYNB_CONFIG = {"Exporter": {"template_file": "files/templates/custom.tpl"}}
 # done in the code, hope you don't mind ;-)
 # Note: most Nikola-specific extensions are done via the Nikola plugin system,
 #       with the MarkdownExtension class and should not be added here.
-# The default is ['fenced_code', 'codehilite']
+# Defaults are markdown.extensions.(fenced_code|codehilite|extra)
+# markdown.extensions.meta is required for Markdown metadata.
 MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.codehilite', 'markdown.extensions.extra']
 
 # Options to be passed to markdown extensions (See https://python-markdown.github.io/reference/)
@@ -1114,7 +1138,7 @@ MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.c
 # SHOW_SOURCELINK = True
 # Copy the source files for your pages?
 # Setting it to False implies SHOW_SOURCELINK = False
-COPY_SOURCES = False
+# COPY_SOURCES = True
 
 # Modify the number of Post per Index Page
 # Defaults to 10
@@ -1218,8 +1242,7 @@ BODY_END = """
   gtag('js', new Date());
 
   gtag('config', 'UA-131299125-1');
-</script>
-"""
+</script>"""
 
 # The possibility to extract metadata from the filename by using a
 # regular expression.
@@ -1279,10 +1302,6 @@ BODY_END = """
 # They make it possible for you to attach media to Tweets that link
 # to your content.
 #
-# IMPORTANT:
-# Please note, that you need to opt-in for using Twitter Cards!
-# To do this please visit https://cards-dev.twitter.com/validator
-#
 # Uncomment and modify to following lines to match your accounts.
 # Images displayed come from the `previewimage` meta tag.
 # You can specify the card type by using the `card` parameter in TWITTER_CARD.
@@ -1300,7 +1319,7 @@ BODY_END = """
 # USE_BUNDLES = True
 
 # Plugins you don't want to use. Be careful :-)
-DISABLED_PLUGINS = ["render_galleries", "robots"]
+# DISABLED_PLUGINS = ["render_galleries"]
 
 # Special settings to disable only parts of the indexes plugin.
 # Use with care.
@@ -1363,3 +1382,7 @@ GLOBAL_CONTEXT = {}
 # GLOBAL_CONTEXT as parameter when the template is about to be
 # rendered
 GLOBAL_CONTEXT_FILLER = []
+
+# Add any post types here that you want to be displayed without a title.
+# Ir your theme supports it, the titles will not be shown.
+TYPES_TO_HIDE_TITLE = []
