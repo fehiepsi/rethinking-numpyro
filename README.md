@@ -18,3 +18,7 @@ The following tools are used for some analysis and visualizations: [arviz](https
 ```sh
 pip install numpyro arviz causalgraphicalmodels daft
 ```
+
+## Acknowledgements
+
+`Kapil Sachdeva <https://github.com/ksachdev>`_ has helped fix many code and plot mismatches since the release. Thank you!
