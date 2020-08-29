@@ -3,6 +3,7 @@ import io
 import os
 
 import nbformat
+from nbconvert.preprocessors import ExecutePreprocessor
 
 from nikola.plugin_categories import Task
 from nikola import utils
@@ -66,7 +67,7 @@ class CopyNotebooks(Task):
                 "name": dst_file,
                 "file_dep": [src_file],
                 "targets": [dst_file],
-                "actions": [(copy_notebooks, (src_file, dst_file, prev_nb, next_nb))],
+                "actions": [(copy_notebooks, (src_file, dst_file, prev_nb, next_nb, kw["notebooks_folder"]))],
                 "uptodate": [utils.config_changed(kw, "copy_notebooks")],
                 "clean": True,
             }
@@ -92,7 +93,7 @@ def copy_scripts(src_file, dst_file):
         f.write(content)
 
 
-def copy_notebooks(src_file, dst_file, prev_nb, next_nb):
+def copy_notebooks(src_file, dst_file, prev_nb, next_nb, notebook_folder):
     # navigation
     prev_link = get_nb_link(prev_nb) if prev_nb is not None else ""
     next_link = get_nb_link(next_nb) if next_nb is not None else ""
@@ -102,6 +103,11 @@ def copy_notebooks(src_file, dst_file, prev_nb, next_nb):
     # read notebook
     with io.open(src_file, "r", encoding="utf8") as f:
         nb = nbformat.read(f, as_version=4)
+
+    # execute notebook
+    if "SVG" in os.environ:
+        ep = ExecutePreprocessor(timeout=600, kernel_name="python3")
+        ep.preprocess(nb, {"metadata": {"path": notebook_folder}})
 
     # add title
     title = get_nb_link(src_file)
