@@ -21,4 +21,4 @@ pip install numpyro arviz causalgraphicalmodels daft
 
 ## Acknowledgements
 
-[Kapil Sachdeva](https://github.com/ksachdeva) has helped fix many code and plot mismatches since the release. Thank you!
+[Kapil Sachdeva](https://github.com/ksachdeva) and [Manuel A. Vázquez](https://github.com/manuvazquez) has helped fix many code and plot mismatches since the release. Many thanks!
