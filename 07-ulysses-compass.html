@@ -40,7 +40,7 @@ import warnings
 import arviz as az
 import matplotlib.pyplot ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-09-17T14:45:43-05:00">
+<meta property="article:published_time" content="2020-09-30T15:20:18-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -132,7 +132,7 @@ import matplotlib.pyplot ">
 <span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">dist</span>
 <span class="kn">import</span> <span class="nn">numpyro.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">numpyro.diagnostics</span> <span class="kn">import</span> <span class="n">print_summary</span>
-<span class="kn">from</span> <span class="nn">numpyro.infer</span> <span class="kn">import</span> <span class="n">ELBO</span><span class="p">,</span> <span class="n">SVI</span><span class="p">,</span> <span class="n">Predictive</span><span class="p">,</span> <span class="n">init_to_value</span><span class="p">,</span> <span class="n">log_likelihood</span>
+<span class="kn">from</span> <span class="nn">numpyro.infer</span> <span class="kn">import</span> <span class="n">Predictive</span><span class="p">,</span> <span class="n">SVI</span><span class="p">,</span> <span class="n">Trace_ELBO</span><span class="p">,</span> <span class="n">init_to_value</span><span class="p">,</span> <span class="n">log_likelihood</span>
 <span class="kn">from</span> <span class="nn">numpyro.infer.autoguide</span> <span class="kn">import</span> <span class="n">AutoLaplaceApproximation</span>
 
 <span class="k">if</span> <span class="s2">"SVG"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
@@ -234,7 +234,7 @@ import matplotlib.pyplot ">
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_1</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -276,7 +276,7 @@ import matplotlib.pyplot ">
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_1_OLS</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">=</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
-    <span class="n">loss</span><span class="o">=</span><span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -394,13 +394,13 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m7_2</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)})</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)})</span>
 <span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_2</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -440,13 +440,13 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m7_3</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)})</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)})</span>
 <span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_3</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -466,13 +466,13 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m7_4</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)})</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)})</span>
 <span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_4</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -492,13 +492,13 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m7_5</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
 <span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_5</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -538,13 +538,13 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m7_6</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)})</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)})</span>
 <span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m7_6</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.003</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">mass_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">mass_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">brain_std</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">brain_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
@@ -910,12 +910,12 @@ import matplotlib.pyplot ">
 
     <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span>
-            <span class="n">model</span><span class="p">,</span> <span class="n">init_strategy</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)})</span>
+            <span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)})</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">mm</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">b_sigma</span><span class="p">:</span> <span class="kc">None</span>
     <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
-        <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">mm</span><span class="o">=</span><span class="n">mm_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b_sigma</span><span class="o">=</span><span class="n">b_sigma</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">mm</span><span class="o">=</span><span class="n">mm_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b_sigma</span><span class="o">=</span><span class="n">b_sigma</span>
     <span class="p">)</span>
     <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">fold_in</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">i</span><span class="p">))</span>
     <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
@@ -1110,7 +1110,7 @@ import matplotlib.pyplot ">
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cars_dist</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cars_dist</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
@@ -1335,7 +1335,7 @@ import matplotlib.pyplot ">
 
 
 <span class="n">m6_6</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m6_6</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">h0</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h0</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">h1</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m6_6</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">h0</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h0</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">h1</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
 <span class="n">p6_6</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -1356,7 +1356,7 @@ import matplotlib.pyplot ">
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m6_7</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">treatment</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">treatment</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">fungus</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">fungus</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">h0</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h0</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
@@ -1381,7 +1381,7 @@ import matplotlib.pyplot ">
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m6_8</span><span class="p">,</span>
     <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">ELBO</span><span class="p">(),</span>
+    <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">treatment</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">treatment</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">h0</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h0</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">h1</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
@@ -1976,7 +1976,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 <span class="n">m5_1</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_1</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_1</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
 <span class="n">p5_1</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -1991,7 +1991,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 <span class="n">m5_2</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_2</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_2</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
 <span class="n">p5_2</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -2007,7 +2007,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 <span class="n">m5_3</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_3</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m5_3</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
 <span class="n">p5_3</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -2257,7 +2257,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 <span class="n">m5_3t</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">m5_3t</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">m5_3t</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">M</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">M</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 <span class="n">init_state</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">svi</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
