@@ -41,7 +41,7 @@ import warnings
 
 import ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-09-30T15:20:18-05:00">
+<meta property="article:published_time" content="2021-05-31T21:33:33-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -143,6 +143,7 @@ import ">
 <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="s2">"</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">message</span>
 <span class="p">)</span>
+<span class="n">numpyro</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
 <span class="n">numpyro</span><span class="o">.</span><span class="n">set_host_device_count</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 
@@ -795,7 +796,8 @@ import ">
     <span class="n">rugged_std</span><span class="o">=</span><span class="n">dd</span><span class="o">.</span><span class="n">rugged_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">log_gdp_std</span><span class="o">=</span><span class="n">dd</span><span class="o">.</span><span class="n">log_gdp_std</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">p8_3</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">p8_3</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 <span class="n">post</span> <span class="o">=</span> <span class="n">m8_3</span><span class="o">.</span><span class="n">sample_posterior</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">p8_3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
 <span class="n">print_summary</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">post</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">"mu"</span><span class="p">},</span> <span class="mf">0.89</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -1764,9 +1766,7 @@ Number of divergences: 0
         <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
     </script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131299125-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

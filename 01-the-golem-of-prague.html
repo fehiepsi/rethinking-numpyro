@@ -43,7 +43,7 @@ There are no codes in this chapter.
     
 &lt; Preface | Chapter 2. Small Worlds and Large Worlds &gt;">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-09-30T15:20:18-05:00">
+<meta property="article:published_time" content="2021-05-31T21:33:33-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -176,9 +176,7 @@ There are no codes in this chapter.
         <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
     </script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131299125-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

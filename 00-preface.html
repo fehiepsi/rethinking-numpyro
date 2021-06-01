@@ -43,7 +43,7 @@ import pandas as pd
 import jax.numpy as jnp
 from jax im">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-09-30T15:20:18-05:00">
+<meta property="article:published_time" content="2021-05-31T21:33:33-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -137,6 +137,7 @@ from jax im">
 <span class="k">if</span> <span class="s2">"SVG"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="o">%</span><span class="k">config</span> InlineBackend.figure_formats = ["svg"]
 <span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"arviz-darkgrid"</span><span class="p">)</span>
+<span class="n">numpyro</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -319,7 +320,8 @@ from jax im">
     <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">dist_</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">params</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 
 <span class="c1"># estimated coefficients from the model</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
@@ -458,9 +460,7 @@ from jax im">
         <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
     </script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131299125-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

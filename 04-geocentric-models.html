@@ -40,7 +40,7 @@ import warnings
 import arviz as az
 import matplotlib">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-09-30T15:20:18-05:00">
+<meta property="article:published_time" content="2021-05-31T21:33:33-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -142,6 +142,7 @@ import matplotlib">
     <span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">message</span>
 <span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"arviz-darkgrid"</span><span class="p">)</span>
+<span class="n">numpyro</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1360,7 +1361,8 @@ Name: height, Length: 544, dtype: float64</pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">m4_1</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">flist</span><span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">flist</span><span class="p">,</span> <span class="n">m4_1</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">height</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">p4_1</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">p4_1</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -1456,7 +1458,8 @@ Name: height, Length: 544, dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"mu"</span><span class="p">:</span> <span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="s2">"sigma"</span><span class="p">:</span> <span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">std</span><span class="p">()}</span>
 <span class="n">m4_1</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">flist</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">start</span><span class="p">))</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">flist</span><span class="p">,</span> <span class="n">m4_1</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">height</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">p4_1</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">p4_1</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -1508,7 +1511,8 @@ Name: height, Length: 544, dtype: float64</pre>
 
 <span class="n">m4_2</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m4_2</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">height</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">p4_2</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">p4_2</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">m4_2</span><span class="o">.</span><span class="n">sample_posterior</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">p4_2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
 <span class="n">print_summary</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -2016,7 +2020,8 @@ Name: height, Length: 544, dtype: float64</pre>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">m4_3</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
-<span class="n">p4_3</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">p4_3</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -2077,7 +2082,8 @@ Name: height, Length: 544, dtype: float64</pre>
     <span class="n">weight</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">height</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">p4_3b</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">p4_3b</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -2339,7 +2345,8 @@ Name: height, Length: 544, dtype: float64</pre>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">mN</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">dN</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">dN</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
-<span class="n">pN</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">pN</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -3171,7 +3178,8 @@ memory usage: 17.1 KB
     <span class="n">weight_s2</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">weight_s2</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">height</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">p4_5</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">p4_5</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -3373,7 +3381,8 @@ memory usage: 17.1 KB
     <span class="n">weight_s3</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">weight_s3</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">height</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">p4_6</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">p4_6</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -3701,7 +3710,8 @@ memory usage: 17.1 KB
 <span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"w"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])}</span>
 <span class="n">m4_7</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">start</span><span class="p">))</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m4_7</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">B</span><span class="o">=</span><span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">doy</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">p4_7</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20000</span><span class="p">)</span>
+<span class="n">p4_7</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -3864,7 +3874,8 @@ memory usage: 17.1 KB
 <span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"w"</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])}</span>
 <span class="n">m4_7alt</span> <span class="o">=</span> <span class="n">AutoLaplaceApproximation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">init_loc_fn</span><span class="o">=</span><span class="n">init_to_value</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">start</span><span class="p">))</span>
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">m4_7alt</span><span class="p">,</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Trace_ELBO</span><span class="p">(),</span> <span class="n">B</span><span class="o">=</span><span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">d2</span><span class="o">.</span><span class="n">doy</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">p4_7alt</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20000</span><span class="p">)</span>
+<span class="n">p4_7alt</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 
     </div>
@@ -3944,9 +3955,7 @@ memory usage: 17.1 KB
         <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
     </script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131299125-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
