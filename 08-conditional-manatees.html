@@ -31,17 +31,25 @@
 
 
 
-In [0]:
+
+
+          
+            
+              
+            
+          
+        
+
+
+
+
+
+In [ ]:
 
     
-import math
-import os
-import warnings
-
-import arviz as az
-import matplotlib.pyplot as ">
+!pip in">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-05-31T21:51:07-05:00">
+<meta property="article:published_time" content="2021-10-24T07:54:33-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -112,6 +120,33 @@ import matplotlib.pyplot as ">
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="admonition note">
+          <span style="white-space: nowrap;">
+            <a href="https://colab.research.google.com/github/fehiepsi/rethinking-numpyro/blob/master/notebooks/08_conditional_manatees.ipynb">
+              <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" style="vertical-align:text-bottom"></a>
+          </span>
+        </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install -q numpyro arviz causalgraphicalmodels daft
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -747,7 +782,7 @@ See http://arxiv.org/abs/1507.04544 for details
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">post</span> <span class="o">=</span> <span class="n">m8_2</span><span class="o">.</span><span class="n">sample_posterior</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">p8_2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
 <span class="n">diff_a1_a2</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="s2">"a"</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">post</span><span class="p">[</span><span class="s2">"a"</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">diff_a1_a2</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">94.5</span><span class="p">))</span>
+<span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">diff_a1_a2</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">94.5</span><span class="p">]))</span>
 </pre></div>
 
     </div>
@@ -804,9 +839,9 @@ See http://arxiv.org/abs/1507.04544 for details
 
 <span class="c1"># summarize to means and intervals</span>
 <span class="n">mu_NotAfrica_mu</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mu_NotAfrica</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">mu_NotAfrica_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu_NotAfrica</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mu_NotAfrica_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu_NotAfrica</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">mu_Africa_mu</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mu_Africa</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">mu_Africa_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu_Africa</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mu_Africa_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu_Africa</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1148,7 +1183,7 @@ See http://arxiv.org/abs/1507.04544 for details
 <span class="p">)</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">predictive</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">cid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rugged_std</span><span class="o">=</span><span class="n">rugged_seq</span><span class="p">)[</span><span class="s2">"mu"</span><span class="p">]</span>
 <span class="n">mu_mean</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">mu_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mu_ci</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">98.5</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rugged_seq</span><span class="p">,</span> <span class="n">mu_mean</span><span class="p">,</span> <span class="s2">"k"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">rugged_seq</span><span class="p">,</span> <span class="n">mu_ci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu_ci</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Non-African nations"</span><span class="p">)</span>
@@ -1710,8 +1745,12 @@ memory usage: 992.0+ bytes
     </div>
     </div>
 </div>
-    </div>
-        <section class="comments"><h2>Comments</h2>
+</div></article>
+</div>
+</div>
+</body>
+</html><html>
+<section class="comments"><h2>Comments</h2>
         
         
         <div id="disqus_thread"></div>
@@ -1735,18 +1774,13 @@ memory usage: 992.0+ bytes
 
         </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script></article><!--End of body content--><footer id="footer">
+        </script><!--End of body content--><footer id="footer">
             Contents © 2021         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
             
-        </footer>
-</div>
-</div>
-
-
-        <script src="assets/js/all-nocdn.js"></script><script>
+        </footer><script src="/assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
@@ -1757,5 +1791,5 @@ memory usage: 992.0+ bytes
 
   gtag('config', 'UA-131299125-1');
 </script>
-</body>
 </html>
+
