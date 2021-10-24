@@ -27,7 +27,9 @@ class CopyNotebooks(Task):
             "notebooks_folder": self.site.config["NOTEBOOKS_FOLDER"],
             "pages_folder": "pages",
         }
-        kw["notebooks"] = sorted(glob.glob(os.path.join(kw["notebooks_folder"], "*.ipynb")))
+        kw["notebooks"] = sorted(
+            glob.glob(os.path.join(kw["notebooks_folder"], "*.ipynb"))
+        )
         kw["scripts"] = sorted(glob.glob(os.path.join(kw["notebooks_folder"], "*.py")))
         return kw
 
@@ -56,7 +58,9 @@ class CopyNotebooks(Task):
             os.mkdir(kw["pages_folder"])
 
         for i, src_file in enumerate(kw["notebooks"]):
-            dst_file = os.path.join(kw["pages_folder"], os.path.basename(src_file).replace("_", "-"))
+            dst_file = os.path.join(
+                kw["pages_folder"], os.path.basename(src_file).replace("_", "-")
+            )
             prev_nb, next_nb = None, None
             if i > 0:
                 prev_nb = kw["notebooks"][i - 1]
@@ -67,7 +71,12 @@ class CopyNotebooks(Task):
                 "name": dst_file,
                 "file_dep": [src_file],
                 "targets": [dst_file],
-                "actions": [(copy_notebooks, (src_file, dst_file, prev_nb, next_nb, kw["notebooks_folder"]))],
+                "actions": [
+                    (
+                        copy_notebooks,
+                        (src_file, dst_file, prev_nb, next_nb, kw["notebooks_folder"]),
+                    )
+                ],
                 "uptodate": [utils.config_changed(kw, "copy_notebooks")],
                 "clean": True,
             }
@@ -80,7 +89,9 @@ class CopyNotebooks(Task):
         for nb_file in kw["notebooks"]:
             nb_link = get_nb_link(nb_file)
             nb_title = get_nb_title(nb_file)
-            output.append('<li><p><a href="{}">{}</a></p></li>'.format(nb_link, nb_title))
+            output.append(
+                '<li><p><a href="{}">{}</a></p></li>'.format(nb_link, nb_title)
+            )
 
         return "<ul>{}</ul>".format("".join(output)), kw["notebooks"]
 
@@ -121,8 +132,29 @@ def copy_notebooks(src_file, dst_file, prev_nb, next_nb, notebook_folder):
     # add navigation
     nav_template = "<!-- NAVIGATION -->\n< [{}]({}) | [{}]({}) >"
     navigation = nav_template.format(prev_title, prev_link, next_title, next_link)
-    nb.cells.insert(0, nbformat.v4.new_markdown_cell(navigation, metadata={"navigation": True}))
-    nb.cells.append(nbformat.v4.new_markdown_cell(navigation, metadata={"navigation": True}))
+    navigation_cell = nbformat.v4.new_markdown_cell(
+        navigation, metadata={"navigation": True}
+    )
+    del navigation_cell["id"]
+    nb.cells.insert(0, navigation_cell)
+    nb.cells.append(navigation_cell)
+
+    # add colab cell
+    colab_cell = nbformat.v4.new_markdown_cell(
+        """<div class="admonition note">
+          <span style="white-space: nowrap;">
+            <a href="https://colab.research.google.com/github/fehiepsi/rethinking-numpyro/blob/master/notebooks/{}">
+              <img alt="Open In Colab"
+                src="https://colab.research.google.com/assets/colab-badge.svg"
+                style="vertical-align:text-bottom">
+            </a>
+          </span>
+        </div>""".format(
+            src_file.split("/")[-1]
+        )
+    )
+    del colab_cell["id"]
+    nb.cells.insert(2, colab_cell)
 
     # reduce execution_count
     for cell in nb.cells:
