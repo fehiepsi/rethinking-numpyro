@@ -46,7 +46,7 @@
 
 In [ ]">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-10-24T07:54:33-05:00">
+<meta property="article:published_time" content="2021-10-24T11:34:24-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -293,7 +293,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1542.44it/s, init loss: 115.9437, avg. loss [951-1000]: 3.6486]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1583.49it/s, init loss: 115.9437, avg. loss [951-1000]: 3.6486]
 </pre>
 </div>
 </div>
@@ -356,7 +356,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1579.16it/s, init loss: 118.9001, avg. loss [951-1000]: 6.6802]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1683.33it/s, init loss: 118.9001, avg. loss [951-1000]: 6.6802]
 </pre>
 </div>
 </div>
@@ -499,7 +499,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2793.27it/s, init loss: 19.0172, avg. loss [1901-2000]: 6.6510]
+<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2967.07it/s, init loss: 19.0172, avg. loss [1901-2000]: 6.6510]
 </pre>
 </div>
 </div>
@@ -615,9 +615,9 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2654.99it/s, init loss: 22.2387, avg. loss [1901-2000]: 8.8866]
-100%|██████████| 2000/2000 [00:00&lt;00:00, 2525.85it/s, init loss: 25.4603, avg. loss [1901-2000]: 10.8298]
-100%|██████████| 2000/2000 [00:00&lt;00:00, 2691.64it/s, init loss: 28.6818, avg. loss [1901-2000]: 8.2608]
+<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2940.67it/s, init loss: 22.2387, avg. loss [1901-2000]: 8.8866]
+100%|██████████| 2000/2000 [00:00&lt;00:00, 2909.59it/s, init loss: 25.4603, avg. loss [1901-2000]: 10.8298]
+100%|██████████| 2000/2000 [00:00&lt;00:00, 2795.88it/s, init loss: 28.6818, avg. loss [1901-2000]: 8.2608]
 </pre>
 </div>
 </div>
@@ -683,7 +683,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 5000/5000 [00:01&lt;00:00, 4800.05it/s, init loss: 31.9033, avg. loss [4751-5000]: 9.2877] 
+<pre>100%|██████████| 5000/5000 [00:00&lt;00:00, 5171.19it/s, init loss: 31.9033, avg. loss [4751-5000]: 9.2877]
 </pre>
 </div>
 </div>
@@ -1251,7 +1251,7 @@ In [ ]">
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m</span><span class="p">,</span>
-    <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
     <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">cars_dist</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
@@ -1278,8 +1278,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:01&lt;00:00, 985.65it/s, init loss: 210883.8125, avg. loss [951-1000]: 310.6195]
-UserWarning: Hessian of log posterior at the MAP point is singular. Posterior samples from AutoLaplaceApproxmiation will be constant (equal to the MAP point). Please consider using an AutoNormal guide.
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1181.69it/s, init loss: 210883.8125, avg. loss [951-1000]: 231.4643]
 </pre>
 </div>
 </div>
