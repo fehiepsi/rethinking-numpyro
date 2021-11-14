@@ -46,7 +46,7 @@
 
 In [ ]">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-10-24T11:34:24-05:00">
+<meta property="article:published_time" content="2021-11-12T16:35:04-06:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -293,7 +293,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1583.49it/s, init loss: 115.9437, avg. loss [951-1000]: 3.6486]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1593.52it/s, init loss: 115.9437, avg. loss [951-1000]: 3.6486]
 </pre>
 </div>
 </div>
@@ -356,7 +356,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1683.33it/s, init loss: 118.9001, avg. loss [951-1000]: 6.6802]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1700.78it/s, init loss: 118.9001, avg. loss [951-1000]: 6.6802]
 </pre>
 </div>
 </div>
@@ -499,7 +499,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2967.07it/s, init loss: 19.0172, avg. loss [1901-2000]: 6.6510]
+<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 3029.44it/s, init loss: 19.0172, avg. loss [1901-2000]: 6.6510]
 </pre>
 </div>
 </div>
@@ -615,9 +615,9 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2940.67it/s, init loss: 22.2387, avg. loss [1901-2000]: 8.8866]
-100%|██████████| 2000/2000 [00:00&lt;00:00, 2909.59it/s, init loss: 25.4603, avg. loss [1901-2000]: 10.8298]
-100%|██████████| 2000/2000 [00:00&lt;00:00, 2795.88it/s, init loss: 28.6818, avg. loss [1901-2000]: 8.2608]
+<pre>100%|██████████| 2000/2000 [00:00&lt;00:00, 2905.53it/s, init loss: 22.2387, avg. loss [1901-2000]: 8.8866]
+100%|██████████| 2000/2000 [00:00&lt;00:00, 2911.48it/s, init loss: 25.4603, avg. loss [1901-2000]: 10.8298]
+100%|██████████| 2000/2000 [00:00&lt;00:00, 2650.21it/s, init loss: 28.6818, avg. loss [1901-2000]: 8.2608]
 </pre>
 </div>
 </div>
@@ -683,7 +683,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 5000/5000 [00:00&lt;00:00, 5171.19it/s, init loss: 31.9033, avg. loss [4751-5000]: 9.2877]
+<pre>100%|██████████| 5000/5000 [00:00&lt;00:00, 5220.55it/s, init loss: 31.9033, avg. loss [4751-5000]: 9.2877]
 </pre>
 </div>
 </div>
@@ -1251,12 +1251,12 @@ In [ ]">
 <span class="n">svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">m</span><span class="p">,</span>
-    <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+    <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">Trace_ELBO</span><span class="p">(),</span>
     <span class="n">speed</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">cars_dist</span><span class="o">=</span><span class="n">cars</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">5000</span><span class="p">)</span>
 <span class="n">params</span> <span class="o">=</span> <span class="n">svi_result</span><span class="o">.</span><span class="n">params</span>
 <span class="n">post</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">sample_posterior</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">94</span><span class="p">),</span> <span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
 </pre></div>
@@ -1278,7 +1278,7 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1181.69it/s, init loss: 210883.8125, avg. loss [951-1000]: 231.4643]
+<pre>100%|██████████| 5000/5000 [00:00&lt;00:00, 5122.07it/s, init loss: 210883.8125, avg. loss [4751-5000]: 227.2560]
 </pre>
 </div>
 </div>
@@ -1402,7 +1402,7 @@ In [ ]">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>DeviceArray(528.47644, dtype=float32)</pre>
+<pre>DeviceArray(422.99088, dtype=float32)</pre>
 </div>
 
 </div>
@@ -1449,7 +1449,7 @@ In [ ]">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>DeviceArray(6.914621, dtype=float32)</pre>
+<pre>DeviceArray(17.235405, dtype=float32)</pre>
 </div>
 
 </div>
@@ -1581,9 +1581,9 @@ In [ ]">
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1148.43it/s, init loss: 279.8950, avg. loss [951-1000]: 204.3793]
-100%|██████████| 1000/1000 [00:01&lt;00:00, 737.04it/s, init loss: 151456.4062, avg. loss [951-1000]: 168.2294]
-100%|██████████| 1000/1000 [00:01&lt;00:00, 887.98it/s, init loss: 87469.1172, avg. loss [951-1000]: 198.4736]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1252.99it/s, init loss: 279.8950, avg. loss [951-1000]: 204.3793]
+100%|██████████| 1000/1000 [00:01&lt;00:00, 821.21it/s, init loss: 151456.4062, avg. loss [951-1000]: 168.2294]
+100%|██████████| 1000/1000 [00:01&lt;00:00, 981.14it/s, init loss: 87469.1172, avg. loss [951-1000]: 198.4736]
 UserWarning: For one or more samples the posterior variance of the log predictive densities exceeds 0.4. This could be indication of WAIC starting to fail. 
 See http://arxiv.org/abs/1507.04544 for details
 </pre>
@@ -2228,9 +2228,9 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1307.12it/s, init loss: 2138.6682, avg. loss [951-1000]: 60.6515]
-100%|██████████| 1000/1000 [00:00&lt;00:00, 1221.54it/s, init loss: 962.7464, avg. loss [951-1000]: 67.4809]
-100%|██████████| 1000/1000 [00:00&lt;00:00, 1072.52it/s, init loss: 3201.7393, avg. loss [951-1000]: 60.7879]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1334.71it/s, init loss: 2138.6682, avg. loss [951-1000]: 60.6515]
+100%|██████████| 1000/1000 [00:00&lt;00:00, 1365.18it/s, init loss: 962.7464, avg. loss [951-1000]: 67.4809]
+100%|██████████| 1000/1000 [00:00&lt;00:00, 1106.15it/s, init loss: 3201.7393, avg. loss [951-1000]: 60.7879]
 </pre>
 </div>
 </div>
@@ -2512,7 +2512,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1025.27it/s, init loss: 194.5655, avg. loss [951-1000]: 63.3271]
+<pre>100%|██████████| 1000/1000 [00:00&lt;00:00, 1067.98it/s, init loss: 194.5655, avg. loss [951-1000]: 63.3271]
 </pre>
 </div>
 </div>
