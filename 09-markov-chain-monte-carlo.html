@@ -42,7 +42,7 @@
 
 ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2022-01-03T17:20:09-06:00">
+<meta property="article:published_time" content="2023-05-05T19:49:25-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -93,13 +93,12 @@
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<div class="cell border-box-sizing text_cell rendered">
+    <div class="cell border-box-sizing text_cell rendered">
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="08-conditional-manatees.html">Chapter 8. Conditional Manatees</a> | <a href="10-big-entropy-and-the-generalized-linear-model.html">Chapter 10. Big Entropy and the Generalized Linear Model</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="08-conditional-manatees.html">Chapter 8. Conditional Manatees</a> | <a href="10-big-entropy-and-the-generalized-linear-model.html">Chapter 10. Big Entropy and the Generalized Linear Model</a> &gt;</p>
 
     </div>
     </div>
@@ -125,6 +124,7 @@
               <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" style="vertical-align:text-bottom"></a>
           </span>
         </div>
+
 </div>
 </div>
 </div>
@@ -153,6 +153,7 @@
 
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
@@ -289,7 +290,7 @@
 <div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">positions</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">rwidth</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">rwidth</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -341,7 +342,7 @@
 <span class="n">Y</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">MultivariateNormal</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">D</span><span class="p">))</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
     <span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">T</span><span class="p">,)</span>
 <span class="p">)</span>
-<span class="n">rad_dist</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">Y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">rad_dist</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">Y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">Rd</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">rad_dist</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">Rd</span><span class="p">,</span> <span class="n">bw</span><span class="o">=</span><span class="mf">0.18</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -427,8 +428,8 @@
 <span class="k">def</span> <span class="nf">U_gradient</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">muy</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">mux</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">G1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">muy</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">muy</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># dU/dmuy</span>
-    <span class="n">G2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mux</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">mux</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># dU/dmux</span>
+    <span class="n">G1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">muy</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">muy</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># dU/dmuy</span>
+    <span class="n">G2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mux</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">mux</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># dU/dmux</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="o">-</span><span class="n">G1</span><span class="p">,</span> <span class="o">-</span><span class="n">G2</span><span class="p">])</span>  <span class="c1"># negative bc energy is neg-log-prob</span>
 
 
@@ -489,9 +490,9 @@
     <span class="n">p</span> <span class="o">=</span> <span class="o">-</span><span class="n">p</span>
     <span class="c1"># Evaluate potential and kinetic energies at start and end of trajectory</span>
     <span class="n">current_U</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">current_q</span><span class="p">)</span>
-    <span class="n">current_K</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">current_p</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">current_K</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">current_p</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">proposed_U</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
-    <span class="n">proposed_K</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">proposed_K</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="c1"># Accept or reject the state at end of trajectory, returning either</span>
     <span class="c1"># the position at the end of the trajectory or the initial position</span>
     <span class="n">accept</span> <span class="o">=</span> <span class="mi">0</span>
@@ -536,7 +537,7 @@
         <span class="c1"># for fancy arrows</span>
         <span class="n">dx</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">dy</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
             <span class="s2">""</span><span class="p">,</span>
             <span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="s2">"traj"</span><span class="p">][</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
@@ -1080,16 +1081,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="d717e5a5-74d0-48ed-9f20-309d80b17de3"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d717e5a5-74d0-48ed-9f20-309d80b17de3');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1104,16 +1097,8 @@ var element = $('#d717e5a5-74d0-48ed-9f20-309d80b17de3');
 
 
 
-
- 
- 
-<div id="2a851cef-d8ae-4be1-8d27-0b748d48a7e2"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2a851cef-d8ae-4be1-8d27-0b748d48a7e2');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1128,16 +1113,8 @@ var element = $('#2a851cef-d8ae-4be1-8d27-0b748d48a7e2');
 
 
 
-
- 
- 
-<div id="a11d531c-889f-48bf-b5a5-8c144806b69c"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#a11d531c-889f-48bf-b5a5-8c144806b69c');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1152,16 +1129,8 @@ var element = $('#a11d531c-889f-48bf-b5a5-8c144806b69c');
 
 
 
-
- 
- 
-<div id="9bda02b7-732e-42d5-b75c-fcd3a48cc6f1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#9bda02b7-732e-42d5-b75c-fcd3a48cc6f1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1462,16 +1431,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="2814552f-77cc-409a-a2e6-30ed8edeea8f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2814552f-77cc-409a-a2e6-30ed8edeea8f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1486,16 +1447,8 @@ var element = $('#2814552f-77cc-409a-a2e6-30ed8edeea8f');
 
 
 
-
- 
- 
-<div id="9d207f8d-1a03-48a0-b8ec-390535177d07"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#9d207f8d-1a03-48a0-b8ec-390535177d07');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1510,16 +1463,8 @@ var element = $('#9d207f8d-1a03-48a0-b8ec-390535177d07');
 
 
 
-
- 
- 
-<div id="a4dbffd2-5cd3-428d-9faf-d45936858a2f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#a4dbffd2-5cd3-428d-9faf-d45936858a2f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1625,16 +1570,8 @@ Number of divergences: 102
 
 
 
-
- 
- 
-<div id="a24c958c-95a9-4593-9d29-9177371e0c25"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#a24c958c-95a9-4593-9d29-9177371e0c25');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1649,16 +1586,8 @@ var element = $('#a24c958c-95a9-4593-9d29-9177371e0c25');
 
 
 
-
- 
- 
-<div id="7dfbaca9-e4db-453e-941b-decdc562940d"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#7dfbaca9-e4db-453e-941b-decdc562940d');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1673,16 +1602,8 @@ var element = $('#7dfbaca9-e4db-453e-941b-decdc562940d');
 
 
 
-
- 
- 
-<div id="6a9a477e-8c2c-4f32-8548-5bde0bd33b37"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#6a9a477e-8c2c-4f32-8548-5bde0bd33b37');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1761,7 +1682,7 @@ Number of divergences: 1
 <span class="n">m9_4</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">"There were </span><span class="si">{}</span><span class="s2"> transitions that exceeded the maximum treedepth."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">m9_4</span><span class="o">.</span><span class="n">get_extra_fields</span><span class="p">()[</span><span class="s2">"num_steps"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="p">(</span><span class="n">m9_4</span><span class="o">.</span><span class="n">get_extra_fields</span><span class="p">()[</span><span class="s2">"num_steps"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
@@ -1784,16 +1705,8 @@ Number of divergences: 1
 
 
 
-
- 
- 
-<div id="95c6b03a-d1e8-4df9-a209-ac1b9f0d15d5"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#95c6b03a-d1e8-4df9-a209-ac1b9f0d15d5');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1808,16 +1721,8 @@ var element = $('#95c6b03a-d1e8-4df9-a209-ac1b9f0d15d5');
 
 
 
-
- 
- 
-<div id="3a8274ce-a9fc-4d0d-9788-5f21b3a95a4f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#3a8274ce-a9fc-4d0d-9788-5f21b3a95a4f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1832,16 +1737,8 @@ var element = $('#3a8274ce-a9fc-4d0d-9788-5f21b3a95a4f');
 
 
 
-
- 
- 
-<div id="8cc1d22c-65d7-4a55-b0d9-f1e4f05a6674"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#8cc1d22c-65d7-4a55-b0d9-f1e4f05a6674');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1917,16 +1814,8 @@ There were 1145 transitions that exceeded the maximum treedepth.
 
 
 
-
- 
- 
-<div id="38ec11cb-4169-434a-91dc-55369946a121"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#38ec11cb-4169-434a-91dc-55369946a121');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1941,16 +1830,8 @@ var element = $('#38ec11cb-4169-434a-91dc-55369946a121');
 
 
 
-
- 
- 
-<div id="77beebb7-8acf-4ac7-85c4-c31e512f16d3"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#77beebb7-8acf-4ac7-85c4-c31e512f16d3');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1965,16 +1846,8 @@ var element = $('#77beebb7-8acf-4ac7-85c4-c31e512f16d3');
 
 
 
-
- 
- 
-<div id="da1ce6ae-9f27-4138-b749-fc7975a3d7cc"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#da1ce6ae-9f27-4138-b749-fc7975a3d7cc');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2117,16 +1990,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="d94b9cce-e40b-4c2f-ad95-49ee8792d6d1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d94b9cce-e40b-4c2f-ad95-49ee8792d6d1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2141,16 +2006,8 @@ var element = $('#d94b9cce-e40b-4c2f-ad95-49ee8792d6d1');
 
 
 
-
- 
- 
-<div id="02d38716-18fc-4876-b398-feb2b881aade"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#02d38716-18fc-4876-b398-feb2b881aade');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2165,16 +2022,8 @@ var element = $('#02d38716-18fc-4876-b398-feb2b881aade');
 
 
 
-
- 
- 
-<div id="3460a160-ec79-480e-96df-0f2ff714ff72"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#3460a160-ec79-480e-96df-0f2ff714ff72');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2189,16 +2038,8 @@ var element = $('#3460a160-ec79-480e-96df-0f2ff714ff72');
 
 
 
-
- 
- 
-<div id="43e2ef43-9b9c-4979-ab4a-ca4828cb6f65"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#43e2ef43-9b9c-4979-ab4a-ca4828cb6f65');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2257,16 +2098,8 @@ var element = $('#43e2ef43-9b9c-4979-ab4a-ca4828cb6f65');
 
 
 
-
- 
- 
-<div id="471e199d-4e5b-4bf8-8065-a4a176e17ec8"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#471e199d-4e5b-4bf8-8065-a4a176e17ec8');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2281,16 +2114,8 @@ var element = $('#471e199d-4e5b-4bf8-8065-a4a176e17ec8');
 
 
 
-
- 
- 
-<div id="7b0d87c4-fa15-4f4e-a145-69b7989a9225"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#7b0d87c4-fa15-4f4e-a145-69b7989a9225');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2305,16 +2130,8 @@ var element = $('#7b0d87c4-fa15-4f4e-a145-69b7989a9225');
 
 
 
-
- 
- 
-<div id="1534462e-c996-49bb-a7c4-9ec0df7edf30"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#1534462e-c996-49bb-a7c4-9ec0df7edf30');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2329,16 +2146,8 @@ var element = $('#1534462e-c996-49bb-a7c4-9ec0df7edf30');
 
 
 
-
- 
- 
-<div id="f56705d2-e94e-4e3c-adf0-a2f1ac3b31df"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#f56705d2-e94e-4e3c-adf0-a2f1ac3b31df');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2351,22 +2160,22 @@ var element = $('#f56705d2-e94e-4e3c-adf0-a2f1ac3b31df');
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="08-conditional-manatees.html">Chapter 8. Conditional Manatees</a> | <a href="10-big-entropy-and-the-generalized-linear-model.html">Chapter 10. Big Entropy and the Generalized Linear Model</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="08-conditional-manatees.html">Chapter 8. Conditional Manatees</a> | <a href="10-big-entropy-and-the-generalized-linear-model.html">Chapter 10. Big Entropy and the Generalized Linear Model</a> &gt;</p>
 
     </div>
     </div>
     </div>
     </div>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {}, "version_major": 2, "version_minor": 0}
+</script>
 </div>
-</div></article>
-</div>
-</div>
-</body>
-</html><html>
-<section class="comments"><h2>Comments</h2>
+        <section class="comments"><h2>Comments</h2>
         
-        
+    
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="fehiepsi-github-io",
@@ -2388,13 +2197,18 @@ var element = $('#f56705d2-e94e-4e3c-adf0-a2f1ac3b31df');
 
         </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script><!--End of body content--><footer id="footer">
-            Contents © 2022         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2023         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
             
-        </footer><script src="/assets/js/all-nocdn.js"></script><script>
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
@@ -2405,5 +2219,5 @@ var element = $('#f56705d2-e94e-4e3c-adf0-a2f1ac3b31df');
 
   gtag('config', 'UA-131299125-1');
 </script>
+</body>
 </html>
-

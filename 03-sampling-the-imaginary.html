@@ -44,12 +44,13 @@
 
 
 
+
 In [ ]:
 
     
-!">
+">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-10-24T11:34:23-05:00">
+<meta property="article:published_time" content="2023-05-05T19:49:24-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -100,13 +101,12 @@ In [ ]:
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<div class="cell border-box-sizing text_cell rendered">
+    <div class="cell border-box-sizing text_cell rendered">
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="02-small-worlds-and-large-worlds.html">Chapter 2. Small Worlds and Large Worlds</a> | <a href="04-geocentric-models.html">Chapter 4. Geocentric Models</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="02-small-worlds-and-large-worlds.html">Chapter 2. Small Worlds and Large Worlds</a> | <a href="04-geocentric-models.html">Chapter 4. Geocentric Models</a> &gt;</p>
 
     </div>
     </div>
@@ -132,6 +132,7 @@ In [ ]:
               <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" style="vertical-align:text-bottom"></a>
           </span>
         </div>
+
 </div>
 </div>
 </div>
@@ -157,6 +158,7 @@ In [ ]:
 
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span>
 
@@ -1178,7 +1180,7 @@ In [ ]:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dummy_w</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">total_count</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">probs</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">100000</span><span class="p">,))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_dist</span><span class="p">(</span><span class="n">dummy_w</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"hist"</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"rwidth"</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_dist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dummy_w</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"hist"</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"rwidth"</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"dummy water count"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1393,22 +1395,22 @@ In [ ]:
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="02-small-worlds-and-large-worlds.html">Chapter 2. Small Worlds and Large Worlds</a> | <a href="04-geocentric-models.html">Chapter 4. Geocentric Models</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="02-small-worlds-and-large-worlds.html">Chapter 2. Small Worlds and Large Worlds</a> | <a href="04-geocentric-models.html">Chapter 4. Geocentric Models</a> &gt;</p>
 
     </div>
     </div>
     </div>
     </div>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {}, "version_major": 2, "version_minor": 0}
+</script>
 </div>
-</div></article>
-</div>
-</div>
-</body>
-</html><html>
-<section class="comments"><h2>Comments</h2>
+        <section class="comments"><h2>Comments</h2>
         
-        
+    
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="fehiepsi-github-io",
@@ -1430,13 +1432,18 @@ In [ ]:
 
         </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script><!--End of body content--><footer id="footer">
-            Contents © 2022         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2023         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
             
-        </footer><script src="/assets/js/all-nocdn.js"></script><script>
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
@@ -1447,5 +1454,5 @@ In [ ]:
 
   gtag('config', 'UA-131299125-1');
 </script>
+</body>
 </html>
-

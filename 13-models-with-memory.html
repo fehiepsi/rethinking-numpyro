@@ -44,12 +44,12 @@
 
 
 
+
 In [ ]:
 
-    
-">
+    ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-10-24T11:34:25-05:00">
+<meta property="article:published_time" content="2023-05-05T19:49:25-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -100,13 +100,12 @@ In [ ]:
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<div class="cell border-box-sizing text_cell rendered">
+    <div class="cell border-box-sizing text_cell rendered">
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="12-monsters-and-mixtures.html">Chapter 12. Monsters and Mixtures</a> | <a href="14-adventures-in-covariance.html">Chapter 14. Adventures in Covariance</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="12-monsters-and-mixtures.html">Chapter 12. Monsters and Mixtures</a> | <a href="14-adventures-in-covariance.html">Chapter 14. Adventures in Covariance</a> &gt;</p>
 
     </div>
     </div>
@@ -132,6 +131,7 @@ In [ ]:
               <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" style="vertical-align:text-bottom"></a>
           </span>
         </div>
+
 </div>
 </div>
 </div>
@@ -221,8 +221,7 @@ In [ ]:
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -288,8 +287,7 @@ In [ ]:
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -316,6 +314,7 @@ In [ ]:
 <span class="n">d</span><span class="p">[</span><span class="s2">"tank"</span><span class="p">]</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="n">dat</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">surv</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">density</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">tank</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">tank</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
 
 <span class="c1"># approximate posterior</span>
 <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">tank</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
@@ -346,16 +345,8 @@ In [ ]:
 
 
 
-
- 
- 
-<div id="f31e4afd-c0b5-4eeb-a77d-cb5f14a878ed"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#f31e4afd-c0b5-4eeb-a77d-cb5f14a878ed');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "16f40dccda04471cb23cf10bbedabc7a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -370,16 +361,8 @@ var element = $('#f31e4afd-c0b5-4eeb-a77d-cb5f14a878ed');
 
 
 
-
- 
- 
-<div id="e0517a28-dba7-4c87-9e2b-585be9ee1786"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#e0517a28-dba7-4c87-9e2b-585be9ee1786');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2f4d0b2f45ed4dad8b40be5de3d864d2", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -394,16 +377,8 @@ var element = $('#e0517a28-dba7-4c87-9e2b-585be9ee1786');
 
 
 
-
- 
- 
-<div id="663b7ce4-aa28-4c41-918b-27d327440ce1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#663b7ce4-aa28-4c41-918b-27d327440ce1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "e9214d10c40749bdaeb0bd94a6692a2e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -418,16 +393,8 @@ var element = $('#663b7ce4-aa28-4c41-918b-27d327440ce1');
 
 
 
-
- 
- 
-<div id="62550709-554a-4c5f-87ef-2c30656a7d74"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#62550709-554a-4c5f-87ef-2c30656a7d74');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c9df1c0e64b94baeb22a3961dede9dcc", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -481,16 +448,8 @@ var element = $('#62550709-554a-4c5f-87ef-2c30656a7d74');
 
 
 
-
- 
- 
-<div id="98d28764-f0e2-4225-97cd-2b957f098c1f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#98d28764-f0e2-4225-97cd-2b957f098c1f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2ff9cb0094984a22b09d43672f305066", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -505,16 +464,8 @@ var element = $('#98d28764-f0e2-4225-97cd-2b957f098c1f');
 
 
 
-
- 
- 
-<div id="09d3cf6d-a4b2-462c-9d60-dcf5f4cad3cf"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#09d3cf6d-a4b2-462c-9d60-dcf5f4cad3cf');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "4e5e0bf19668489ea49baf0a9b95e17c", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -529,16 +480,8 @@ var element = $('#09d3cf6d-a4b2-462c-9d60-dcf5f4cad3cf');
 
 
 
-
- 
- 
-<div id="8d1103a5-d694-4e60-b0c0-6fe651f7a854"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#8d1103a5-d694-4e60-b0c0-6fe651f7a854');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "579ac158e9424633aa38fcabd07aaec6", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -553,16 +496,8 @@ var element = $('#8d1103a5-d694-4e60-b0c0-6fe651f7a854');
 
 
 
-
- 
- 
-<div id="2ce20dee-5fa8-4098-94a5-bcf940675519"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2ce20dee-5fa8-4098-94a5-bcf940675519');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "075b7c617d4b417da9687c879554e659", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -628,8 +563,7 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -683,8 +617,7 @@ See http://arxiv.org/abs/1507.04544 for details
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -1060,16 +993,8 @@ See http://arxiv.org/abs/1507.04544 for details
 
 
 
-
- 
- 
-<div id="669db8c5-8376-47ec-bea7-ef04050edab4"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#669db8c5-8376-47ec-bea7-ef04050edab4');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "0ff063349e744370afbc9988791a7c67", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1084,16 +1009,8 @@ var element = $('#669db8c5-8376-47ec-bea7-ef04050edab4');
 
 
 
-
- 
- 
-<div id="73e31052-28b5-4211-9a17-488e1a455b05"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#73e31052-28b5-4211-9a17-488e1a455b05');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1fd9da563a954219bea47561ac36ebea", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1108,16 +1025,8 @@ var element = $('#73e31052-28b5-4211-9a17-488e1a455b05');
 
 
 
-
- 
- 
-<div id="29c7e958-2fc1-47b7-b1be-113180953794"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#29c7e958-2fc1-47b7-b1be-113180953794');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b3d0b10ebb5c4b779563a780d608b24a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1132,16 +1041,8 @@ var element = $('#29c7e958-2fc1-47b7-b1be-113180953794');
 
 
 
-
- 
- 
-<div id="97826fdf-e573-4e82-b098-404ddaa2eeab"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#97826fdf-e573-4e82-b098-404ddaa2eeab');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a68246c63af444ae82b9ed9733dbaa96", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1481,16 +1382,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="647664c3-a0ae-456f-8d8b-9903df305e07"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#647664c3-a0ae-456f-8d8b-9903df305e07');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1aa01cf0b87349d889d271d2b1a3242d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1505,16 +1398,8 @@ var element = $('#647664c3-a0ae-456f-8d8b-9903df305e07');
 
 
 
-
- 
- 
-<div id="bc27c182-149a-4835-9507-0b4451a6538f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bc27c182-149a-4835-9507-0b4451a6538f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a2a0a669cc5b41a08f9988d42dcf9cae", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1529,16 +1414,8 @@ var element = $('#bc27c182-149a-4835-9507-0b4451a6538f');
 
 
 
-
- 
- 
-<div id="ccd92773-a21f-4421-8e91-535606304fc1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#ccd92773-a21f-4421-8e91-535606304fc1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a3eff3961ab24edf85a68333f91566ed", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1553,16 +1430,8 @@ var element = $('#ccd92773-a21f-4421-8e91-535606304fc1');
 
 
 
-
- 
- 
-<div id="c241c3d8-ab79-4e56-9a39-f168b5c5e86f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#c241c3d8-ab79-4e56-9a39-f168b5c5e86f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "9d833c6daba646e1a701ba90f05fe488", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1652,16 +1521,8 @@ var element = $('#c241c3d8-ab79-4e56-9a39-f168b5c5e86f');
 
 
 
-
- 
- 
-<div id="44ac0b92-07c9-44be-a605-59d6b8f29a83"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#44ac0b92-07c9-44be-a605-59d6b8f29a83');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ebfb5bd45d744df584607eb6e1b092c8", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1676,16 +1537,8 @@ var element = $('#44ac0b92-07c9-44be-a605-59d6b8f29a83');
 
 
 
-
- 
- 
-<div id="d8522715-c3e9-45f3-a45f-a8d02bdaa4a1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d8522715-c3e9-45f3-a45f-a8d02bdaa4a1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2a53b34c765d4eb7abbf2b516a77feb8", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1700,16 +1553,8 @@ var element = $('#d8522715-c3e9-45f3-a45f-a8d02bdaa4a1');
 
 
 
-
- 
- 
-<div id="2a761e9d-fc43-4686-9c04-634ccfb5fea4"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2a761e9d-fc43-4686-9c04-634ccfb5fea4');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "5777b61f605a4a4d900c94e6512e6f86", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1724,16 +1569,8 @@ var element = $('#2a761e9d-fc43-4686-9c04-634ccfb5fea4');
 
 
 
-
- 
- 
-<div id="c85bfc76-9204-4d75-a1a1-147893ec698b"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#c85bfc76-9204-4d75-a1a1-147893ec698b');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2e062b1bdbce4b7ea1d5ae6fd436942e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1893,16 +1730,8 @@ Number of divergences: 7
 
 
 
-
- 
- 
-<div id="d0e9dbda-f2c8-43c8-8fd9-2a38e42f35dd"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d0e9dbda-f2c8-43c8-8fd9-2a38e42f35dd');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ce50e5b3aac749009d018fc0c99aad6a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1917,16 +1746,8 @@ var element = $('#d0e9dbda-f2c8-43c8-8fd9-2a38e42f35dd');
 
 
 
-
- 
- 
-<div id="5d31dde6-2501-4f61-a997-4db283a53037"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#5d31dde6-2501-4f61-a997-4db283a53037');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a2b6afe8815e424cb9acd7eaa279f128", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1941,16 +1762,8 @@ var element = $('#5d31dde6-2501-4f61-a997-4db283a53037');
 
 
 
-
- 
- 
-<div id="bd86bd95-4280-4675-8834-5ab2565a40cf"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bd86bd95-4280-4675-8834-5ab2565a40cf');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ef58b82922b1442895852a7aaef92e74", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1965,16 +1778,8 @@ var element = $('#bd86bd95-4280-4675-8834-5ab2565a40cf');
 
 
 
-
- 
- 
-<div id="75da04d9-e941-4ab5-927e-2ae43a21e654"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#75da04d9-e941-4ab5-927e-2ae43a21e654');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a29c399b7c5e4dd0933836f1810e5679", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2036,8 +1841,7 @@ var element = $('#75da04d9-e941-4ab5-927e-2ae43a21e654');
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -2091,8 +1895,7 @@ var element = $('#75da04d9-e941-4ab5-927e-2ae43a21e654');
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -2154,16 +1957,8 @@ var element = $('#75da04d9-e941-4ab5-927e-2ae43a21e654');
 
 
 
-
- 
- 
-<div id="b547e3d7-f220-4ecc-b304-28569a8be444"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#b547e3d7-f220-4ecc-b304-28569a8be444');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b93a66d90e3145f3b4239eaa7e85b00e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2178,16 +1973,8 @@ var element = $('#b547e3d7-f220-4ecc-b304-28569a8be444');
 
 
 
-
- 
- 
-<div id="55da622d-3023-44c2-bc1e-02286ee00364"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#55da622d-3023-44c2-bc1e-02286ee00364');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "06c1c27107e44f4cafbc37c94f64a7af", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2202,16 +1989,8 @@ var element = $('#55da622d-3023-44c2-bc1e-02286ee00364');
 
 
 
-
- 
- 
-<div id="fcb9a6e6-cc82-4108-8db6-05437572586b"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#fcb9a6e6-cc82-4108-8db6-05437572586b');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ff4201d1e36b4f96b07949769c47cb80", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2226,16 +2005,8 @@ var element = $('#fcb9a6e6-cc82-4108-8db6-05437572586b');
 
 
 
-
- 
- 
-<div id="958f2a2f-4515-46c5-869d-6e20f0e42641"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#958f2a2f-4515-46c5-869d-6e20f0e42641');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2c66a5d7b74c476f85ce14d34cff8119", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2318,16 +2089,8 @@ var element = $('#958f2a2f-4515-46c5-869d-6e20f0e42641');
 
 
 
-
- 
- 
-<div id="828bf63b-d112-43e3-8c40-6a5d8ab514bf"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#828bf63b-d112-43e3-8c40-6a5d8ab514bf');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "92406c5eb23f40d3a217833df2a31a4e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2342,16 +2105,8 @@ var element = $('#828bf63b-d112-43e3-8c40-6a5d8ab514bf');
 
 
 
-
- 
- 
-<div id="75f4731b-9d2e-4c04-9fd5-9b1cd5c06cfb"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#75f4731b-9d2e-4c04-9fd5-9b1cd5c06cfb');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "4e64f6997eaf4dac96a6f8d38c494e87", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2366,16 +2121,8 @@ var element = $('#75f4731b-9d2e-4c04-9fd5-9b1cd5c06cfb');
 
 
 
-
- 
- 
-<div id="fbc6004e-2929-4b48-a362-fa10e07d68df"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#fbc6004e-2929-4b48-a362-fa10e07d68df');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "67f0cadebcbe4125b47cfcf0b0641348", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2390,16 +2137,8 @@ var element = $('#fbc6004e-2929-4b48-a362-fa10e07d68df');
 
 
 
-
- 
- 
-<div id="bd4cdba6-ff1d-4c00-b340-dad71eb641f8"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bd4cdba6-ff1d-4c00-b340-dad71eb641f8');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1e5500f20edd4fb6bc42d34205fddc17", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2471,16 +2210,8 @@ Number of divergences: 201
 
 
 
-
- 
- 
-<div id="2f5aca11-7f35-4671-818b-f9bb48df8745"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2f5aca11-7f35-4671-818b-f9bb48df8745');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "aded23913a6845e4816acf635c0ba397", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2495,16 +2226,8 @@ var element = $('#2f5aca11-7f35-4671-818b-f9bb48df8745');
 
 
 
-
- 
- 
-<div id="22e56ac3-5579-408a-8617-f66dd8e1e609"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#22e56ac3-5579-408a-8617-f66dd8e1e609');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "98a9a208903d4b57998d44647eff36f5", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2519,16 +2242,8 @@ var element = $('#22e56ac3-5579-408a-8617-f66dd8e1e609');
 
 
 
-
- 
- 
-<div id="eb78a1f7-196d-4124-ac2e-0b5853e78ed7"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#eb78a1f7-196d-4124-ac2e-0b5853e78ed7');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "792d6c4ac3654a22a6c9522075ea0f90", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2543,16 +2258,8 @@ var element = $('#eb78a1f7-196d-4124-ac2e-0b5853e78ed7');
 
 
 
-
- 
- 
-<div id="c21583ba-981b-4143-bbf6-9925ce0e19cd"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#c21583ba-981b-4143-bbf6-9925ce0e19cd');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "3dce091e26724d549f642957084a4795", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2624,16 +2331,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="2162a4cd-eb48-42df-b390-37ed22d9d286"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2162a4cd-eb48-42df-b390-37ed22d9d286');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "71f7c86ed00645c9a8d518c48cfb88b6", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2648,16 +2347,8 @@ var element = $('#2162a4cd-eb48-42df-b390-37ed22d9d286');
 
 
 
-
- 
- 
-<div id="0f7663bf-7f9c-4737-9de6-9b4faee52ef4"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#0f7663bf-7f9c-4737-9de6-9b4faee52ef4');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6dc6d03d838d4f2ca9a50d3585e99e0b", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2672,16 +2363,8 @@ var element = $('#0f7663bf-7f9c-4737-9de6-9b4faee52ef4');
 
 
 
-
- 
- 
-<div id="38c56574-8933-49c7-a354-a1732698af6a"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#38c56574-8933-49c7-a354-a1732698af6a');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "264b77e1e6cc4a18ad3d6f246171448d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2696,16 +2379,8 @@ var element = $('#38c56574-8933-49c7-a354-a1732698af6a');
 
 
 
-
- 
- 
-<div id="d54b42ad-ff0a-454d-ad45-ead880a06ee3"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d54b42ad-ff0a-454d-ad45-ead880a06ee3');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "90117906da6c41f7abf0cec243a8516a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2779,16 +2454,8 @@ var element = $('#d54b42ad-ff0a-454d-ad45-ead880a06ee3');
 
 
 
-
- 
- 
-<div id="bd6d7664-8431-40a9-b14e-d6819af85526"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bd6d7664-8431-40a9-b14e-d6819af85526');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "af1617d99e164bdc8a0f50988e9389d3", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2803,16 +2470,8 @@ var element = $('#bd6d7664-8431-40a9-b14e-d6819af85526');
 
 
 
-
- 
- 
-<div id="0da6e6de-efac-4bfd-bf2a-71b23d4a7616"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#0da6e6de-efac-4bfd-bf2a-71b23d4a7616');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "165bd0558d434d669b3d1aeb2188d3d3", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2827,16 +2486,8 @@ var element = $('#0da6e6de-efac-4bfd-bf2a-71b23d4a7616');
 
 
 
-
- 
- 
-<div id="6227d20b-f188-4644-8fe4-67946c006df5"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#6227d20b-f188-4644-8fe4-67946c006df5');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "eb37291d3d664534a36e7566174b530d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2851,16 +2502,8 @@ var element = $('#6227d20b-f188-4644-8fe4-67946c006df5');
 
 
 
-
- 
- 
-<div id="bb146b40-843c-4669-bc03-e24dee3c7e12"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6b4575a617514d27bd43a78aadd1f701", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2899,11 +2542,11 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">neff_c</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">k</span><span class="p">:</span> <span class="n">effective_sample_size</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">k</span><span class="p">:</span> <span class="n">effective_sample_size</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">m13_4</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="n">group_by_chain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="p">}</span>
 <span class="n">neff_nc</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">k</span><span class="p">:</span> <span class="n">effective_sample_size</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">k</span><span class="p">:</span> <span class="n">effective_sample_size</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">m13_4nc</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="n">group_by_chain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="p">}</span>
 <span class="n">par_names</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2938,8 +2581,7 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -3062,8 +2704,7 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -3526,22 +3167,22 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="12-monsters-and-mixtures.html">Chapter 12. Monsters and Mixtures</a> | <a href="14-adventures-in-covariance.html">Chapter 14. Adventures in Covariance</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="12-monsters-and-mixtures.html">Chapter 12. Monsters and Mixtures</a> | <a href="14-adventures-in-covariance.html">Chapter 14. Adventures in Covariance</a> &gt;</p>
 
     </div>
     </div>
     </div>
     </div>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {}, "version_major": 2, "version_minor": 0}
+</script>
 </div>
-</div></article>
-</div>
-</div>
-</body>
-</html><html>
-<section class="comments"><h2>Comments</h2>
+        <section class="comments"><h2>Comments</h2>
         
-        
+    
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="fehiepsi-github-io",
@@ -3563,13 +3204,18 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
 
         </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script><!--End of body content--><footer id="footer">
-            Contents © 2022         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2023         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
             
-        </footer><script src="/assets/js/all-nocdn.js"></script><script>
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
@@ -3580,5 +3226,5 @@ var element = $('#bb146b40-843c-4669-bc03-e24dee3c7e12');
 
   gtag('config', 'UA-131299125-1');
 </script>
+</body>
 </html>
-

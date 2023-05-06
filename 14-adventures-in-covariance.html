@@ -44,9 +44,10 @@
 
 
 
-In [ ">
+
+In [">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2022-01-04T00:53:30-06:00">
+<meta property="article:published_time" content="2023-05-05T19:49:25-05:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -97,13 +98,12 @@ In [ ">
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<div class="cell border-box-sizing text_cell rendered">
+    <div class="cell border-box-sizing text_cell rendered">
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="13-models-with-memory.html">Chapter 13. Models With Memory</a> | <a href="15-missing-data-and-other-opportunities.html">Chapter 15. Missing Data and Other Opportunities</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="13-models-with-memory.html">Chapter 13. Models With Memory</a> | <a href="15-missing-data-and-other-opportunities.html">Chapter 15. Missing Data and Other Opportunities</a> &gt;</p>
 
     </div>
     </div>
@@ -129,6 +129,7 @@ In [ ">
               <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" style="vertical-align:text-bottom"></a>
           </span>
         </div>
+
 </div>
 </div>
 </div>
@@ -155,6 +156,7 @@ In [ ">
 
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">causalgraphicalmodels</span> <span class="kn">import</span> <span class="n">CausalGraphicalModel</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">set_matplotlib_formats</span>
@@ -248,7 +250,7 @@ In [ ">
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cov_ab</span> <span class="o">=</span> <span class="n">sigma_a</span> <span class="o">*</span> <span class="n">sigma_b</span> <span class="o">*</span> <span class="n">rho</span>
-<span class="n">Sigma</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sigma_a</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cov_ab</span><span class="p">],</span> <span class="p">[</span><span class="n">cov_ab</span><span class="p">,</span> <span class="n">sigma_b</span> <span class="o">**</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sigma_a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">cov_ab</span><span class="p">],</span> <span class="p">[</span><span class="n">cov_ab</span><span class="p">,</span> <span class="n">sigma_b</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
 </pre></div>
 
     </div>
@@ -597,16 +599,8 @@ In [ ">
 
 
 
-
- 
- 
-<div id="3b21e68e-3595-41c6-8319-eae2d71fda3b"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#3b21e68e-3595-41c6-8319-eae2d71fda3b');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c86fe5d3db464a3daa797f983fef1a68", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -621,16 +615,8 @@ var element = $('#3b21e68e-3595-41c6-8319-eae2d71fda3b');
 
 
 
-
- 
- 
-<div id="4cebf9e7-d718-4143-857b-86b79818bc68"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#4cebf9e7-d718-4143-857b-86b79818bc68');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c0d22c6dd4a64ea8b7be0225b555b8eb", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -645,16 +631,8 @@ var element = $('#4cebf9e7-d718-4143-857b-86b79818bc68');
 
 
 
-
- 
- 
-<div id="416fa579-c05c-43cd-b8bf-001b67df17fa"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#416fa579-c05c-43cd-b8bf-001b67df17fa');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1c6eb5c4c47e4dce86de47204f1d9213", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -669,16 +647,8 @@ var element = $('#416fa579-c05c-43cd-b8bf-001b67df17fa');
 
 
 
-
- 
- 
-<div id="c1a5cca2-36b4-4ade-93f5-09b233c9236d"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#c1a5cca2-36b4-4ade-93f5-09b233c9236d');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "205acb9dd53849bfb7c5acd5d5dafcfa", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -829,7 +799,7 @@ var element = $('#c1a5cca2-36b4-4ade-93f5-09b233c9236d');
 <span class="n">sa_est</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">post</span><span class="p">[</span><span class="s2">"sigma_cafe"</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">sb_est</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">post</span><span class="p">[</span><span class="s2">"sigma_cafe"</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">cov_ab</span> <span class="o">=</span> <span class="n">sa_est</span> <span class="o">*</span> <span class="n">sb_est</span> <span class="o">*</span> <span class="n">rho_est</span>
-<span class="n">Sigma_est</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sa_est</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cov_ab</span><span class="p">],</span> <span class="p">[</span><span class="n">cov_ab</span><span class="p">,</span> <span class="n">sb_est</span> <span class="o">**</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">Sigma_est</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sa_est</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">cov_ab</span><span class="p">],</span> <span class="p">[</span><span class="n">cov_ab</span><span class="p">,</span> <span class="n">sb_est</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
 
 <span class="c1"># draw contours</span>
 <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">]:</span>
@@ -1088,16 +1058,8 @@ var element = $('#c1a5cca2-36b4-4ade-93f5-09b233c9236d');
 
 
 
-
- 
- 
-<div id="aabb1ac0-4296-4c61-9c0c-25150e3cf5d4"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#aabb1ac0-4296-4c61-9c0c-25150e3cf5d4');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "73b9de5a25374f75a3cf3dec6d2ea80e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1112,16 +1074,8 @@ var element = $('#aabb1ac0-4296-4c61-9c0c-25150e3cf5d4');
 
 
 
-
- 
- 
-<div id="e067669a-27a8-422d-8ae1-45ed3b4caa8f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#e067669a-27a8-422d-8ae1-45ed3b4caa8f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "23689344c2c4495d83e8c7de0f368ce0", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1136,16 +1090,8 @@ var element = $('#e067669a-27a8-422d-8ae1-45ed3b4caa8f');
 
 
 
-
- 
- 
-<div id="d13979a9-4360-4c87-b556-73cf5a73adeb"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d13979a9-4360-4c87-b556-73cf5a73adeb');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "782fb89328f24fcab76abaa0befd7c33", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1160,16 +1106,8 @@ var element = $('#d13979a9-4360-4c87-b556-73cf5a73adeb');
 
 
 
-
- 
- 
-<div id="dc8ab27b-00a6-44f3-b8e5-c0e4a3608c26"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#dc8ab27b-00a6-44f3-b8e5-c0e4a3608c26');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "27001e4da5ee49e39bfc57d59d5d27ef", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1258,16 +1196,8 @@ var element = $('#dc8ab27b-00a6-44f3-b8e5-c0e4a3608c26');
 
 
 
-
- 
- 
-<div id="275a61be-e808-4f90-99e3-8be4eaa6db1e"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#275a61be-e808-4f90-99e3-8be4eaa6db1e');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ef9d61cb19db4816abd5209aede2213a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1282,16 +1212,8 @@ var element = $('#275a61be-e808-4f90-99e3-8be4eaa6db1e');
 
 
 
-
- 
- 
-<div id="71c5e6c2-d53c-405f-a79f-4e321e7f2fd8"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#71c5e6c2-d53c-405f-a79f-4e321e7f2fd8');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "369d799707f949958db610936366d16f", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1306,16 +1228,8 @@ var element = $('#71c5e6c2-d53c-405f-a79f-4e321e7f2fd8');
 
 
 
-
- 
- 
-<div id="96a8a558-6575-41f1-9e73-cb10c9a8f10a"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#96a8a558-6575-41f1-9e73-cb10c9a8f10a');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a70a4526eab04a05add6a9144f74cb97", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1330,16 +1244,8 @@ var element = $('#96a8a558-6575-41f1-9e73-cb10c9a8f10a');
 
 
 
-
- 
- 
-<div id="f6776b7e-9a1e-4d12-abac-3745515b35ce"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#f6776b7e-9a1e-4d12-abac-3745515b35ce');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "392e6f3a3a2c483e9b44629ff0555486", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1382,11 +1288,11 @@ var element = $('#f6776b7e-9a1e-4d12-abac-3745515b35ce');
 <span class="n">post_nc</span> <span class="o">=</span> <span class="n">Predictive</span><span class="p">(</span><span class="n">m14_3</span><span class="o">.</span><span class="n">sampler</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">post_nc</span><span class="p">)(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">link</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">dat</span><span class="p">)</span>
 <span class="n">post_nc</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">post_nc</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 <span class="n">neff_nc</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">effective_sample_size</span><span class="p">(</span><span class="n">post_nc</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="s2">"beta"</span><span class="p">]]</span>
+    <span class="p">[</span><span class="n">effective_sample_size</span><span class="p">(</span><span class="n">post_nc</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="s2">"beta"</span><span class="p">]]</span>
 <span class="p">)</span>
 <span class="n">post_c</span> <span class="o">=</span> <span class="n">m14_2</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="n">group_by_chain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">neff_c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">effective_sample_size</span><span class="p">(</span><span class="n">post_c</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="s2">"beta"</span><span class="p">]]</span>
+    <span class="p">[</span><span class="n">effective_sample_size</span><span class="p">(</span><span class="n">post_c</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="s2">"beta"</span><span class="p">]]</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neff_c</span><span class="p">,</span> <span class="n">neff_nc</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">mfc</span><span class="o">=</span><span class="s2">"none"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"centered (default)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"non-centered (cholesky)"</span><span class="p">)</span>
@@ -1689,16 +1595,8 @@ sigma_block[3]      0.47      0.35      0.41      0.00      0.91   1316.58      
 
 
 
-
- 
- 
-<div id="e49fc66d-55a0-4b17-bff6-7f300f6d9613"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#e49fc66d-55a0-4b17-bff6-7f300f6d9613');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "108efd1941cd4aafaeeb8077c7d048ed", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1713,16 +1611,8 @@ var element = $('#e49fc66d-55a0-4b17-bff6-7f300f6d9613');
 
 
 
-
- 
- 
-<div id="4f778363-8ad7-4484-9e62-df84bd2a9a14"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#4f778363-8ad7-4484-9e62-df84bd2a9a14');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d57df3d5cef541479bfbe4569096f56a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1737,16 +1627,8 @@ var element = $('#4f778363-8ad7-4484-9e62-df84bd2a9a14');
 
 
 
-
- 
- 
-<div id="bdbe6eb7-55f9-490e-82e6-8162cfd1aa16"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#bdbe6eb7-55f9-490e-82e6-8162cfd1aa16');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ae5061818b7c4c77968e1a5db60fbe58", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1761,16 +1643,8 @@ var element = $('#bdbe6eb7-55f9-490e-82e6-8162cfd1aa16');
 
 
 
-
- 
- 
-<div id="cee93ab0-855b-489e-a125-862d61c5e871"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#cee93ab0-855b-489e-a125-862d61c5e871');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "9a6efd39fe804ecaaff46bf9abd2a54d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1846,16 +1720,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="7e941e62-40aa-485e-9c67-8f1fdca323de"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#7e941e62-40aa-485e-9c67-8f1fdca323de');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8068fbcaf5c1437b852971cfd993a434", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1870,16 +1736,8 @@ var element = $('#7e941e62-40aa-485e-9c67-8f1fdca323de');
 
 
 
-
- 
- 
-<div id="00d3c5c1-c90b-4034-976f-3ec9106a1f63"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#00d3c5c1-c90b-4034-976f-3ec9106a1f63');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "933faa259c424713929d2e5fc2c8b88a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1894,16 +1752,8 @@ var element = $('#00d3c5c1-c90b-4034-976f-3ec9106a1f63');
 
 
 
-
- 
- 
-<div id="5871ab68-c338-464f-ba21-08a7e14ce951"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#5871ab68-c338-464f-ba21-08a7e14ce951');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c700f152ab71467284cab5442031eac9", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -1918,16 +1768,8 @@ var element = $('#5871ab68-c338-464f-ba21-08a7e14ce951');
 
 
 
-
- 
- 
-<div id="867e1822-11cd-4fa5-bdd7-5894148ae8ec"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#867e1822-11cd-4fa5-bdd7-5894148ae8ec');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "f48c8a590b034871bbbff8e6e7ec9edd", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2012,16 +1854,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="6fd19d3e-b4ed-47ed-a4e5-9d70a28812c1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#6fd19d3e-b4ed-47ed-a4e5-9d70a28812c1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "7f0a01d8d1704b17a28a40e946167eaf", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2036,16 +1870,8 @@ var element = $('#6fd19d3e-b4ed-47ed-a4e5-9d70a28812c1');
 
 
 
-
- 
- 
-<div id="a18a4aea-be58-4345-bef3-e88620880b45"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#a18a4aea-be58-4345-bef3-e88620880b45');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "204b7ead9bb249409500d2aff9e00483", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2060,16 +1886,8 @@ var element = $('#a18a4aea-be58-4345-bef3-e88620880b45');
 
 
 
-
- 
- 
-<div id="ba5191af-7417-4407-90a0-5b8354e513f0"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#ba5191af-7417-4407-90a0-5b8354e513f0');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "097b0d379c7d4d2dacf8942cc2156d61", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2084,16 +1902,8 @@ var element = $('#ba5191af-7417-4407-90a0-5b8354e513f0');
 
 
 
-
- 
- 
-<div id="ad641e86-bbab-4e85-95a8-5ddaf09efc25"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#ad641e86-bbab-4e85-95a8-5ddaf09efc25');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d24ef45f653144699a1a556cf11bcaa2", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2168,16 +1978,8 @@ Number of divergences: 0
 
 
 
-
- 
- 
-<div id="adde787d-47c7-47ac-ba50-d7f9de79e4ce"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#adde787d-47c7-47ac-ba50-d7f9de79e4ce');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6d2e6af4827e436fb99786b3d26d738d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2192,16 +1994,8 @@ var element = $('#adde787d-47c7-47ac-ba50-d7f9de79e4ce');
 
 
 
-
- 
- 
-<div id="2ba86632-3a6b-41a5-adb7-b3738b81f4db"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2ba86632-3a6b-41a5-adb7-b3738b81f4db');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a398b276361148a09d38326b80519c7c", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2216,16 +2010,8 @@ var element = $('#2ba86632-3a6b-41a5-adb7-b3738b81f4db');
 
 
 
-
- 
- 
-<div id="83533695-9d46-4c98-b466-c9072a97103f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#83533695-9d46-4c98-b466-c9072a97103f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ccc61ca5db5d4db8be967ae9e9d665b0", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2240,16 +2026,8 @@ var element = $('#83533695-9d46-4c98-b466-c9072a97103f');
 
 
 
-
- 
- 
-<div id="337be64b-24a9-4656-b360-30500a9e5b4b"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#337be64b-24a9-4656-b360-30500a9e5b4b');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "0b2b093572f24ab08a84a2d2f8e7248b", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2264,16 +2042,8 @@ var element = $('#337be64b-24a9-4656-b360-30500a9e5b4b');
 
 
 
-
- 
- 
-<div id="24ea0f7c-643a-48d0-8d51-8d096ff6f190"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#24ea0f7c-643a-48d0-8d51-8d096ff6f190');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8b284b5aa4d944a6bd3cc9c2786fcc65", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2288,16 +2058,8 @@ var element = $('#24ea0f7c-643a-48d0-8d51-8d096ff6f190');
 
 
 
-
- 
- 
-<div id="b4b218ed-349a-4c32-9c16-49e1a63b2862"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#b4b218ed-349a-4c32-9c16-49e1a63b2862');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "5dcb947c5e654ff687bb6c81afbe1370", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2312,16 +2074,8 @@ var element = $('#b4b218ed-349a-4c32-9c16-49e1a63b2862');
 
 
 
-
- 
- 
-<div id="529a28b8-ae73-40d1-bdab-25e7b0114a92"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#529a28b8-ae73-40d1-bdab-25e7b0114a92');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dd339338c908486fb1597d30b8da6f9b", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2336,16 +2090,8 @@ var element = $('#529a28b8-ae73-40d1-bdab-25e7b0114a92');
 
 
 
-
- 
- 
-<div id="aae5ddc1-5c4c-47f4-afe5-dcaa1027efd1"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#aae5ddc1-5c4c-47f4-afe5-dcaa1027efd1');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dfb66ecdbeb948d1b12459e23b7e010d", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2538,16 +2284,8 @@ var element = $('#aae5ddc1-5c4c-47f4-afe5-dcaa1027efd1');
 
 
 
-
- 
- 
-<div id="f4fb02a9-df84-404c-aaf4-117933fcab26"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#f4fb02a9-df84-404c-aaf4-117933fcab26');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "02285e2eff654bac801cee5bb94a65f4", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2562,16 +2300,8 @@ var element = $('#f4fb02a9-df84-404c-aaf4-117933fcab26');
 
 
 
-
- 
- 
-<div id="348f1d1c-7d64-48a3-a004-8ee46166e885"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#348f1d1c-7d64-48a3-a004-8ee46166e885');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "e2d16da459eb42f2a6253ea9d98f86ef", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2586,16 +2316,8 @@ var element = $('#348f1d1c-7d64-48a3-a004-8ee46166e885');
 
 
 
-
- 
- 
-<div id="e7dae00e-7f89-4b81-8f46-d0c6af9e649a"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#e7dae00e-7f89-4b81-8f46-d0c6af9e649a');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c204526a3f904e1ebd5bf35e95fcc872", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2610,16 +2332,8 @@ var element = $('#e7dae00e-7f89-4b81-8f46-d0c6af9e649a');
 
 
 
-
- 
- 
-<div id="2bbc94bb-b8c0-4f69-a7cd-6d1039e578b9"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#2bbc94bb-b8c0-4f69-a7cd-6d1039e578b9');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1b0e90531a5d4b12be3b8ef460a1625f", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -2932,8 +2646,7 @@ Rho_d[1,1]      1.00      0.00      1.00      1.00      1.00     89.24      1.00
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -3094,8 +2807,7 @@ Rho_d[1,1]      1.00      0.00      1.00      1.00      1.00     89.24      1.00
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -3125,7 +2837,7 @@ Rho_d[1,1]      1.00      0.00      1.00      1.00      1.00     89.24      1.00
 
 <span class="c1"># squared</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -3199,7 +2911,7 @@ Rho_d[1,1]      1.00      0.00      1.00      1.00      1.00     89.24      1.00
     <span class="n">rhosq</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"rhosq"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
     <span class="n">SIGMA</span> <span class="o">=</span> <span class="n">cov_GPL2</span><span class="p">(</span><span class="n">Dmat</span><span class="p">,</span> <span class="n">etasq</span><span class="p">,</span> <span class="n">rhosq</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">MultivariateNormal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIGMA</span><span class="p">))</span>
-    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">P</span> <span class="o">**</span> <span class="n">b</span> <span class="o">/</span> <span class="n">g</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">society</span><span class="p">])</span>
+    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">P</span><span class="o">**</span><span class="n">b</span> <span class="o">/</span> <span class="n">g</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">society</span><span class="p">])</span>
     <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"T"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="n">lambda_</span><span class="p">),</span> <span class="n">obs</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
 
 
@@ -3225,16 +2937,8 @@ Rho_d[1,1]      1.00      0.00      1.00      1.00      1.00     89.24      1.00
 
 
 
-
- 
- 
-<div id="e8d43829-a565-4801-93f6-646d29617cf5"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#e8d43829-a565-4801-93f6-646d29617cf5');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "9069397b48c2446eb7b4abf0c09d544a", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3249,16 +2953,8 @@ var element = $('#e8d43829-a565-4801-93f6-646d29617cf5');
 
 
 
-
- 
- 
-<div id="03830314-3a95-497d-ab44-3d6193e94311"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#03830314-3a95-497d-ab44-3d6193e94311');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "4e4420602b944bb3bac26511d4b4722e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3273,16 +2969,8 @@ var element = $('#03830314-3a95-497d-ab44-3d6193e94311');
 
 
 
-
- 
- 
-<div id="d4582221-1fd8-43af-980b-903eeb1333f2"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#d4582221-1fd8-43af-980b-903eeb1333f2');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a10b1a2443fe405e8de81a2dd67ff28c", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3297,16 +2985,8 @@ var element = $('#d4582221-1fd8-43af-980b-903eeb1333f2');
 
 
 
-
- 
- 
-<div id="220e571e-b941-47d0-9c46-00f004994478"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#220e571e-b941-47d0-9c46-00f004994478');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8a073d3a4fdf4cd2ae9c5f71e37e9aeb", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3401,7 +3081,7 @@ Number of divergences: 3
 
 <span class="c1"># compute posterior mean covariance</span>
 <span class="n">x_seq</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">pmcov</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">post</span><span class="p">[</span><span class="s2">"etasq"</span><span class="p">]</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">post</span><span class="p">[</span><span class="s2">"rhosq"</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))(</span><span class="n">x_seq</span><span class="p">)</span>
+<span class="n">pmcov</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">post</span><span class="p">[</span><span class="s2">"etasq"</span><span class="p">]</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">post</span><span class="p">[</span><span class="s2">"rhosq"</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))(</span><span class="n">x_seq</span><span class="p">)</span>
 <span class="n">pmcov_mu</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pmcov</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_seq</span><span class="p">,</span> <span class="n">pmcov_mu</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">"k"</span><span class="p">)</span>
 
@@ -3409,7 +3089,7 @@ Number of divergences: 3
 <span class="n">x</span> <span class="o">=</span> <span class="n">x_seq</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">x_seq</span><span class="p">,</span> <span class="n">post</span><span class="p">[</span><span class="s2">"etasq"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">post</span><span class="p">[</span><span class="s2">"rhosq"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">"k"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span>
+        <span class="n">x_seq</span><span class="p">,</span> <span class="n">post</span><span class="p">[</span><span class="s2">"etasq"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">post</span><span class="p">[</span><span class="s2">"rhosq"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="s2">"k"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span>
     <span class="p">)</span>
 </pre></div>
 
@@ -3490,7 +3170,7 @@ Number of divergences: 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># convert to correlation matrix</span>
 <span class="n">Rho</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">K</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">K</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">K</span><span class="p">))),</span> <span class="mi">2</span><span class="p">)</span>
 <span class="c1"># add row/col names for convenience</span>
-<span class="n">Rho</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Rho</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">Rho</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Rho</span><span class="p">))</span>
 <span class="n">Rho</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Ml"</span><span class="p">,</span> <span class="s2">"Ti"</span><span class="p">,</span> <span class="s2">"SC"</span><span class="p">,</span> <span class="s2">"Ya"</span><span class="p">,</span> <span class="s2">"Fi"</span><span class="p">,</span> <span class="s2">"Tr"</span><span class="p">,</span> <span class="s2">"Ch"</span><span class="p">,</span> <span class="s2">"Mn"</span><span class="p">,</span> <span class="s2">"To"</span><span class="p">,</span> <span class="s2">"Ha"</span><span class="p">]</span>
 <span class="n">Rho</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">Rho</span><span class="o">.</span><span class="n">columns</span>
 <span class="n">Rho</span>
@@ -3513,8 +3193,7 @@ Number of divergences: 3
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
+<div class="output_html rendered_html output_subarea output_execute_result"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -3675,8 +3354,7 @@ Number of divergences: 3
     </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -3704,7 +3382,7 @@ Number of divergences: 3
 <span class="n">psize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">psize</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
 
 <span class="c1"># plot raw data and labels</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">lon2</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">psize</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">lon2</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">psize</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"longitude"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"latitude"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">culture</span><span class="o">.</span><span class="n">values</span>
 <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
@@ -3783,7 +3461,7 @@ Number of divergences: 3
 <span class="n">lambda_PI80</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># plot raw data and labels</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">logpop</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">psize</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">logpop</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">psize</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"log population"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"total tools"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">74</span><span class="p">))</span>
 <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
@@ -3872,7 +3550,7 @@ Number of divergences: 3
     <span class="n">z</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"z"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">([</span><span class="mi">10</span><span class="p">]))</span>
     <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">L_SIGMA</span> <span class="o">@</span> <span class="n">z</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">])[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">P</span> <span class="o">**</span> <span class="n">b</span> <span class="o">/</span> <span class="n">g</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">society</span><span class="p">])</span>
+    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">P</span><span class="o">**</span><span class="n">b</span> <span class="o">/</span> <span class="n">g</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">society</span><span class="p">])</span>
     <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">"T"</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="n">lambda_</span><span class="p">),</span> <span class="n">obs</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
 
 
@@ -3898,16 +3576,8 @@ Number of divergences: 3
 
 
 
-
- 
- 
-<div id="45b96697-eba1-4bf1-80f2-d56699a02e6f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#45b96697-eba1-4bf1-80f2-d56699a02e6f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "fd11d1d7fbb44800803c98c594d64f1e", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3922,16 +3592,8 @@ var element = $('#45b96697-eba1-4bf1-80f2-d56699a02e6f');
 
 
 
-
- 
- 
-<div id="b30d5915-b87e-40a9-b531-5fdbed782927"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#b30d5915-b87e-40a9-b531-5fdbed782927');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c591f966d4da4c649da3248a134a81f2", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3946,16 +3608,8 @@ var element = $('#b30d5915-b87e-40a9-b531-5fdbed782927');
 
 
 
-
- 
- 
-<div id="6712943d-a298-4824-af65-1822a1dbf98e"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#6712943d-a298-4824-af65-1822a1dbf98e');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c1a50499b3e840d7949018bdf645e921", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -3970,16 +3624,8 @@ var element = $('#6712943d-a298-4824-af65-1822a1dbf98e');
 
 
 
-
- 
- 
-<div id="ee38a0e7-6fef-43db-bdbf-81f09e89222a"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#ee38a0e7-6fef-43db-bdbf-81f09e89222a');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c571b105e11e4c74ab31e53e4356d991", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/2000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -4138,16 +3784,8 @@ var element = $('#ee38a0e7-6fef-43db-bdbf-81f09e89222a');
 
 
 
-
- 
- 
-<div id="9ac3fbf7-5165-46c7-8a9a-ee8ef40b4399"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#9ac3fbf7-5165-46c7-8a9a-ee8ef40b4399');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6c0f9ea54c0d45a3a1550ef845e2451b", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -4162,16 +3800,8 @@ var element = $('#9ac3fbf7-5165-46c7-8a9a-ee8ef40b4399');
 
 
 
-
- 
- 
-<div id="abf7bf63-bffd-4f96-92bf-19fe406e817f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#abf7bf63-bffd-4f96-92bf-19fe406e817f');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "0c291d441ee54c149e1d686caf7ca7a8", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -4186,16 +3816,8 @@ var element = $('#abf7bf63-bffd-4f96-92bf-19fe406e817f');
 
 
 
-
- 
- 
-<div id="728df69e-187b-47bb-9b45-4e37a756b7ab"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#728df69e-187b-47bb-9b45-4e37a756b7ab');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c36df8de264d45dc9b4a560fade2db32", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -4210,16 +3832,8 @@ var element = $('#728df69e-187b-47bb-9b45-4e37a756b7ab');
 
 
 
-
- 
- 
-<div id="cbb8101e-04c8-40e5-bcdd-8c65e5f219bb"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#cbb8101e-04c8-40e5-bcdd-8c65e5f219bb');
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "2da832239f284fb793af6a75bad56dae", "version_major": 2, "version_minor": 0}
-</script>
+<div class="output_text output_subarea ">
+<pre>  0%|          | 0/1000 [00:00&lt;?, ?it/s]</pre>
 </div>
 
 </div>
@@ -4331,6 +3945,7 @@ Number of divergences: 0
 <span class="n">dat_list</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">spp_obs</span><span class="p">,</span> <span class="n">spp_obs</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="c1"># convert to correlation matrix</span>
 <span class="n">dat_list</span><span class="p">[</span><span class="s2">"R"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dat_list</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
 
 <span class="c1"># Brownian motion model</span>
 <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
@@ -4594,7 +4209,7 @@ Number of divergences: 0
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sa</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sb</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">rho</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.7</span>
-<span class="n">S</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sa</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">sb</span> <span class="o">*</span> <span class="n">rho</span><span class="p">],</span> <span class="p">[</span><span class="n">a</span> <span class="o">*</span> <span class="n">sb</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">sb</span> <span class="o">**</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sa</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">sb</span> <span class="o">*</span> <span class="n">rho</span><span class="p">],</span> <span class="p">[</span><span class="n">a</span> <span class="o">*</span> <span class="n">sb</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">sb</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
 </pre></div>
 
     </div>
@@ -4606,22 +4221,22 @@ Number of divergences: 0
     <div class="inner_cell">
     <div class="text_cell_render border-box-sizing rendered_html">
     <div class="navigation">
-    <p><!-- NAVIGATION -->
-&lt; <a href="13-models-with-memory.html">Chapter 13. Models With Memory</a> | <a href="15-missing-data-and-other-opportunities.html">Chapter 15. Missing Data and Other Opportunities</a> &gt;</p>
+    <!-- NAVIGATION -->
+<p>&lt; <a href="13-models-with-memory.html">Chapter 13. Models With Memory</a> | <a href="15-missing-data-and-other-opportunities.html">Chapter 15. Missing Data and Other Opportunities</a> &gt;</p>
 
     </div>
     </div>
     </div>
     </div>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {}, "version_major": 2, "version_minor": 0}
+</script>
 </div>
-</div></article>
-</div>
-</div>
-</body>
-</html><html>
-<section class="comments"><h2>Comments</h2>
+        <section class="comments"><h2>Comments</h2>
         
-        
+    
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="fehiepsi-github-io",
@@ -4643,13 +4258,18 @@ Number of divergences: 0
 
         </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script><!--End of body content--><footer id="footer">
-            Contents © 2022         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2023         <a href="mailto:fehiepsi@gmail.com">Du Phan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
             
-        </footer><script src="/assets/js/all-nocdn.js"></script><script>
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
@@ -4660,5 +4280,5 @@ Number of divergences: 0
 
   gtag('config', 'UA-131299125-1');
 </script>
+</body>
 </html>
-
