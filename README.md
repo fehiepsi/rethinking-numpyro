@@ -21,7 +21,7 @@ pip install numpyro arviz causalgraphicalmodels daft
 
 ## Excercises
 
-If you need help solving the exercises with numpyro, there are resolutions from chapter 3 and 4 [here](https://github.com/felipeffm/statistical-rethinking-resolutions).
+If you need help solving the exercises with numpyro, there are resolutions from chapter 2 and 3 [here](https://github.com/felipeffm/statistical-rethinking-resolutions).
 
 ## Acknowledgements
 
