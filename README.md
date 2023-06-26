@@ -1,7 +1,7 @@
 [![Test Status](https://github.com/fehiepsi/rethinking-numpyro/workflows/CI/badge.svg)](https://github.com/fehiepsi/rethinking-numpyro/actions)
 # Statistical Rethinking (2nd ed.) with NumPyro
 
-I am a fan of the book [*Statistical Rethinking*](https://xcelab.net/rm/statistical-rethinking/), so I port the codes of [its second edition](https://github.com/rmcelreath/rethinking) to [NumPyro](https://github.com/pyro-ppl/numpyro). I hope that the book and this translation will be helpful not only for NumPyro/Pyro users but also for ones who are willing to do Bayesian statistics in Python.
+I am a fan of the book [*Statistical Rethinking*](https://xcelab.net/rm/statistical-rethinking/), so I port the codes of [its second edition](https://github.com/rmcelreath/rethinking) to [NumPyro](https://github.com/pyro-ppl/numpyro). I hope that the book and this translation will be helpful not only for NumPyro/Pyro users but also for ones who are willing to do Bayesian statistics in Python. 
 
 ## How to read the notebooks
 
@@ -18,6 +18,10 @@ The following tools are used for some analysis and visualizations: [arviz](https
 ```sh
 pip install numpyro arviz causalgraphicalmodels daft
 ```
+
+## Excercises
+
+If you need help solving the exercises with numpyro, there are resolutions from chapter 2 and 3 [here](https://github.com/felipeffm/statistical-rethinking-resolutions).
 
 ## Acknowledgements
 
