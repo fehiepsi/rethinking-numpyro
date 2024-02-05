@@ -1,4 +1,5 @@
 numpyro
 arviz
-causalgraphicalmodels
+# causalgraphicalmodels compatible with python 3.9+
+causalgraphicalmodels @ git+https://github.com/BirkhoffG/causalgraphicalmodels.git@cd178afc246160d1d0ec996a4ec0652cba580205
 daft
