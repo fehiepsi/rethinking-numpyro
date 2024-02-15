@@ -1,20 +1,13 @@
 on: [push]
 
-defaults:
-  run:
-    working-directory: ./site
-
 jobs:
   nikola_build:
     runs-on: ubuntu-latest
     name: 'Deploy Nikola to GitHub Pages'
-    defaults:
-      run:
-        working-directory: ./site
     steps:
     - name: Check out
       uses: actions/checkout@v2
     - name: Build and Deploy Nikola
-      uses: getnikola/nikola-action@v4
+      uses: fehiepsi/nikola-action@v9
       with:
         dry_run: false
