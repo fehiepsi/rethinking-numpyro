@@ -1,5 +1,9 @@
 on: [push]
 
+defaults:
+  run:
+    working-directory: ./site
+
 jobs:
   nikola_build:
     runs-on: ubuntu-latest
