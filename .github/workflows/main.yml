@@ -8,7 +8,7 @@ jobs:
     - name: Check out
       uses: actions/checkout@v2
     - name: Build and Deploy Nikola
-      working-directory: ./site
       uses: getnikola/nikola-action@v4
       with:
         dry_run: false
+      working-directory: ./site
