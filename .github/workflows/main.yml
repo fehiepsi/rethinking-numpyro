@@ -4,6 +4,9 @@ jobs:
   nikola_build:
     runs-on: ubuntu-latest
     name: 'Deploy Nikola to GitHub Pages'
+    defaults:
+      run:
+        working-directory: ./site
     steps:
     - name: Check out
       uses: actions/checkout@v2
@@ -11,4 +14,3 @@ jobs:
       uses: getnikola/nikola-action@v4
       with:
         dry_run: false
-      working-directory: ./site
