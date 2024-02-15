@@ -18,6 +18,7 @@ pre.code .c1, .code .codetable .c1, .highlight pre .c1 { color: #3D7B7B; font-st
 pre.code .cs, .code .codetable .cs, .highlight pre .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
 pre.code .gd, .code .codetable .gd, .highlight pre .gd { color: #A00000 } /* Generic.Deleted */
 pre.code .ge, .code .codetable .ge, .highlight pre .ge { font-style: italic } /* Generic.Emph */
+pre.code .ges, .code .codetable .ges, .highlight pre .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
 pre.code .gr, .code .codetable .gr, .highlight pre .gr { color: #E40000 } /* Generic.Error */
 pre.code .gh, .code .codetable .gh, .highlight pre .gh { color: #000080; font-weight: bold } /* Generic.Heading */
 pre.code .gi, .code .codetable .gi, .highlight pre .gi { color: #008400 } /* Generic.Inserted */
