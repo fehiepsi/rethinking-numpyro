@@ -23,4 +23,5 @@ jobs:
         pip install "Nikola[extras]"
         git fetch origin gh-pages
         cd site
+        nikola build
         nikola github_deploy
