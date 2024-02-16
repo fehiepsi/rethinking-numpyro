@@ -7,14 +7,18 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/</loc>
-  <lastmod>2024-02-15T20:54:00Z</lastmod>
+  <lastmod>2024-02-16T11:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/archive.html</loc>
-  <lastmod>2024-02-15T20:54:00Z</lastmod>
+  <lastmod>2024-02-16T11:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://fehiepsi.github.io/rethinking-numpyro/categories/</loc>
-  <lastmod>2024-02-15T20:54:00Z</lastmod>
+  <lastmod>2024-02-16T11:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://fehiepsi.github.io/rethinking-numpyro/listings/</loc>
+  <lastmod>2024-02-16T11:50:00Z</lastmod>
  </url>
 </urlset>
