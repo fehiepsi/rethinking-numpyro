@@ -53,4 +53,3 @@ jobs:
     - name: Test with nbval
       run: |
         find notebooks -maxdepth 1 -name "[01][456789]*.ipynb" | sort -n | xargs pytest -vx --nbval-lax --durations=0
-

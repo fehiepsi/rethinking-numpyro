@@ -1,4 +1,4 @@
 numpyro
 arviz
-causalgraphicalmodels
 daft
+networkx
