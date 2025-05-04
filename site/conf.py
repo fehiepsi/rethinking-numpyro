@@ -139,6 +139,8 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
+        ("/", "Contents"),
+        ("https://fehiepsi.github.io", "Blog"),
         # ("/archive.html", "Archives"),
         # ("/categories/index.html", "Tags"),
         # ("/rss.xml", "RSS feed"),
@@ -990,7 +992,7 @@ RSS_COPYRIGHT_FORMATS = CONTENT_FOOTER_FORMATS
 # systems.  The following comment systems are supported by Nikola:
 #   disqus, facebook, intensedebate, isso, muut, commento
 # You can leave this option blank to disable comments.
-COMMENT_SYSTEM = "disqus"
+COMMENT_SYSTEM = "giscus"
 # And you also need to add your COMMENT_SYSTEM_ID which
 # depends on what comment system you use. The default is
 # "nikolademo" which is a test account for Disqus. More information
